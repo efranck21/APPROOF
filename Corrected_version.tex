@@ -812,22 +812,22 @@ C \eps  \|\partial_{xxx}p_0\|_{L^2(\mathbb{R})}.
 \end{equation*}
 \end{proposition}
 \begin{proof}
-We define $u^{\eps}=-\frac{\varepsilon}\sigma \partial_x p^{\eps}$ and
+We define $v=-\frac{\varepsilon}\sigma \partial_x p$ with $p$ the diffusion solution of (\ref{difffff}) and
 introduce $R^{\eps}$ such that the solution of the diffusion equation satisfies
 \begin{equation}\label{modifdiff}
 \left \{
 \begin{array}{lll}
-\dt p^{\eps} +\frac{1}{\eps}\partial_{x}u^{\eps}=0,\\
-\partial_t u^{\eps} + \frac{1}{\eps}\partial_x p^{\eps} +\frac{\sigma}{\eps^2}u^{\eps} = R^{\eps}
+\dt p +\frac{1}{\eps}\partial_{x}v=0,\\
+\partial_t v+ \frac{1}{\eps}\partial_x p +\frac{\sigma}{\eps^2}v = R^{\eps}
 \end{array}
 \right.
 \end{equation}
 where
- $R^{\eps}=\dt u^{\eps}=-\frac{\varepsilon}\sigma \partial_{tx} p^{\eps}=
--\frac{\varepsilon}{\sigma^2} \partial_{xxx}p^{\eps}$. 
+ $R^{\eps}=\dt v=-\frac{\varepsilon}\sigma \partial_{tx} p=
+-\frac{\varepsilon}{\sigma^2} \partial_{xxx}p$. 
 Note that 
 $\|R^{\eps}(t)\|_{L^2(\mathbb{R})}\leq \|R^{\eps}(0)\|_{L^2(\mathbb{R})}$. 
-Denoting $e^{\eps}=p-p^{\eps}$, $f^{\eps}=u-u^{\eps}$, we make the difference between the
+Denoting $e^{\eps}=p-p^{\eps}$, $f^{\eps}=v-u^{\eps}$, we make the difference between the
 systems \eqref{chaleur22} et \eqref{modifdiff}
 \begin{equation}\label{diffmodif}
 \left \{
@@ -1239,14 +1239,14 @@ $$
 \left ( 
 \delta_{j}^+(u^{\eps})^2+\delta_{j}^-(u^{\eps})^2\right )dt
 \leq h \left( \frac{1}{\eps}+\frac{\sigma}{2\eps^2}\right)
-\| \mathbf u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }.
+\|  u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }.
 $$
 
 
-Since $\| \mathbf u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }\leq t \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$ and also 
+Since $\| u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }\leq t \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$ and also 
 $
 \frac{\sigma}
-{\eps^2}\| \mathbf u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }\leq  \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$
+{\eps^2}\| u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }\leq  \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$
 by (\ref{bee1} ) and (\ref{bee2} ), one gets that
 \begin{equation} \label{eq:sm1}
 \left( \frac{1}{\eps}+\frac{\sigma}{2\eps^2}\right)
@@ -1281,7 +1281,7 @@ $$
 \mathbb{Z}}\bigg( {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} u^{\eps}(x) dx \bigg)^2
 \leq 
 \frac{\sigma^2}{4\eps^3}
-h \|  \mathbf u^\eps  \|^2_{  L^2(\mathbb R) }
+h \|  u^\eps  \|^2_{  L^2(\mathbb R) }
 $$
 so that
 \begin{equation} \label{eq:sm4}
@@ -1291,7 +1291,7 @@ so that
 \mathbb{Z}}\bigg( {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} u^{\eps}(x) dx \bigg)^2
 \leq 
 \frac{\sigma^2}{4\eps^3}
-h \|  \mathbf u^\eps  \|^2_{  L^2([0,t]\times \mathbb R) }
+h \| u^\eps  \|^2_{  L^2([0,t]\times \mathbb R) }
 \leq 
 \frac{\sigma}{4\eps}
 h  \|\mathbf{V}^{\eps}(0)\|_{L^2(\mathbb{R})}^2
@@ -1608,9 +1608,9 @@ The proof is ended.
 
 
 
-\begin{proposition}\label{pro:H1}
+\begin{lemma}\label{pro:H1}
 The bound (\ref{eq:xx}) holds.
-\end{proposition}
+\end{lemma}
 
 \begin{proof}
 
@@ -1747,8 +1747,8 @@ by a method similar to the one of proposition
 The error between the two solutions
 can be  upper bounded by
 \begin{equation}\label{ine3}
-| p^\epsilon-p\|_{   L^\infty([0,T];H^n(\Omega))  }+
-\| \uu^\eps 
+\| p^\epsilon-p\|_{   L^\infty([0,T];H^n(\Omega))  }+
+\| \mathbf{v} 
  \|_{   L^\infty([0,T]; H^n(\Omega))  }
  \leq
 C \eps
@@ -1831,7 +1831,7 @@ corner problem
 \left\{ \begin{array}{l}
 \displaystyle 
 p_{jr}^{\eps}-p_j^\eps=
-\njr,    \uj^{\eps}-\ur^{\eps}
+(\njr,    \uj^{\eps}-\ur^{\eps}
 )-\frac{\sigma}{\varepsilon}( \xr -\xj, \ur^{\eps}), 
 \\
 \sum_{j}\ljr
@@ -3883,7 +3883,7 @@ $\Delta t = 0.2 h^2$.
 in section \ref{sec::num}.
 Each curve corresponds to a value of $\tau\in\{0,\frac14, \frac12, 1, 2  \}$, plus 
 a reference line for order one. One sees that the order of convergence is an increasing function
-of $\gamma$.}
+of $\tau$.}
 \label{fig1}
 \end{figure}
 
@@ -3891,7 +3891,7 @@ As predicted by  the theory, the scheme is uniformly AP and the error behavior i
 between the  hyperbolic and parabolic limits. However the results are much better, in the sense
 the order is greater than the theoretical prediction since
 the order is approximatively 1 for $\gamma=0$ (hyperbolic limit)
-and 2 for $\gamma=2$ (parabolic regime).
+and 2 for $\gamma=2$ (parabolic regime).  We can find a closed result on the second order convergence for the parabolic regime in the paper \cite{TAHO} (1D linear problem).
 The reason is probably that the theory is based on worst case estimates, as it is often the case for the numerical analysis
 of finite volume schemes \cite{FV}.
 
@@ -3916,7 +3916,7 @@ The numerical results indicate that it is probably not the case.
 {\footnotesize 
 \begin{thebibliography}{abcde}   
 
-
+\bibitem{TAHO} D. Aregba, M. Briani, R. Natalini, Time Asymptotic High Order Schemes for Dissipative BGK Hyperbolic Systems, arXiv:1207.6279.
 
 \bibitem{ber1} C. Berthon, P. Charrier, R. Turpault \emph{An HLLC scheme
 to solve the $M^1$ model of radiative transfer in two dimensions} J. Scie.

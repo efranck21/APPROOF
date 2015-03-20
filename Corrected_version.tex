@@ -602,12 +602,12 @@ v=-\frac{1}{\sigma}\dx p.
 We denote $x_{j+1/2}$ the nodes, the cells $j$ are the intervals $[x_{j-1/2},x_{j+1/2}]$, thus $\Delta x_j=x_{j+1/2}-x_{j-1/2}$, $x_j$ is the center of the cell $j$ that is $x_j =\frac12(x_{j+1/2}+x_{j-1/2})$, and $\Delta x_{j+1/2}=x_{j+1}-x_j=\frac12(\Delta x_{j+1}+\Delta x_{j})$. Natural assumptions on the mesh are summarized below:
 
 \begin{hyp}[Regularity of the mesh in 1D] \label{geometrie1d}
- We consider there exists 
-a universal constant $C>0$ independent of the mesh size
+ We consider that there exists 
+a universal constant $C_{\mathcal{M}}>0$ independent of the mesh size
 $h=\sup_{j\in \mathbb Z} \Delta x_j $
 so that one has 
 $$
-Ch \leq \Delta x_j \leq h \qquad \forall j \in \mathbb{Z}.
+C_{\mathcal{M}} h \leq \Delta x_j \leq h \qquad \forall j \in \mathbb{Z}.
 $$
 \end{hyp}
 
@@ -740,9 +740,7 @@ The natural cellwise initialization is chosen
 p_j^\eps(0)=p_0(x_j) \mbox{ and }
 u_j^\eps(0)=-\frac\eps\sigma \partial_x p_0(x_j) \mbox{ for all }j\in \mathbb Z.
 \end{equation}
-Our goal is this section is to show that this scheme is AP.
-
-When $\eps$ tends to $0$, 
+Our goal is this section is to show that this scheme is AP. When $\eps$ tends to $0$, 
  the scheme $P_h^\eps$ admits the 
 diffusion limit scheme $P_h^0$
 \begin{equation}\label{schemadifff}
@@ -807,10 +805,10 @@ limit equation \eqref{difffff}.
 
 
 \begin{proposition} \label{heqtode}
-There exists a constant $C>0$ such that 
+There exists a constant which depend of the time such that 
 \begin{equation*}
 \|\V^{\eps}-\W^\eps\|_{L^\infty([0,T];L^2(\mathbb{R}) )} \leq
-C \eps  \|\partial_{xxx}p_0\|_{L^2(\mathbb{R})}.
+ \eps \frac{T}{\sigma^2} \|\partial_{xxx}p_0\|_{L^2(\mathbb{R})}.
 \end{equation*}
 \end{proposition}
 \begin{proof}
@@ -913,12 +911,12 @@ which is
 equivalent to $P_h^\eps$
 \begin{equation}\label{schema}
 \left\{
-\begin{array}{lll}
-\displaystyle\Delta x_j\frac{d}{dt}p^{\eps}_j +\frac{u_{j+\frac12 }^{\eps} -
+\begin{aligned}
+&\Delta x_j\frac{d}{dt}p^{\eps}_j +\frac{u_{j+\frac12 }^{\eps} -
 u_{j-\frac12 }^{\eps} }{\eps} = 0,\\
-\displaystyle\Delta x_j\frac{d}{dt}u^{\eps}_j-\frac{u_{j+\frac12 }^{\eps}+
+&\Delta x_j\frac{d}{dt}u^{\eps}_j-\frac{u_{j+\frac12 }^{\eps}+
 u_{j-\frac12 }^{\eps}}{\eps} +\frac{2}{\eps}u_j^{\eps}=0, \\
-\displaystyle 
+&
 \left( 2
 +\frac{\sigma \Delta x_{j+\frac12}
  }{\eps}
@@ -926,7 +924,7 @@ u_{j-\frac12 }^{\eps}}{\eps} +\frac{2}{\eps}u_j^{\eps}=0, \\
 
 =p^{\eps}_j-p^{\eps}_{j+1}+u^{\eps}_j+u^{\eps}_{j+1}
 .
-\end{array}
+\end{aligned}
 \right.
 \end{equation}
 Consider now the discrete quadratic energy
@@ -994,11 +992,11 @@ In this section we
 prove the 
 convergence of $P_h^\varepsilon $ to  $P^\varepsilon $. We still denote $V^\eps(t)=(p^\eps,u^\eps)$.
 \begin{proposition}\label{cv1d}
-There exist a constant $C(T)>0$ independent of $\eps$ and $h$ 
- such that the following estimate holds 
+Under assumption \ref{geometrie1d} on the mesh and assuming that the initial conditions satisfy \eqref{eq:initp1}, the following estimate holds 
+
 \begin{equation*}
 \|\V^{\eps}-\V^{\eps}_h \|_{L^2([0,T]\times \mathbb{R})}
-\leq C(T) 
+\leq \sqrt{h\eps + 2t + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} }
 \sqrt \frac{h}\eps 
 \left\| \V^{\eps}(0)
 \right\|_{H^1(\mathbb{R})}.
@@ -1011,7 +1009,7 @@ In order to establish this estimate, we will use the method introduced by C.
 Mazeran \cite{Mazeran} in his PhD thesis.
 It  starts with an estimate for the time derivative of
 $\mathscr{E}=\frac12 \|\mathbf V_h^\eps - \mathbf V^\eps  \|^2_{L^2(\mathbb{R})}$.
-For the sake of simplicity,for any quantity $q$,   $q'$ stands indifferently for  $\frac{d}{dt}q $ or $\partial_t q $. One has 
+For the sake of simplicity, for any quantity $q$,   $q'$ stands indifferently for  $\frac{d}{dt}q $ or $\partial_t q $. One has 
 \begin{equation*}\label{esti}
 \begin{array}{l}
 \mathscr{E}'(t) = \underbrace{\frac12 
@@ -1057,8 +1055,8 @@ For $D_4$, one gets  directly
 In this method the third term
  $D_3$ is more complicated to study
 \begin{equation*}
-\begin{array}{l}
- D_3 = \sum_{j\in \mathbb{Z}}
+\begin{aligned}
+ D_3 &= \sum_{j\in \mathbb{Z}}
 \frac{u_{j+\frac12 }^{\eps}-u_{j-\frac12 }^{\eps}}{\eps} \: \bigg(
 \frac{1}{\Delta x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}}
  p^{\eps}(x) dx \bigg)
@@ -1067,11 +1065,11 @@ In this method the third term
 \frac{1}{\Delta x_j} 
 {\int_{x_{j-\frac12}}^{x_{j+\frac12}}}
  u^{\eps}(x) dx \bigg) \\
-\hspace{0.8cm}+\sum_{j\in \mathbb{Z}} \Delta x_j  \frac{\sigma}{\eps^2}
+&+\sum_{j\in \mathbb{Z}} \Delta x_j  \frac{\sigma}{\eps^2}
 \frac{u_{j+\frac12 }^{\eps}+u_{j-\frac12 }^{\eps}}{2}\: \bigg(
 \frac{1}{\Delta x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}}
  u^{\eps}(x) dx \bigg).
-\end{array}
+\end{aligned}
 \end{equation*}
  It is  decomposed in several pieces.
 We add and subtract in each fluxes  the value of the unknowns in the
@@ -1081,29 +1079,28 @@ unknowns on the edge. Denoting by $\delta_{j }^\pm
 x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} g(x) dx -g(x_{j\pm\frac12 })$,
  one gets after rearrangements
 \begin{equation*}
-\begin{array}{lll}
- D_3 &=& \underset{j\in \mathbb{Z}}{\sum}
+\begin{aligned}
+ D_3 &= \underset{j\in \mathbb{Z}}{\sum}
 \frac{u_{j+\frac12 }^{\eps}-u_j^{\eps}}{\eps} \delta_{j}^+\left(p^{\eps}\right)+
 \underset{j\in \mathbb{Z}}{\sum}
 \frac{u^{\eps}_j-u_{j-\frac12 }^{\eps}}{\eps}\delta_{j}^-\left(p^{\eps}\right)
 \\
-& +& \underset{j\in \mathbb{Z}}{\sum}
+& + \underset{j\in \mathbb{Z}}{\sum}
 \frac{p_{j+\frac12 }^{\eps}-p_{j}^{\eps}}{\eps} 
 \delta_{j}^+\left(u^{\eps}\right)
 +\underset{j\in \mathbb{Z}}{\sum}
 \frac{p^{\eps}_j-p_{j-\frac12 }^{\eps}}{\eps} 
 \delta_{j}^-\left(u^{\eps}\right) \\
-&-&\underset{j\in \mathbb{Z}}{\sum} 
+&-\underset{j\in \mathbb{Z}}{\sum} 
 \frac{u^{\eps}(x_{j+\frac12 })-u^{\eps}(x_{j-\frac12 })}{\eps} 
-p^{\eps}_j
--
+p^{\eps}_j -
 \underset{j\in \mathbb{Z}}{\sum} 
 \frac{p^{\eps}(x_{j+\frac12 })-p^{\eps}(x_{j-\frac12 })}{\eps}
 u^{\eps}_j  \\
-&+& \underset{j\in \mathbb{Z}}{\sum} \Delta x_j  \frac{\sigma}{\eps^2}
+&+ \underset{j\in \mathbb{Z}}{\sum} \Delta x_j  \frac{\sigma}{\eps^2}
 \frac{u_{j+\frac12 }^{\eps}+u_{j-\frac12 }^{\eps}}{2}\: \bigg(
 \frac{1}{\Delta x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}}u^{\eps}(x) dx \bigg)
-\end{array}
+\end{aligned}
 \end{equation*}
 Using the fluxes' definition (\ref{eq:fflux}), one can 
 eliminate the pressure fluxes. With
@@ -1135,11 +1132,12 @@ $$
 $$
 Using this expression in $D_3$ and  using again Young's inequality, one gets for 
 arbitrary  $\alpha>0$
-\begin{eqnarray*}
- D_3 &\leq& \alpha \sum_{j\in \mathbb{Z}}
+\begin{equation*}
+\begin{aligned}
+ D_3 &\leq \alpha \sum_{j\in \mathbb{Z}}
 \frac{(u_{j+\frac12 }^{\eps}-u_j^{\eps})^2}{\eps} + \alpha \sum_{j\in
 \mathbb{Z}} \frac{(u_{j-\frac12 }^{\eps}-u_j^{\eps})^2}{\eps} \\
-&+&\sum_{j\in \mathbb{Z}} \bigg(
+&+\sum_{j\in \mathbb{Z}} \bigg(
 \left( \frac{1}{2\alpha\eps}+\frac{\sigma}{2\eps^2}\right)
 \left( 
 \delta_{j}^+\left(u^{\eps}\right)^2+
@@ -1148,39 +1146,42 @@ arbitrary  $\alpha>0$
 +\frac{\delta_{j}^+\left(p^{\eps}\right)^2
 +\delta_{j}^-\left(p^{\eps}\right)^2
 }{2\eps\alpha} \bigg) \\
-&+& \sum_{j\in \mathbb{Z}} \frac{1}{8\eps} \sigma \Delta x_j^2
+&+ \sum_{j\in \mathbb{Z}} \frac{1}{8\eps} \sigma \Delta x_j^2
 \frac{(u_{j-\frac12 }^{\eps})^2 + (u_{j+\frac12 }^{\eps})^2}{\eps}+
 \sum_{j\in \mathbb{Z}} \Delta x_j  \frac{\sigma}{\eps^2}
 \frac{u_{j+\frac12 }^{\eps}+u_{j-\frac12 }^{\eps}}{2}\: \bigg(
 \frac{1}{\Delta x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}}u^{\eps}(x) dx \bigg) \\
-&-& \sum_{j\in \mathbb{Z}} u^{\eps}_j 
+&- \sum_{j\in \mathbb{Z}} u^{\eps}_j 
 \frac{p^{\eps}(x_{j+\frac12 })-p^{\eps}(x_{j-\frac12 })}{\eps} -
 \sum_{j\in \mathbb{Z}} p^{\eps}_j
-\frac{u^{\eps}(x_{j+\frac12 })-u^{\eps}(x_{j-\frac12 })}{\eps}
-\end{eqnarray*}
+\frac{u^{\eps}(x_{j+\frac12 })-u^{\eps}(x_{j-\frac12 })}{\eps}.
+\end{aligned}
+\end{equation*}
 We now sum  all  bounds contributing to $\mathscr{E}'(t)$ and we get:
-\begin{eqnarray*}
-\mathscr{E}'(t)  & \leq & (-1+\alpha) \sum_{j\in \mathbb{Z}}
+\begin{equation*}
+\begin{aligned}
+\mathscr{E}'(t)  & \leq (-1+\alpha) \sum_{j\in \mathbb{Z}}
 \frac{(u_{j+\frac12 }^{\eps}-u_j^{\eps})^2+(u_{j-\frac12 }^{\eps}-u_j^{
 \eps})^2}{\eps} \\
-&+&\sum_{j\in \mathbb{Z}} \bigg(
+&+\sum_{j\in \mathbb{Z}} \bigg(
 \left( \frac{1}{2\alpha\eps}+\frac{\sigma}{2\eps^2}\right)
 \left ( \delta_{j}^+(u^{\eps})^2+\delta_{j}^-(u^{\eps})^2\right )
 +\frac{\delta_{j}^+(p^{\eps})^2+\delta_{j}^-(p^{\eps}
 )^2}{2\eps\alpha} \bigg) \\
-&+& \sum_{j\in \mathbb{Z}} \frac{1}{8\eps} \sigma \Delta x_j^2
+&+ \sum_{j\in \mathbb{Z}} \frac{1}{8\eps} \sigma \Delta x_j^2
 \frac{(u_{j-\frac12 }^{\eps})^2+ (u_{j+\frac12 }^{\eps})^2}{\eps}\\
-&+& \sum_{j\in \mathbb{Z}} \Delta x_j  \frac{\sigma}{\eps^2}
+&+ \sum_{j\in \mathbb{Z}} \Delta x_j  \frac{\sigma}{\eps^2}
 \frac{u_{j+\frac12 }^{\eps}+u_{j-\frac12 }^{\eps}}{2}\: \bigg(
 \frac{1}{\Delta x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}}
  u^{\eps}(x) dx \bigg) 
 -\sum_{j\in \mathbb{Z}} \Delta x_j \frac{\sigma}{2\eps}
 \frac{(u_{j-\frac12 }^{\eps})^2+(u_{j+\frac12 }^{\eps})^2}{\eps} \\
-&+& \sum_{j\in \mathbb{Z}} \Delta x_j  \frac{\sigma}{\eps^2} u^{\eps}_j \:
+&+ \sum_{j\in \mathbb{Z}} \Delta x_j  \frac{\sigma}{\eps^2} u^{\eps}_j \:
 \bigg( \frac{1}{\Delta x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} u^{\eps}(x) dx \bigg) -
 \sum_{j\in \mathbb{Z}} \Delta x_j \frac{ \sigma  }{\eps^2} \: \bigg(
 \frac{1}{\Delta x_j} {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} (u^{\eps})^2(x) dx \bigg).
-\end{eqnarray*} 
+\end{aligned}
+\end{equation*} 
 We now examine
  the sum of all terms in the two last lines of the RHS of the above inequality , which we denote $S$. 
 One finds
@@ -1213,7 +1214,6 @@ S \leq \frac{\sigma^2}{8\widehat{\alpha}\eps^3} \sum_{j\in \mathbb{Z}}\bigg(
 (u^{\eps}_j-u_{j-\frac12 }^{\eps})^2}{\eps} .
 \end{eqnarray*}
 For example by choosing $\alpha=\frac12$ and $\widehat{\alpha}=\frac12$, and coming back to $\mathscr{E}'(t) $ we get
-we obtain
 \begin{eqnarray} \label{eq:eqn1}
 \mathscr{E}'(t)  & \leq & \sum_{j\in \mathbb{Z}} \bigg(
 \left( \frac{1}{\eps}+\frac{\sigma}{2\eps^2}\right)\left ( 
@@ -1241,15 +1241,14 @@ $$
 \left ( 
 \delta_{j}^+(u^{\eps})^2+\delta_{j}^-(u^{\eps})^2\right )dt
 \leq h \left( \frac{1}{\eps}+\frac{\sigma}{2\eps^2}\right)
-\|  u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }.
+\|  u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R)) }.
 $$
 
 
-Since $\| u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }\leq t \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$ and also 
-$
+Since $\| \mathbf u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) )}\leq t \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$ and also 
 \frac{\sigma}
-{\eps^2}\| u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) }\leq  \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$
-by (\ref{bee1} ) and (\ref{bee2} ), one gets that
+{\eps^2}\| \mathbf u^\eps  \|^2_{ L^2( [0,t] : H^1(\mathbb R) )}\leq  \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$
+by (\ref{bee1}) and (\ref{bee2}), one gets that
 \begin{equation} \label{eq:sm1}
 \left( \frac{1}{\eps}+\frac{\sigma}{2\eps^2}\right)
 \int_0^t 
@@ -1270,11 +1269,11 @@ A similar and simpler formula for the next terms is
 \leq     \frac{ h t}\eps 
 \| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2.
 \end{equation}
-Next, using the assumption \eqref{geometrie1d} on the mesh and estimate \eqref{estiuepsflux}, one can find a constant $C\geq0$ such that the next term can be  bounded like 
+Next, using the assumption \eqref{geometrie1d} on the mesh and the estimate \eqref{estiuepsflux}, one controls the next term by 
 \begin{equation} \label{eq:sm3}
  \int_0^T \underset{j\in \mathbb{Z}}{\sum} \frac{1}{8\eps} \sigma \Delta x_j^2
 \frac{(u_{j-\frac12 }^{\eps})^2+(
-u_{j+\frac12 }^{\eps})^2}{\eps} \leq C h \|\mathbf{V}^{\eps}(0)\|_{L^2(\mathbb{R})}^2.
+u_{j+\frac12 }^{\eps})^2}{\eps} \leq  \frac{h}{4C_{\mathcal{M}}} \|\mathbf{V}^{\eps}(0)\|_{L^2(\mathbb{R})}^2.
 \end{equation}
 Finally the last term in (\ref{eq:eqn1}) can be bounded using a
 Cauchy-Schwarz inequality 
@@ -1306,12 +1305,12 @@ by means of the energy identity.
 \left( \frac{t}{\eps}+\frac{1}2 + \frac{t}{\eps}+C+\frac{\sigma
 }{4\eps}\right)\| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2.
 \end{eqnarray*}
-The initialization stage is consistent so 
- $\mathscr{E}(0)\leq Ch^2\| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$.
+The initialization stage is consistent (equation \ref{eq:initp1}) so 
+ $\mathscr{E}(0)\leq h^2\| \V^{\eps}(0) \|_{H^1(\mathbb{R})}^2$.
  Making use of the  initial remark \ref{sigmanotzero}, one   obtains 
 \begin{equation*}\label{esti1}
 \|\V^{\eps}-\V^{\eps}_h \|_{L^2([0,T]\times \mathbb{R})}
-\leq C(T) \sqrt{ \frac{h}{\eps}}
+\leq \sqrt{h\eps + 2t + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} } \sqrt{ \frac{h}{\eps}}
 \| \V^{\eps}( 0)
 \|_{H^1(\mathbb{R})}, \qquad C(T)\geq0.
 \end{equation*}
@@ -1324,8 +1323,7 @@ The proof is ended.
 
 We  first 
  recall a fundamental   error estimate \cite{FV}
-for the diffusion limit scheme \eqref{schemadifff}, assuming smooth initial data.
-. 
+for the diffusion limit scheme \eqref{schemadifff}, assuming smooth initial data \eqref{eq:intip0}. 
 \begin{proposition}\label{ds1d}
 There exists a constant $C(T)>0$ such that
 \begin{equation*}
@@ -1376,7 +1374,7 @@ one finds that
 \frac12 \frac{d}{dt}\|e_h\|_{L^2(\mathbb{R})}^2 +\frac{1}{\sigma} \sum_j
 \frac{(e_{j+1}-e_{j})^2}{\Delta
 x_{j+\frac12 }}=
-\sigma^{-1}\sum_j \Delta x_j s_j e_j+\sigma^{-1}\sum_jr_{j+\frac12 }(e_j-e_{j+1}).
+\frac{1}{\sigma}\sum_j \Delta x_j s_j e_j+\frac{1}{\sigma}\sum_jr_{j+\frac12 }(e_j-e_{j+1}).
 \end{equation*}
 The Cauchy-Schwarz inequality yields 
 \begin{equation*}
@@ -1389,65 +1387,58 @@ One finds out with natural notations
 \frac12 \frac{d}{dt} \|e_h\|_{L^2(\mathbb{R})}^2+
 \frac{1}{2 \sigma} \sum_j
 \frac{(e_{j+1}-e_{j})^2}{\Delta x_{j+\frac12 }}\leq
-\sigma^{-1}\| s_h\|_{L^2(\mathbb{R})} \|e_h\|_{L^2(\mathbb{R})}+
-\frac12 \|r_h\|^2_{L^2(\mathbb{R})}.
+\frac{1}{\sigma}\| s_h\|_{L^2(\mathbb{R})} \|e_h\|_{L^2(\mathbb{R})}+
+\frac{1}{2\sigma} \|r_h\|^2_{L^2(\mathbb{R})}.
 \end{equation}
-Using the  definitions of  the truncation errors $s_h$ and $r_h$, these
-quantites can be   
-bounded independently of the time of observation $T$ 
+Using the  definitions of  the truncation error $s_h$, one easily obtains by using classical arguments $\|s_h\|_{L^2([0,T]\times\mathbb{R})}\leq \sqrt{2}h\|\partial_{xxx}p\|_{L^2([0,T]\times\mathbb{R})}$. Since $p$ satisfies the diffusion equation \eqref{difffff}, one gets $\|\partial_{xxx}p\|_{L^2([0,T]\times\mathbb{R})} \leq \sqrt{\sigma/2} \|\partial_{xx}p_0\|_{L^2(\mathbb{R})}$. The same manipulations on the second truncation error $r_h$ yields
 \begin{equation} \label{eq:bsr}
 \|s_h\|_{L^2([0,T]\times\mathbb{R})}+
-\|r_h\|_{L^2([0,T]\times\mathbb{R})}  \leq C h \bigg(
- \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})}+\|\partial_{xx}p_0\| _{L^2(\mathbb{R})} \bigg).
+\|r_h\|_{L^2([0,T]\times\mathbb{R})} \leq \sqrt{\sigma} h \bigg(
+ \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})} +\|\partial_{x}p_0\| _{L^2(\mathbb{R})} \bigg).
 \end{equation}
 Rescaling  for convenience $\widehat s_h=\frac1hs_h$ for any quantity
 $s$, one gets the bound
 $$
 \frac12 \frac{d}{dt} \|\widehat e_h\|_{L^2(\mathbb{R})}^2
 \leq
-\| \widehat s_h\|_{L^2(\mathbb{R})} \|\widehat e_h\|_{L^2(\mathbb{R})}+
+\frac{1}{\sigma} \| \widehat s_h\|_{L^2(\mathbb{R})} \|\widehat e_h\|_{L^2(\mathbb{R})}+
 \frac{1}{2\sigma} \|\widehat r_h\|^2_{L^2(\mathbb{R})}
 \leq
-\frac12
-\left(\| \widehat s_h\|_{L^2(\mathbb{R})}^2+ \frac{1}{\sigma} \|\widehat r_h\|^2_{L^2(\mathbb{R})}  \right)+\frac12 
- \|\widehat e_h\|^2_{L^2(\mathbb{R})}
+\frac{1}{2\sigma}
+\left(\| \widehat s_h\|_{L^2(\mathbb{R})}^2+  \|\widehat r_h\|^2_{L^2(\mathbb{R})}  \right)+ \frac{1}{2\sigma}
+ \|\widehat e_h\|^2_{L^2(\mathbb{R})},
 $$
 where the term in parenthesis is bounded due to (\ref{eq:bsr}).
 The Gronwall's inequality guarantees the boundedness of
 $\|\widehat e_h\|_{L^2(\mathbb{R})}$ at any time.
 Therefore
 \begin{equation} \label{eq:e2}
-\| e_h\|_{L^\infty([0,T];\mathbb{R})}\leq C(T) h 
+\| e_h\|_{L^\infty([0,T];L^2(\mathbb{R}))}\leq h 
 \left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
- \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})}
-\right).
+ \|\partial_{x}p_0   \| _{L^2(\mathbb{R})}
+\right)e^{T/2\sigma}.
 \end{equation}
 The other term 
 that we consider  is
 $
-f_h=\eps\left(v(x_j)-v_j    \right)_{j\in \mathbb Z}=-\eps
-\left(\frac{\partial_x p(x_j)}{\sigma}- v_j  \right)_{j\in \mathbb Z}$.
+f_h=\eps\left(v(x_j)-v_j    \right)_{j\in \mathbb Z}= - \eps
+\left(  \frac{\partial_x p(x_j)}{\sigma} + v_j  \right)_{j\in \mathbb Z}$, where $v$ is defined in \eqref{eq:diff-v}.
 We notice that (\ref{eq:eee}) and (\ref{eq:e2}) yields
 $$
-\left\| 
-\frac{e_{j+1}-e_{j}}{\Delta x_{j+\frac12 }} \right\|_{
-L^2([0,T]\times\mathbb{R})
-}
-\leq C(T) h 
-\left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
- \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})}
-\right)
+\int_0^T \sum_j
+\frac{(e_{j+1}-e_{j})^2}{\Delta x_{j+\frac12 }}\leq h^2
+\left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}^2 +
+ \|\partial_{x}p_0   \| _{L^2(\mathbb{R})}^2 
+\right)\bigg( \sigma + Te^{T/\sigma} \bigg) ,
 $$
 which implies after some  manipulations
 $$
-\left\| 
-\frac{p_{j+1}-p_{j}}{\Delta x_{j+\frac12 }} -\partial_x p (x_{j+\frac12}) \right\|_{
-L^2([0,T]\times\mathbb{R})
-}
-\leq C(T) h 
-\left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
- \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})}
-\right).
+\int_0^T \sum_j \Delta x_{j+\frac12 } \bigg|
+\frac{p_{j+1}-p_{j}}{\Delta x_{j+\frac12 }} -\partial_x p (x_{j+\frac12})  \bigg|^2
+\leq 2 h^2
+\left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}^2 +
+ \|\partial_{x}p_0   \| _{L^2(\mathbb{R})}^2 
+\right)\bigg( 3 \sigma + Te^{T/\sigma} \bigg).
 $$
 The definition (\ref{eq:vv}) of $v_j$ 
 implies 
@@ -1455,11 +1446,11 @@ the bound
 \begin{equation} \label{eq:f2}
 \|f_h\|_{
 L^2([0,T]\times\mathbb{R})
-}\leq C(T) h \eps \left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
- \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})}
-\right).
+}\leq  h \eps \bigg(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
+ \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})} \bigg) \sqrt{\frac12 + \frac{4}{\mathcal{C}_M}\bigg( 3 + \frac{T}{\sigma}e^{T/\sigma} \bigg) }
+,
 \end{equation}
-Finally, 
+where the constant $\mathcal{C}_M$ is defined in assumption \ref{geometrie1d}. Finally, 
 $\|\W_h^\eps-\W^\eps\|_{L^2([0,T]\times\mathbb{R})}^2=
 \|e_h\|_{L^2([0,T]\times\mathbb{R})}^2+\|f_h\|_{L^2([0,T]\times\mathbb{R
 })}^2

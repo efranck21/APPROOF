@@ -3823,17 +3823,19 @@ p= f+\frac{\eps^2}\sigma \partial_t f
 \mathbf u= -\frac\eps \sigma \nabla f,
 $$
 with $f$ solution of 
-$
-\partial_t f +\frac{\eps^2}\sigma \partial_t^2 f -\frac1\sigma \Delta f=0$.
-We add periodic boundary conditions and consider
+\begin{equation}\label{telegraph}
+\partial_t f +\frac{\eps^2}\sigma \partial_t^2 f -\frac1\sigma \Delta f=0.
+\end{equation}
+ We propose to construct a solution for a subset of small $\eps$ to validate the uniform convergence. Firstly we consider that the solution is a periodic solution on the square $\left[0,2\right]\times\left[0,2\right]$. For this we use the separation of the variables. We consider the following function
 $$
 f(t,x,y)=\alpha(t)\cos (\pi x ))\cos( \pi y ).
 $$
+and we propose to find the function $\alpha(t)$ such that $f(t,x,y)=\alpha(t)\cos (\pi x ))\cos( \pi y )$ is a periodic solution of (\ref{telegraph}).
 The function $\alpha$ is determined as the solution of
 $$
 \alpha'(t)+ \frac{\eps^2}\sigma\alpha''(t)+\frac{2\pi}\sigma \alpha=0
 $$
-whith $\alpha'(0)=0$ and $\alpha(0)=1$.
+with $\alpha'(0)=0$ and $\alpha(0)=1$.
 For small $\eps$, which is the case we are interested in, the solution is computed as follows.
 First determine 
 $$

@@ -1527,7 +1527,11 @@ implies that $\|\frac{d}{dt} p_h(0)\|_{L^2(\mathbb{R})}\leq \frac{1}{\sigma}
 \|R\|_{L^2([0,T]\times \mathbb{R})}\leq   \frac{\eps }{ \sqrt{ 2\sigma C_{\mathcal{M}} } } 
 \| p_0\|_{H^2(\mathbb{R})}.
 \end{equation}
-Using the definitions of $u_j$ \eqref{schemadiff3}, the $L^2$ norm of $S_h = (S_{j+\frac12})_{j\in\mathbb{Z}}$ is related to the $L^2$ norm of $\frac{d}{dt}u_j$. Using once again the proposition \ref{pro:H1}, one finds out that 
+Using the definitions of $u_j$ \eqref{schemadiff3}, $S_{j+\frac12}$ can be written in terms of $\frac{d}{dt}p_j$ and $\frac{d}{dt}p_{j+1}$
+\begin{equation*}
+S_{j+\frac12} = \frac{\eps}{2} \bigg( \frac{\Delta x_{j} }{\Delta x_{j+\frac12} }\frac{d}{dt}p_j - \frac{\Delta x_{j+1} }{\Delta x_{j+\frac12} }\frac{d}{dt}p_{j+1} \bigg).
+\end{equation*}
+Using once again the proposition \ref{pro:H1}, one finds out that $S_h = (S_{j+\frac12})_{j\in\mathbb{Z}}$ satisfies
 \begin{equation}\label{eq:xx}
 \| S_h \|_{L^2(\mathbb{R})} \leq \eps  \frac{\sqrt{2}}{\sigma \sqrt{C_{\mathcal{M}}}}
 \| p(0)\|_{H^2(\mathbb{R})}.
@@ -1605,7 +1609,7 @@ The proof is ended.
 
 \begin{lemma}\label{pro:H1}
 The bound $
-\sqrt{ \sum_j \Delta x_j (\frac{d}{dt}u_j)^2(t) }
+\sqrt{ \sum_j \Delta x_j (\frac{d}{dt}p_j)^2(t) }
 \leq \sigma^{-1}\|p_0\|_{H^2(\mathbb{R})}$
  holds at any time.\end{lemma}
 

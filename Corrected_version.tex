@@ -768,7 +768,7 @@ x_{j+\frac12 }},\\
 
 Provided that the initial data is smooth, the initialization gives us 
 \begin{equation}\label{init_1D}
- \| u_j^{\eps}(0)-\eps v_j(0)\|_{L^2(\mathbb{R})} \leq C h\eps .
+ \| u_j^{\eps}(0)-\eps v_j(0)\|_{L^2(\mathbb{R})} \leq C_0 h\eps .
 \end{equation}
 
 
@@ -980,7 +980,7 @@ $\bar{v}_h=\left( v_{j+\frac12}  \right)_j$ defined by
 \int_0^T \sum_j \Delta x_{j+\frac12} (v_{j+\frac12} )^2
 }
 \leq
-C\|p_0\|_{L^2(\mathbb R)}, \qquad C>0.
+\sqrt{\frac{\sigma}{2}}\|p_0\|_{L^2(\mathbb R)}, \qquad C>0.
 \end{equation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1324,10 +1324,15 @@ We  first
  recall a fundamental   error estimate \cite{FV}
 for the diffusion limit scheme \eqref{schemadifff}, assuming smooth initial data \eqref{eq:intip0}. 
 \begin{proposition}\label{ds1d}
-There exists a constant $C(T)>0$ such that
+Under assumption \ref{geometrie1d}, the following estimate holds
 \begin{equation*}
 \|\W_h^\eps-\W^\eps\|_{L^{\infty}([0,T];L^2(\mathbb{R}))} \leq
-C(T)h \| \partial_{xxx}p_0 \|_{L^2(\mathbb{R})  }.
+h 
+\left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
+ \|\partial_{x}p_0   \| _{L^2(\mathbb{R})}
+\right)  \bigg(  
+e^{T/2\sigma} + 
+\eps \sqrt{\frac12 + \frac{4}{\mathcal{C}_M}\bigg( 3 + \frac{T}{\sigma}e^{T/\sigma} \bigg) } \bigg).
 \end{equation*}
 \end{proposition}
 
@@ -1446,10 +1451,10 @@ the bound
 \|f_h\|_{
 L^2([0,T]\times\mathbb{R})
 }\leq  h \eps \bigg(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
- \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})} \bigg) \sqrt{\frac12 + \frac{4}{\mathcal{C}_M}\bigg( 3 + \frac{T}{\sigma}e^{T/\sigma} \bigg) }
+ \|\partial_{xxx}p_0   \| _{L^2(\mathbb{R})} \bigg) \sqrt{\frac12 + \frac{4}{C_{\mathcal{M}}}\bigg( 3 + \frac{T}{\sigma}e^{T/\sigma} \bigg) }
 ,
 \end{equation}
-where the constant $\mathcal{C}_M$ is defined in assumption \ref{geometrie1d}. Finally, 
+where the constant $C_{\mathcal{M}}$ is defined in assumption \ref{geometrie1d}. Finally, 
 $\|\W_h^\eps-\W^\eps\|_{L^2([0,T]\times\mathbb{R})}^2=
 \|e_h\|_{L^2([0,T]\times\mathbb{R})}^2+\|f_h\|_{L^2([0,T]\times\mathbb{R
 })}^2
@@ -1471,9 +1476,9 @@ estimates between the initial data of $P_h^\eps$ and $P_h^0$.
 \begin{proposition} \label{gttods}
 There exists a constant $C(T)>0$ such that the following estimate holds
 \begin{equation*}
-\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb R)} \leq
-C(T)  \eps.
+\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb R)} \leq  \eps e^{t/2} \bigg(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } ( \frac12 + \frac{1}{\sigma^2} )} \|p_0\|_{H^2(\mathbb{R})} \bigg) ,
 \end{equation*}
+where $C_0$ is defined in \eqref{init_1D}.
 \end{proposition}
 \begin{proof}
 We define $R_j$ and $S_{j+\frac12 }$ such that the solution of
@@ -1508,24 +1513,23 @@ R_j= \frac{d}{dt} u_j
 S_{j+\frac12 }= \frac1{\Delta x_{j+\frac12} }\left(
 u_j+u_{j+1} -2u_{j+\frac12 }\right).
 \end{equation*}
-Thanks to the estimate \eqref{l2} and as the scheme is linear, $\frac{d}{dt} u_j$
+Thanks to the estimate \eqref{l2} and since the scheme is linear, $\frac{d}{dt} u_h = (\frac{d}{dt} u_j)_{j\in\mathbb{Z}}$
 satisfies the estimate 
 $$
-\|R\|_{L^2([0,T]\times \mathbb{R})}=\bigg\|\frac{d}{dt} u_j\bigg\|_{L^2([0,T]\times \mathbb{R})}\leq
-C\eps\bigg\|\frac{d}{dt} p_h(0)\bigg\|_{L^2(\mathbb{R})}.
+\bigg\|\frac{d}{dt} u_h\bigg\|_{L^2([0,T]\times \mathbb{R})} = \sqrt{\int_0^T \sum_{j\in\mathbb{Z}} \Delta x_j u_j^2 }\leq
+\eps \sqrt{ \frac{\sigma}{2C_{\mathcal{M}} }} \bigg\|\frac{d}{dt} p_h(0)\bigg\|_{L^2(\mathbb{R})}.
 $$
 The definition of $\dt p_h(0)$ is from (\ref{schemadifff}-\ref{eq:intip0}),
 which
-implies that $\|\frac{d}{dt} p_h(0)\|_{L^2(\mathbb{R})}\leq C 
-\| p(t=0)\|_{H^2(\mathbb{R})}$. So one has the bound
+implies that $\|\frac{d}{dt} p_h(0)\|_{L^2(\mathbb{R})}\leq \frac{1}{\sigma}
+\| p_0\|_{H^2(\mathbb{R})}$  (proposition \ref{pro:H1}). So one has the bound
 \begin{equation} \label{eq:p5}
-\|R\|_{L^2([0,T]\times \mathbb{R})}\leq C \eps
-\| p(0)\|_{H^2(\mathbb{R})}.
+\|R\|_{L^2([0,T]\times \mathbb{R})}\leq   \frac{\eps }{ \sqrt{ 2\sigma C_{\mathcal{M}} } } 
+\| p_0\|_{H^2(\mathbb{R})}.
 \end{equation}
-It is seen in proposition \ref{pro:H1}
-that 
+Using the definitions of $u_j$ \eqref{schemadiff3}, the $L^2$ norm of $S_h = (S_{j+\frac12})_{j\in\mathbb{Z}}$ is related to the $L^2$ norm of $\frac{d}{dt}u_j$. Using once again the proposition \ref{pro:H1}, one finds out that 
 \begin{equation}\label{eq:xx}
-\| S\|_{L^2(\mathbb{R})} \leq \eps  
+\| S_h \|_{L^2(\mathbb{R})} \leq \eps  \frac{\sqrt{2}}{\sigma \sqrt{C_{\mathcal{M}}}}
 \| p(0)\|_{H^2(\mathbb{R})}.
 \end{equation}
 We now introduce the differences
@@ -1577,43 +1581,37 @@ one finds out that
 \end{eqnarray*}
 Using the Cauchy-Schwarz inequality, we thus have
 \begin{eqnarray*}
-\frac12 \frac{d}{dt}\|\V_h^{\eps}-\W^\eps_h\|_{L^2(\mathbb R)}
-^2 \leq \frac12 \|\V_h^{\eps}-\W^\eps_h\|_{L^2(\mathbb R)}^2 +
-C\bigg( \| R\|_{L^2(\mathbb R)}^2 +\| S \|_{L^2(\mathbb R)}^2\bigg).
+ \frac{d}{dt}\|\V_h^{\eps}-\W^\eps_h\|_{L^2(\mathbb R)}
+^2 \leq  \|\V_h^{\eps}-\W^\eps_h\|_{L^2(\mathbb R)}^2 +
+ \| R\|_{L^2(\mathbb R)}^2 + \frac1{2\sigma}\| S \|_{L^2(\mathbb R)}^2 . 
 \end{eqnarray*}
 Integrating between 0 and t and using a Gronwall's inequality, one finds
 for $t\leq T$
 \begin{equation*}
 \|\V_h^{\eps}(t)-\W^\eps_h(t)\|_{L^2(\mathbb R)}^2 \leq 
 \exp(t) \left( \|\V_h^{\eps}(0)-\W^\eps_h(0)\|_{L^2(\mathbb R)}^2 
-+ C (
- \| R\|_{L^2([0,T]\times\mathbb R)}^2 + \|
-S\|_{L^2([0,T]\times\mathbb R)}^2
-) \right)
++ 
+ \| R\|_{L^2([0,T]\times\mathbb R)}^2 +  \frac1{2\sigma} \|
+S\|_{L^2([0,T]\times\mathbb R)}^2 \right)
 \end{equation*}
 Finally, using the previous estimates (\ref{eq:p5}-\ref{eq:xx})
 and the well-preparedness of the data (\ref{eq:initp1},\ref{eq:intip0},\ref{init_1D}), one gets
 $
-\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb{R})} \leq C(T) \eps$. 
+\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb{R})} \leq \eps e^{t/2} \big(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } ( \frac12 + \frac{1}{\sigma^2} )} \|p_0\|_{H^2(\mathbb{R})} \big)$. 
 The proof is ended.
 \end{proof} 
 
 
 
 \begin{lemma}\label{pro:H1}
-The bound (\ref{eq:xx}) holds.
-\end{lemma}
+The bound $
+\sqrt{ \sum_j \Delta x_j (\frac{d}{dt}u_j)^2(t) }
+\leq \sigma^{-1}\|p_0\|_{H^2(\mathbb{R})}$
+ holds at any time.\end{lemma}
 
 \begin{proof}
 
-Using the definition of $u_j$
-and $u_{j+\frac12 }$, one has 
-$$
-S_{j+\frac12 }=\frac{\eps}{2}\left( \frac{ \Delta x_j}{\Delta x_{j+\frac12}}
-\frac{d}{dt} p_j - \frac{\Delta x_{j+1}}{\Delta x_{j+\frac12}} \frac{d}{dt} p_{j+1} \right)
-$$
- at all time.
-Moreover, $z_h=\frac{d}{dt} p_h$ is solution of
+By linearity of the diffusion scheme, $z_h=\frac{d}{dt} p_h$ is solution of
 $P_h^0$:
 $$
 \Delta x_j\frac{d}{dt} z_j -\frac{1}{\sigma } \bigg(

@@ -3828,14 +3828,14 @@ with $f$ solution of
 \begin{equation}\label{telegraph}
 \partial_t f +\frac{\eps^2}\sigma \partial_t^2 f -\frac1\sigma \Delta f=0.
 \end{equation}
- We propose to construct a solution for a subset of small $\eps$ to validate the uniform convergence. Firstly we consider that the solution is a periodic solution on the square $\left[0,2\right]\times\left[0,2\right]$. For this we use the separation of the variables. We consider the following function
+ We propose to construct a solution for a subset of small $\eps$ to validate the uniform convergence. Firstly we consider that the solution is a periodic solution on the square $\left[0,2\right]\times\left[0,\frac{2}{L}\right]$. For this we use the separation of the variables. We consider the following function
 $$
-f(t,x,y)=\alpha(t)\cos (\pi x ))\cos( \pi y ).
+f(t,x,y)=\alpha(t)\cos (L \pi x ))\cos( L\pi y ).
 $$
-and we propose to find the function $\alpha(t)$ such that $f(t,x,y)=\alpha(t)\cos (\pi x ))\cos( \pi y )$ is a periodic solution of (\ref{telegraph}).
+and we propose to find the function $\alpha(t)$ such that $f(t,x,y)=\alpha(t)\cos (L\pi x )\cos( L\pi y )$ is a periodic solution of (\ref{telegraph}).
 The function $\alpha$ is determined as the solution of
 $$
-\alpha'(t)+ \frac{\eps^2}\sigma\alpha''(t)+\frac{2\pi}\sigma \alpha=0
+\alpha'(t)+ \frac{\eps^2}\sigma\alpha''(t)+\frac{2L^2\pi^2}\sigma \alpha(t)=0
 $$
 with $\alpha'(0)=0$ and $\alpha(0)=1$.
 For small $\eps$, which is the case we are interested in, the solution is computed as follows.
@@ -3843,12 +3843,12 @@ First determine
 $$
 \lambda_1=-
 \frac{
-\sigma \left( \sqrt{1-\frac{\eps^2}{\sigma^2}  8 \pi^2  } +1\right)
+\sigma \left( \sqrt{1-\frac{\eps^2}{\sigma^2}  8L^2 \pi^2  } +1\right)
 }{2 \eps^2  }
 \mbox{ and }
 \lambda_2=
 \frac{
-\sigma \left( \sqrt{1-\frac{\eps^2}{\sigma^2}  8 \pi^2  } -1\right)
+\sigma \left( \sqrt{1-\frac{\eps^2}{\sigma^2}  8L^2 \pi^2  } -1\right)
 }{2 \eps^2  }.
 $$
 Then 
@@ -3889,7 +3889,7 @@ the order is greater than the theoretical prediction since
 the order is approximatively 1 for $\gamma=0$ (hyperbolic limit)
 and 2 for $\gamma=2$ (parabolic regime).  We can find a closed result on the second order convergence for the parabolic regime in the paper \cite{TAHO} (1D linear problem).
 The reason is probably that the theory is based on worst case estimates, as it is often the case for the numerical analysis
-of finite volume schemes \cite{FV}.
+of finite volume schemes \cite{FV}. Numerically we observe a time-linear rate for the numerical which shows that the time-exponential rate obtained using the Gronwall lemma is clearly not optimal.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

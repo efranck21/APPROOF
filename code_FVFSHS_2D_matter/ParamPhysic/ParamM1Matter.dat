@@ -1,0 +1,14 @@
+sigma (-1 si variable)
+1
+sigma_A
+1
+eps
+1
+Order Advection
+2
+1_sur_mc2
+1
+Black Body at boundary
+0
+a (Stefan constant)
+1

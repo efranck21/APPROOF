@@ -1,0 +1,42 @@
+nonbre de maille en x
+64
+nombre de maille en y
+64
+longueur du domaine en x
+2
+longueur du domaine en y
+2
+Numero du cas test
+1
+Numero schema
+1
+Type du schéma
+N
+CFL
+0.001
+Temps final
+0.1
+Total Order
+1
+nom Maillage
+RandomCartesianMesh
+Type de modele
+M1Matter
+Type de discretisation temporelle (Explicit E or Implicit I)
+E
+Type de maille (Triangle T or Quadrangle Q)
+T
+Numero des variables a enregistrer  (liste des variables avec E pour finir)
+0,1,2,3,E
+Pas de temps de l'animation
+0.0001
+Animation
+y
+nom fichier anim
+Euler3
+Type d'ecriture donnee Cell (C) ou Node (N)
+N
+dimension sauvegarde
+2
+restart
+0

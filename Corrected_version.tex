@@ -772,19 +772,17 @@ Provided that the initial data is smooth, the initialization gives us
 \end{equation}
 
 
-We denote by $\V^{\eps}(t)=\left(p^{\eps}(x_j,t),
-u^{\eps}(x_j,t)\right)_{j\in \mathbb Z}$ the interpolation of the 
-solution of the hyperbolic heat equations $P^\eps$ and by
+We denote by $\V^{\eps}(t,x)=\left(p^{\eps}(x,t),
+u^{\eps}(x,t)\right)$ the solution of the hyperbolic heat equations $P^\eps$ and by
 $\V^{\eps}_h(t)=
-\left(p_j^{\eps}(t), u_j^{\eps}(t)   \right)_{j\in \mathbb Z}$ the
-solution of the JL-(b) scheme $P_h^\eps$. Similarly  we  reconstruct
+\left( \sum_{j\in \mathbb Z} p_j^{\eps}(t) {1}_{\Omega_j} ,  \sum_{j\in \mathbb Z} u_j^{\eps}(t) {1}_{\Omega_j} \right)$ the solution of the JL-(b) scheme $P_h^\eps$. Similarly  we  reconstruct
 similar quantities from the diffusion scheme: it yields 
-$\W^\eps(t)=\left(p(x_j,t),\varepsilon v(x_j,t)\right)_{j\in \mathbb Z}$ 
-which is the interpolation of the 
+$\W^\eps(t,x)=\left(p(x,t),\varepsilon v(x,t)\right)$ 
+which is the 
 solution of the diffusion limit
 $P^0$ (\ref{difffff})-(\ref{eq:diff-v}),
- and  $\W_h^\eps(t)=\left( p_j(t),  
-\varepsilon v_j(t)   \right)_{j\in \mathbb Z}$ which is
+ and  $\W_h^\eps(t)= \left( \sum_{j\in \mathbb Z} p_j(t) {1}_{\Omega_j} ,
+\varepsilon \sum_{j\in \mathbb Z} v_j(t)  {1}_{\Omega_j} \right)$ which is
 the
 solution of the diffusion scheme $P_h^0$ (\ref{schemadifff})-(\ref{eq:vv}). 
 For simplicity we choose a final time $T>0$.
@@ -995,7 +993,7 @@ Under assumption \ref{geometrie1d} on the mesh and assuming that the initial con
 
 \begin{equation*}
 \|\V^{\eps}-\V^{\eps}_h \|_{L^2([0,T]\times \mathbb{R})}
-\leq \sqrt{h\eps + 2t + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} }
+\leq \sqrt{h\eps + 2T + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} }
 \sqrt \frac{h}\eps 
 \left\| \V^{\eps}(0)
 \right\|_{H^1(\mathbb{R})}.
@@ -1309,7 +1307,7 @@ The initialization stage is consistent (equation \ref{eq:initp1}) so
  Making use of the  initial remark \ref{sigmanotzero}, one   obtains 
 \begin{equation*}\label{esti1}
 \|\V^{\eps}-\V^{\eps}_h \|_{L^2([0,T]\times \mathbb{R})}
-\leq \sqrt{h\eps + 2t + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} } \sqrt{ \frac{h}{\eps}}
+\leq \sqrt{h\eps + 2T + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} } \sqrt{ \frac{h}{\eps}}
 \| \V^{\eps}( 0)
 \|_{H^1(\mathbb{R})}, \qquad C(T)\geq0.
 \end{equation*}
@@ -1476,7 +1474,7 @@ estimates between the initial data of $P_h^\eps$ and $P_h^0$.
 \begin{proposition} \label{gttods}
 There exists a constant $C(T)>0$ such that the following estimate holds
 \begin{equation*}
-\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb R)} \leq  \eps e^{t/2} \bigg(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } ( \frac12 + \frac{1}{\sigma^2} )} \|p_0\|_{H^2(\mathbb{R})} \bigg) ,
+\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb R)} \leq  \eps e^{T/2} \bigg(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } \big( \frac12 + \frac{1}{\sigma^2} \big) } \|p_0\|_{H^2(\mathbb{R})} \bigg) ,
 \end{equation*}
 where $C_0$ is defined in \eqref{init_1D}.
 \end{proposition}
@@ -1601,7 +1599,7 @@ S\|_{L^2([0,T]\times\mathbb R)}^2 \right)
 Finally, using the previous estimates (\ref{eq:p5}-\ref{eq:xx})
 and the well-preparedness of the data (\ref{eq:initp1},\ref{eq:intip0},\ref{init_1D}), one gets
 $
-\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb{R})} \leq \eps e^{t/2} \big(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } ( \frac12 + \frac{1}{\sigma^2} )} \|p_0\|_{H^2(\mathbb{R})} \big)$. 
+\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb{R})} \leq \eps e^{T/2} \big(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } ( \frac12 + \frac{1}{\sigma^2} )} \|p_0\|_{H^2(\mathbb{R})} \big)$. 
 The proof is ended.
 \end{proof} 
 
@@ -1741,13 +1739,13 @@ by a method similar to the one of proposition
 The error between the two solutions
 can be  upper bounded by
 \begin{equation}\label{ine3}
-\| p^\epsilon-p\|_{   L^\infty([0,T];H^n(\Omega))  }+
+\textcolor{red}{\| p^\epsilon-p\|_{   L^\infty([0,T];H^n(\Omega))  }+
 \| \mathbf{v} 
  \|_{   L^\infty([0,T]; H^n(\Omega))  }
  \leq
 C \eps
 \|p_0 \|_{H^{3+n}(\Omega)},
-\qquad n \in \mathbb N.
+\qquad n \in \mathbb N.}
 \end{equation}
 \end{proposition}
 \begin{proof}
@@ -1897,7 +1895,6 @@ $$
 $$
 This is well defined since the matrix
 $\sum_r \alj$ is  symetric positive by definition of the $\alj$.
-
 \subsection{Definition of $\mathbf{DA}_h^\eps$}
 
 
@@ -1932,7 +1929,6 @@ The initial data for \eqref{das} is $p_j^{\eps}(0)=p_0(\mathbf{x}_j)$. There is 
 need of initial data for $(u_j^{\eps}(0))$, which will be obtained 
  as a function of $(p_j^{\eps}(0))$ by solving a linear system.
 
-
 \subsection{Mesh assumptions}
 
 
@@ -1954,9 +1950,14 @@ The characteristic length of the mesh is
 \begin{equation*} \label{eq:d6}
 h=\max_j \left( \mbox{diam}(\Omega_j)  \right).
 \end{equation*}
-By definition  there exists  a constant $C>0$ such that 
+By definition  there exists  a constant $C_{\mathcal{M}}>0$ such that 
 \begin{equation} \label{eq:d7}
-l_{jr}\leq Ch , \qquad \forall j,r.
+\left\{
+\begin{aligned}
+&l_{jr}\leq C_{\mathcal{M}}h , \qquad \forall j,r , \\
+&|\Omega_j| \leq C_{\mathcal{M}}^2 h^2 , \qquad \forall j .
+\end{aligned}
+\right. 
 \end{equation}
 The control volume $V_r$ 
 around the vertex $\mathbf x_r$ is 
@@ -2015,7 +2016,7 @@ $\beta >0 $ such that
 It can be proved with a geometrical  identity that we borrow
  from \cite{de10}  (proposition 8).
 
-\item  The matrix $B_r$ is positive and that there exists a
+\item  The matrix $B_r$ is positive and there exists a
 constant $\alpha >0 $ independent of r such that 
 \begin{equation}\label{geom3}
 (B_r \uu, \uu)=(B^s_r \uu, \uu)\geq \alpha \vert
@@ -2040,22 +2041,27 @@ norm of any vertex based quantity $g=(g_r)_{r\in {\rm Vertices}}$ is
 $\|g\|_{L^2(\Omega)}=\sqrt{\sum_r |V_r| |g_r|^2   }$.
 Useful  quantities  are
 \begin{itemize}
-\item $\mathbf V_h^\eps=\left(p^\eps_j, \uu^\eps_j \right)_
-{j\in {\rm Cells}}$ is the solution of $\mathbf P_h^\eps$.
+\item $\mathbf V_h^\eps=\left(  \sum_{j\in Cells} p^\eps_j 1_{\Omega_j} , \sum_{j\in Cells} \uu^\eps_j  1_{\Omega_j} \right) $ is the solution of $\mathbf P_h^\eps$.
 \item 
-$\mathbf V^\eps=\left(p^\eps(\x_j), \uu^\eps(\x_j)  \right)_
-{j\in {\rm Cells}}$ is the solution of $\mathbf P^\eps$,
-\item $\mathbf W_h^\eps=\left(p^\eps_j, \uu^\eps_j \right)_
-{j\in {\rm Cells}}$ is the solution of $\mathbf{DA}_h^\eps$.
+$\mathbf V^\eps=\left(p^\eps, \uu^\eps  \right)$ is the solution of $\mathbf P^\eps$,
+\item $\mathbf W_h^\eps=\left(  \sum_{j\in Cells}  p^\eps_j 1_{\Omega_j} ,  \sum_{j\in Cells}  \uu^\eps_j  1_{\Omega_j}  \right) $ is the solution of $\mathbf{DA}_h^\eps$.
 Notice that an abuse of notations is been made with the solution
 of $\mathbf P_h^\eps$.
-\item $\mathbf W^\eps= \left(p(\x_j),-\frac\eps\sigma \nabla p(\x_j)  \right)_
-{j\in {\rm Cells}} $ is the solution of $\mathbf P^0$.
+\item $\mathbf W^\eps= \left( p ,-\frac\eps\sigma \nabla p  \right) $ is the solution of $\mathbf P^0$.
 \end{itemize}
 With these notations,  (\ref{ine3}) is rewritten as
 \begin{equation} \label{eq:enc22}
 \|\W^\eps-\mathbf V^\eps\|
 _{ L^2([0,T]\times L^2(\Omega)   ) } \leq C \eps.
+\end{equation}
+The initialization stage yields 
+\begin{equation}\label{constant_init}
+\left\{
+\begin{aligned}
+&\| \mathbf{V}_0 - \mathbf{V}^{\eps}_h(0)\|_{L^2(\Omega)} \leq C_0 h \|  \mathbf V ^\eps_0 \|_  { H^1(\Omega)  } ,\\
+&\| \mathbf{W}_0 - \mathbf{W}^{\eps}_h(0)\|_{L^2(\Omega)} \leq C_0 h \|  \mathbf W ^\eps_0 \|_  { H^1(\Omega)  } .
+\end{aligned}
+\right.
 \end{equation}
 
 
@@ -2078,15 +2084,14 @@ stable in the $L^2$ norm in the sense that $\frac{d}{dt}
  Moreover we have the bounds
 \begin{equation}\label{gggg}
 \frac{\sigma}{\eps^2}\vert\vert \uu_r^{\eps} \vert\vert_{L^2([0,T]\times \Omega)}\leq
-C 
+\frac{1}{\alpha}
 \vert\vert
-V^{\eps}_h(0)\vert\vert_{L^2( \Omega)}, \qquad C>0,
+V^{\eps}_h(0)\vert\vert_{L^2( \Omega)},
 \end{equation}
 \begin{equation}\label{gs}
 \int_0^T\sum_j \sum_r
-l_{jr}(\njr,(\uj^\eps-\ur^\eps))^{2} dt\leq C  \eps \vert\vert
-\mathbf V^{\eps}_h(0)\vert\vert^2_{L^2( \Omega)}. 
-\qquad C>0.
+l_{jr}(\njr,(\uj^\eps-\ur^\eps))^{2} dt\leq \eps \vert\vert
+\mathbf V^{\eps}_h(0)\vert\vert^2_{L^2( \Omega)} .
 \end{equation}
 \end{pro}
 
@@ -2228,13 +2233,19 @@ converges, with $h$, with  at rate $O(\varepsilon^{-\frac12})$ with respect to
 $\eps$.
 
 \begin{proposition}[Convergence]\label{ein_prosit}
-There exists a constant $C(T, \sigma)>0$ 
-      such that the following estimate holds
+The following estimate holds
 \begin{equation} \label{eq:veps2}
 \|\V^{\eps}_h-\V^{\eps}\|_{L^\infty( [0,T]\times L^2  (\Omega) )}\leq
-C(T, \sigma)\|  \mathbf V ^\eps (0) \|_  { H^3(\Omega)  }
-\sqrt{\frac h \eps}.
+C \sqrt{\frac h \eps},
 \end{equation}
+where
+\begin{equation*}
+\begin{aligned}
+C = \|\mathbf{V}_0^\eps\|_{H^3(\Omega)}  \sqrt{2+T+\sigma } \: \hbox{max}\bigg\{ & \:  \frac{ C_{\mathcal{M}}^2 }{2}\sqrt{\frac{P}{C_1}} \bigg( \frac1{\alpha} + PC_{\delta}^2 \bigg) \: , \: \frac{C_{\mathcal{M}}^3P}{2C_1}  , \\
+&  C_{\mathcal{M}} C_{\delta} P \bigg( \frac{1+C_0^2h^2}{C_1} + C_{\delta}  + h \bigg) \: , \: C_0^2 + C_{\mathcal{M}}^2  P C_{\delta}\bigg( 1 + \frac{2C_{\mathcal{M}}^2P}{C_1\alpha} \bigg) \: \bigg\}^{\frac12} .
+\end{aligned}
+\end{equation*}
+The constants $P$, $C_{\delta}$, $C_{\mathcal{M}}$, $\alpha$, $C_0$ and $C_1$ are defined respectively in \eqref{nbmr}, (\ref{const_delta1}-\ref{const_delta2}), \eqref{eq:d7}, \eqref{geom3}, \eqref{constant_init} and \eqref{eq:d5.2}.
 \end{proposition}
 In the whole proof, we will use a constant $C>0$ large enough.
  Like in 1D, we use the method introduced by Mazeran \cite{Mazeran}. 
@@ -2340,25 +2351,24 @@ p_j^{\eps})  \: , \: \frac{1}{|\Omega_j|}\int_{\Omega_j}
 \end{equation*}
 One gets
 \begin{equation*}
-\begin{array}{l}
-D_3 =\frac{1}{\eps} \sum_j \sum_r \bigg(
+\begin{aligned}
+D_3 &=\frac{1}{\eps} \sum_j \sum_r \bigg(
 l_{j,r}(\textbf{u}_r^{\eps}-\textbf{u}_j^{\eps}),\textbf{n}_{j,r} \bigg)
 \delta_{j,r}(p^{\eps})+\frac{1}{\eps} \sum_j \sum_r \bigg( 
-
 l_{jr} \mathbf n_{jr} (p_{j,r}^{\eps}
 -
 p_j^{\eps}) \: ,
 \:\delta_{j,r}(\uu^{\eps}) \bigg) \\
-\hspace{0.6cm}+ \frac{1}{\eps} \sum_j \sum_r \bigg(
+&+ \frac{1}{\eps} \sum_j \sum_r \bigg(
 l_{j,r}(\textbf{u}_r^{\eps}-\textbf{u}_j^{\eps}),\textbf{n}_{j,r} \bigg)
 p^{\eps}(\x_r)+ \frac{1}{\eps} \sum_j \sum_r \bigg(  
 l_{jr} \mathbf n_{jr} (p_{j,r}^{\eps}
 -
 p_j^{\eps})  \: , \:  \uu^{\eps}(\textbf{x}_{r}) \bigg) \\
-\hspace{0.6cm}+\frac{\sigma}{\eps^2} \bigg( \sum_r \sum_j
+&+\frac{\sigma}{\eps^2} \bigg( \sum_r \sum_j
 \widehat{\beta}_{j,r}\textbf{u}_r^{\eps}  \: , \:
 \frac{1}{|\Omega_j|}\int_{\Omega_j} \uu^{\eps} d\x \bigg) .
-\end{array}
+\end{aligned}
 \end{equation*}
 We have the identities $\sum_{j,r}\ljr \njr 
 =0$
@@ -2475,16 +2485,16 @@ are small in some  sense. For this  we recall the results taken from \cite{Mazer
 \begin{pro} \label{pro:interp}
 For any funtion $q$ in $ H^3(\Omega)$,   using  Sobolev embeddings,
 one has the inequalities
-\begin{equation}\label{}
+\begin{equation}\label{const_delta1}
  \vert \delta_{jr}(q) \vert
  \leq 
-  C  \| q \| _{ H^1(\Omega_j) }
+  C_{\delta}  \| q \| _{ H^1(\Omega_j) }
 \end{equation}
 and
-\begin{equation}
+\begin{equation}\label{const_delta2}
 \vert \widetilde \delta_{jr}(q)\vert
 \leq  
-  C h^{3/2}  \| q \| _{ H^3(\Omega_j) }
+  C_{\delta} h^{3/2}  \| q \| _{ H^3(\Omega_j) }
 \end{equation}
 \end{pro}
 
@@ -2497,13 +2507,14 @@ $E_1$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{pro}
 One has
-the bound with a constant $C$proportional to $  \|  \mathbf V ^\eps (0) \|^2_  { H^1(\Omega)  }$  
+the bound 
 \begin{equation} \label{eq:bound1}
 \int_0^T E_1(t)dt \leq 
 \frac{\gamma}{\eps}\int_0^T\sum_{j,r}l_{j,r}(\textbf{n}_{j,r},\textbf{u}_j^{\eps}-\textbf{u}
 _r^{\eps})^2 
-+Ch(  \frac T {\gamma } +1).
++ T \frac {P C_{\delta}^2 C_{\mathcal{M}} h }{2\gamma \eps} \vert \vert \mathbf{V}_0^{\eps} \vert\vert^2_{H^1(\Omega)}  +  \bigg( \frac1{\alpha} + PC_{\delta}^2 \bigg) \frac{ h C_{\mathcal{M}}^2 }{2}\sqrt{\frac{P}{C_1}}  \| \mathbf{V}_0^{\eps} \|_{H^1(\Omega)}^2,
 \end{equation}
+where the constants $P$, $C_{\delta}$, $C_{\mathcal{M}}$ and $C_1$ are defined respectively in \eqref{nbmr}, (\ref{const_delta1}-\ref{const_delta2}), \eqref{eq:d7} and \eqref{eq:d5.2}.
 \end{pro}
 \begin{proof}
 We use a Young's inequality 
@@ -2546,11 +2557,7 @@ E_1 &\leq  \frac{\gamma }{ \eps}\sum_{j,r}l_{j,r}(\textbf{n}_{j,r},\textbf{u}_j^
 \delta_{j,r}(\uu^{\eps} )\bigg) \\
 \end{aligned}
 \end{equation*}
-
-
-
-
-We now look at the last term of (\ref{eq:bound1}), which we call $W$.
+We now look at the last term of this inequality, which we call $W$.
 One has, by definition of $\widehat{\beta}_{j,r}$
 \begin{equation*}
 W=-\frac{1}{\eps} \sum_j \sum_r \bigg( \frac{\sigma}{\eps}
@@ -2570,19 +2577,17 @@ W=-\frac{1}{\eps} \sum_j \sum_r \bigg( \frac{\sigma}{\eps}
  \ljr  | \delta_{j,r}(\uu^{\eps})| ^2 \bigg)^{\frac12 } \\
 \end{equation*}
 Using the assumptions of the mesh, there exist a 
-constant $C>0$ such that $|\xr -\xj|\leq Ch$.
- Using successively assumptions \eqref{eq:d5.2},\eqref{nbmr} and 
-\eqref{geom3}, we get
+constant $C_{\mathcal{M}}>0$ such that $|\xr -\xj|\leq C_{\mathcal{M}} h$ and $\ljr \leq C_{\mathcal{M}} h$. Since $| \njr\otimes(\xr -\xj) \textbf{u}_r^{\eps} |^2 = | (\xr -\xj) ,  \textbf{u}_r^{\eps} |^2$, one obtains by using successively assumptions \eqref{eq:d5.2} and \eqref{nbmr}
 \begin{equation*}\label{esti_beta}
 \vert W \vert
-\leq C \frac{\sigma h}{\eps^2}
-\bigg( \sum_r \big( B_{r}\textbf{u}_r^{\eps},\textbf{u}_r^{\eps}\big)\bigg)^{\frac12} \bigg(\sum_j \sum_r    | \delta_{j,r}(\uu^{\eps})|^2 \bigg)^{\frac12 }.
+\leq  \frac{\sigma h C_{\mathcal{M}}^2 }{\eps^2}\sqrt{\frac{P}{C_1}}
+\bigg( \sum_r |V_r| \big( \textbf{u}_r^{\eps},\textbf{u}_r^{\eps}\big)\bigg)^{\frac12} \bigg(\sum_j \sum_r    | \delta_{j,r}(\uu^{\eps})|^2 \bigg)^{\frac12 }.
 \end{equation*}
 and therefore
 \begin{equation}\label{eq:bound2}
 \vert W \vert
-\leq C \frac{\sigma h}{2\eps^2}
-\bigg( \sum_r \big( B_{r}\textbf{u}_r^{\eps},\textbf{u}_r^{\eps}\big)  +\sum_j \sum_r    | \delta_{j,r}(\uu^{\eps})|^2 \bigg).
+\leq \frac{\sigma h C_{\mathcal{M}}^2 }{2\eps^2}\sqrt{\frac{P}{C_1}}
+\bigg( \sum_r |V_r| \big( \textbf{u}_r^{\eps},\textbf{u}_r^{\eps}\big)  + \sum_j \sum_r    | \delta_{j,r}(\uu^{\eps})|^2 \bigg).
 \end{equation}
 so that
 \begin{equation} \label{eq:bound1bis}
@@ -2592,43 +2597,38 @@ E_1 &\leq \frac{\gamma }{\eps}
 _r^{\eps})^2 + \frac{1}{2\gamma\eps} \sum_j \sum_r l_{j,r}
 \delta_{j,r}(p^{\eps})^2 \\
 &+\frac{1}{2 \gamma \eps} \sum_j \sum_r l_{j,r}\bigg( \textbf{n}_{j,r} \: , \:
-\delta_{j,r}(\uu^{\eps}) \bigg)^2 + C \frac{\sigma h}{2\eps^2}
-\bigg( \sum_r \big( B_{r}\textbf{u}_r^{\eps},\textbf{u}_r^{\eps}\big)  +\sum_j \sum_r    | \delta_{j,r}(\uu^{\eps})|^2 \bigg)\\
+\delta_{j,r}(\uu^{\eps}) \bigg)^2 + \frac{\sigma h C_{\mathcal{M}}^2 }{2\eps^2}\sqrt{\frac{P}{C_1}} 
+\bigg( \sum_r |V_r|  \big( \textbf{u}_r^{\eps},\textbf{u}_r^{\eps}\big)  +\sum_j \sum_r    | \delta_{j,r}(\uu^{\eps})|^2 \bigg)\\
 \end{aligned}
 \end{equation}
-
-Furthermore, using the  classical interpolation results of proposition \ref{pro:interp} , there exists another constant $C\geq0$ such that 
+Furthermore, using the  classical interpolation results of proposition \ref{pro:interp} and once again the assumption  \eqref{nbmr}, one has 
 \[
-\sum_j \sum_r ( \delta_{j,r}\uu^{\eps})^2 \leq C \vert \vert \uu^\eps \vert\vert^2_{H^1(\Omega)}
+\sum_j \sum_r | \delta_{j,r}\uu^{\eps}|^2 \leq P C_{\delta}^2 \vert \vert \uu^\eps \vert\vert^2_{H^1(\Omega)}
 .
 \]
 and
 \[
-\sum_j \sum_r l_{j,r} ( \delta_{j,r}p^{\eps})^2 \leq C h \vert \vert p^\eps \vert\vert^2_{H^1(\Omega)}
+\sum_j \sum_r l_{j,r}  \delta_{j,r} ( p^{\eps})^2 \leq P C_{\delta}^2 C_{\mathcal{M}} h \vert \vert p^\eps \vert\vert^2_{H^1(\Omega)}
 .
 \]
+So we obtain
 
-So we obtain, after redefinition of all the constants $C$ 
-
-$$
-\int_0^T E_1 dt\leq 
+\begin{equation*}
+\begin{aligned}
+\int_0^T E_1 dt & \leq 
 \int_0^T \frac{\gamma}{\eps}
 \sum_{j,r}l_{j,r}(\textbf{n}_{j,r},\textbf{u}_j^{\eps}-\textbf{u}
-_r^{\eps})^2 
-+\frac {Ch }{2\gamma \eps}\bigg(\vert \vert \uu^\eps \vert\vert^2_{H^1(\Omega)} +\vert \vert p^\eps \vert\vert^2_{H^1(\Omega)}  \bigg)
-+C \frac{h\sigma}{2\eps^2}
-\bigg(\sum_r \big( B_{r}\mathbf{u}_r^{\eps},\mathbf{u}_r^{\eps}\big) +  \vert \vert \uu^\eps \vert\vert^2_{H^1(\Omega)}\bigg)dt.
-$$
-
-
-
-Using  energy estimate (\ref{bee1})  for the the second  term of the rhs of the above inequality,    (\ref{gggg}) for the third term   and   (\ref{bee2}) for the last term,
-one gets finally after simplifications and up to another redefinition  of the constant $C$(which is proportional to the $H^1(\Omega)$ norm of the initial data $\V_0$ and  is independent of the parameter $\sigma$)
+_r^{\eps})^2 dt  +  \frac {P C_{\delta}^2 C_{\mathcal{M}} h }{2\gamma \eps}\bigg(\vert \vert \uu^\eps \vert\vert^2_{L^2([0,T]; H^1(\Omega) )} +\vert \vert p^\eps \vert\vert^2_{L^2([0,T]; H^1(\Omega) )}  \bigg) \\
+&+\frac{\sigma h C_{\mathcal{M}}^2 }{2\eps^2}\sqrt{\frac{P}{C_1}}  \| \textbf{u}_r^{\eps} \|_{L^2([0,T]\times\Omega)}^2 + \frac{\sigma h C_{\mathcal{M}}^2  C_{\delta}^2 P^{3/2} }{2\sqrt{C_1} \eps^2}  \vert \vert \uu^\eps \vert\vert^2_{L^2([0,T]; H^1(\Omega) )} .
+\end{aligned}
+\end{equation*}
+Using  energy estimate (\ref{bee1})  for the the second  term of the rhs of the above inequality, (\ref{gggg}) for the third term   and   (\ref{bee2}) for the last term,
+one gets finally after simplifications
 \begin{equation} \label{eq:si1}
 \int_0^T E_1(t)dt \leq 
 \frac{\gamma}{\eps}\int_0^T\sum_{j,r}l_{j,r}(\textbf{n}_{j,r},\textbf{u}_j^{\eps}-\textbf{u}
 _r^{\eps})^2 
-+Ch(  \frac 1 {\gamma } +1).
++ T \frac {P C_{\delta}^2 C_{\mathcal{M}} h }{2\gamma \eps} \vert \vert \mathbf{V}_0^{\eps} \vert\vert^2_{H^1(\Omega)}  +  \bigg( \frac1{\alpha} + PC_{\delta}^2 \bigg) \frac{ h C_{\mathcal{M}}^2 }{2}\sqrt{\frac{P}{C_1}}  \| \mathbf{V}_0^{\eps} \|_{H^1(\Omega)}^2 .
 \end{equation}
 \end{proof}
 
@@ -2640,60 +2640,70 @@ of  $\mathscr{E}'(t)$, which we call $E_2$.
 \begin{pro} \label{pro:e2}
 One has the bound
 \begin{equation} \label{eq:si2}
-\int_0^T E_2(t) dt \leq  \frac{CTh}{\eps} .
+\int_0^T E_2(t) dt \leq  \frac{hT}{\eps} C_{\mathcal{M}} C_{\delta} P \bigg( \frac{1+C_0^2h^2}{C_1} + h \bigg)   \|  \mathbf V ^\eps_0 \|^2_  { H^3(\Omega)  } ,
 \end{equation} 
+where the constants $P$, $C_{\delta}$, $C_{\mathcal{M}}$ and $C_0$ are defined respectively in \eqref{nbmr}, (\ref{const_delta1}-\ref{const_delta2}), \eqref{eq:d7} and \eqref{constant_init}.
 
-where the constant $C$ depends   on $\|  \mathbf V ^\eps (0) \|^2_  { H^3(\Omega)  }$
 \end{pro}
 \begin{proof}
 $E_2=A+B$ is made of two contributions.
 Making use of the second set of inequalities
-of proposition \ref{pro:interp}, one gets concerning the first one
+of the proposition \ref{pro:interp} and the assumptions \eqref{eq:d7} and \eqref{nbmr}, one gets concerning the first one
 $$
 | A|= \left |
 \frac{1}{\eps}\sum_j \sum_r  |\Gamma_{j,r} | p_j^{\eps} (\mathbf{n}_{j,r} ,
 \tilde{\delta}_{j,r}(\uu^{\eps}) ) 
 \right |
 \leq 
-\frac{C}{\eps}  \sum_j h^{5/2} | p_j  ^\eps |
+\frac{ C_{\mathcal{M}} C_{\delta} P }{\eps}  \sum_j h^{5/2} | p_j  ^\eps |
  \|  \mathbf V ^\eps (t) \|_  { H^3(\Omega_j)  }.
 $$
 And using the inequality $ab\leq \frac{1}{2}(a^2+b^2)$ 
-
 $$
 | A|\leq 
-\frac{C_1}{\eps}  \sum_j h^{3} | p_j  ^\eps |^2 + \frac{C_2}{\eps} \sum_j h^{2} 
+\frac{ C_{\mathcal{M}} C_{\delta} P }{ 2\eps}  \sum_j h^{3} | p_j  ^\eps |^2 + \frac{C_{\mathcal{M}} C_{\delta} P}{2 \eps} \sum_j h^{2} 
  \|  \mathbf V ^\eps (t) \|^2_  { H^3(\Omega_j)  }
- \leq 
-\frac{hC_3}{\eps} \|  \mathbf V_h ^\eps (t) \|^2_  { L^2(\Omega)  } + \frac{C_2h^2}{\eps}  
+$$
+The assumption \eqref{eq:d5} yields
+$$
+| A| \leq 
+\frac{hC_{\mathcal{M}} C_{\delta} P}{2C_1 \eps} \|  \mathbf V_h ^\eps (t) \|^2_  { L^2(\Omega)  } + \frac{C_{\mathcal{M}} C_{\delta} P h^2}{2 \eps}  
  \|  \mathbf V ^\eps (t) \|^2_  { H^3(\Omega)  }.
 $$
 The $L^2$ stability  (\ref{gggg})  of the scheme $\mathbf P_h ^\eps$ yields
-that $\|  \mathbf V_h ^\eps (t) \|^2_  { L^2(\Omega)  }\leq
-\|  \mathbf V_h ^\eps (0) \|^2_  { L^2(\Omega)  }\leq\|  \mathbf V ^\eps (0) \|^2_  { L^2(\Omega)  }+C \|  \mathbf V ^\eps (0) \|^2_  { H^1(\Omega)  } $.
-And with  the basic energy estimate (\ref{bee1}) , and since $h$ is bounded, we obtain with a constant $C_4$ proportional to  $   \|  \mathbf V ^\eps (0) \|^2_  { H^3(\Omega)  }$ 
-$$\int_0^T\vert A \vert dt \leq C_4 \frac{hT}{\eps}.$$
-
+that $
+\|  \mathbf V_h ^\eps (t) \|^2_  { L^2(\Omega)  }\leq
+\|  \mathbf V_h ^\eps (0) \|^2_  { L^2(\Omega)  }\leq\|  \mathbf V ^\eps_0 \|^2_  { L^2(\Omega)  }+C_0^2h^2 \|  \mathbf V ^\eps_0 \|^2_  { H^1(\Omega)  } $, where the last inequality comes from the initialization stage \eqref{constant_init}. With  the basic energy estimate (\ref{bee1}), and since $h$ is bounded, we obtain
+$$
+\int_0^T\vert A \vert dt \leq \frac{hT}{\eps} \frac{C_{\mathcal{M}} C_{\delta} P }{2 }\bigg( \frac{1+C_0^2h^2}{C_1} + h \bigg)   \|  \mathbf V ^\eps_0 \|^2_  { H^3(\Omega)  } .
+$$
 For the  second contribution$$
 B=\frac{1}{\eps}\sum_j \sum_r |\Gamma_{j,r} | \bigg(
 \mathbf{u}_j^{\eps} , \mathbf{n}_{j,r} \tilde{\delta}_{j,r}(p^{\eps}) \bigg),
 $$
 by similar calculations we obtain
-$$\int_0^T\vert B \vert dt \leq C_5 \frac{hT}{\eps},$$
-with a constant $C_5$ proportional to $  \|  \mathbf V ^\eps (0) \|^2_  { H^3(\Omega)  }$. Taking $C=2\max(C_4,C_5)$ yields (\ref{eq:si2}).
+$$
+\int_0^T\vert B \vert dt \leq \frac{hT}{\eps} \frac{C_{\mathcal{M}} C_{\delta} P }{2 }\bigg( \frac{1+C_0^2h^2}{C_1} + h \bigg)   \|  \mathbf V ^\eps_0 \|^2_  { H^3(\Omega)  },
+$$
+which concludes the proof.
 \end{proof}
 
 We now study the two last lines of $\mathscr{E}'(t)$, which we call S. 
 \begin{pro}  \label{pro:conv2}
-There exists a constant $C>0$ proportional to $  \|  \mathbf V ^\eps (0) \|^2_  { H^1(\Omega)  }$ such that one has for all $\hat \gamma>0$ 
+For all $\widehat{\gamma}>0$, the following bound holds
 \begin{equation} \label{eq:bound3}
 \begin{aligned}
-\int_0^TSdt&\leq  C\left(  { h^2} +\frac{h}{ \widehat \gamma \eps}\right)
- +
- \frac{\sigma\hat \gamma}{2\eps}\int_0^T\sum_r \sum_j \ljr \bigg(  \njr  \: , \:
-\mathbf{u}_r^{\eps}-\mathbf{u}_j^{\eps} \bigg)^2 dt
+\int _0^TS dt \leq 
+\frac{\widehat{\gamma} \sigma}{2\eps}\int_0^T\sum_r \sum_j \ljr \bigg( 
+\njr  \: , \: \textbf{u}_r^{\eps}-\textbf{u}_j^{\eps} \bigg)^2 dt 
++
+C_{\mathcal{M}}^2  P \bigg\{ C_{\delta}\bigg( 1 + \frac{2C_{\mathcal{M}}^2P}{C_1\alpha} \bigg) h^2 
++
+\frac{ C_{\mathcal{M}} h}{2 C_1 \widehat{\gamma}\eps} \bigg\} \|  \mathbf{V}_0^{\eps} \|_{H^1(\Omega)}^2,
 \end{aligned}
 \end{equation}
+where the constants $P$, $C_{\delta}$, $C_{\mathcal{M}}$ and $C_1$ are defined respectively in \eqref{nbmr}, (\ref{const_delta1}-\ref{const_delta2}), \eqref{eq:d7} and \eqref{eq:d5.2}.
+
 \end{pro}
 
 \begin{proof}
@@ -2769,18 +2779,25 @@ $\sum_r \be =|\Omega_j| I_d$ which can be found in \cite{glaceap,de10},
 \end{equation*}
 We thus get
 \begin{equation}\label{eq:s1}
-\begin{array}{ll | r}
+\left.
+\begin{aligned}
 S\leq &-\frac{\sigma}{\eps^2} \sum_r \sum_j  \bigg( \widehat{\beta}_{j,r}\bigg(
 \textbf{u}_r^{\eps}- \frac{1}{|\Omega_j|}\int_{\Omega_j} 
 \textbf{u}^{\eps} d\x\bigg ) 
 \: , \: \textbf{u}_r^{\eps}-\frac{1}{|\Omega_j|}\int_{\Omega_j}
 \textbf{u}^{\eps} d\x \bigg)
-&=S_1
  \\
 &-\frac{\sigma}{\eps^2} \sum_r \sum_j  \bigg( \widehat{\beta}_{j,r}
 \frac{1}{|\Omega_j|}\int_{\Omega_j} \textbf{u}^{\eps} d\x  \: , \:
-\textbf{u}_r^{\eps}-\textbf{u}_j^{\eps} \bigg). &=S_2
-\end{array}
+\textbf{u}_r^{\eps}-\textbf{u}_j^{\eps} \bigg)
+\end{aligned}
+\hspace{0.3cm}
+\right|
+\begin{aligned}
+:=S_1 \\
+\\
+:=S_2
+\end{aligned}
 \end{equation}
 We add and subtract at each average on the cell the nodal value. 
 We recall the notation  
@@ -2839,28 +2856,23 @@ $$
  \textbf{u}_r^{\eps}-
  u^\eps(\x_r) |^2
 \end{equation}
-with the help of (\ref{geom3}). 
-
-
-
-
-The second and third term in the identity (\ref{eq:bb1}) can be bounded
-by a Young's inequality with a convenient constant
+with the help of (\ref{geom3}). The second and third term in the identity (\ref{eq:bb1}) can be bounded
+by a Young's inequality with a convenient constant $C=\frac{C_1\alpha}{2C_{\mathcal{M}}^2P}$
 so that all terms containing $ \textbf{u}_r^{\eps}-u^\eps(\x_r)$
 are controlled by (\ref{eq:ss2}).
 So we obtain concerning $S_1$ defined in (\ref{eq:s1})
 \begin{equation*} \label{eq:ss4}
 S_1
-\leq C\frac{h^2\sigma }{\eps^2}\sum_r \sum_j  \left|  \delta_{j,r}(\textbf{u}^{\eps}) \right|^2.
+\leq C_{\mathcal{M}}^2 \bigg( 1 + \frac{2C_{\mathcal{M}}^2P}{C_1\alpha} \bigg) \frac{h^2\sigma }{\eps^2}\sum_r \sum_j  \left|  \delta_{j,r}(\textbf{u}^{\eps}) \right|^2.
 \end{equation*}
 Using the standard interpolation result stressed in proposition \ref{pro:interp},
 one has in dimension two
 $| \delta_{j,r}(\textbf{u}^{\eps}) |
- \leq C_1  \|\uu^\eps(t)\|^2_{H^1(\Omega_j)} $. 
+ \leq C_{\delta}  \|\uu^\eps(t)\|_{H^1(\Omega_j)} $. 
 So, taking into account energy estimate (\ref{bee2})
 we have for the first term
 \begin{equation*} \label{eq:ss6}
-\int_0^T S_1dt \leq C_2 h^2  \|\V^\eps(0\|^2_{H^1(\Omega)}.
+\int_0^T S_1dt \leq C_{\mathcal{M}}^2 C_{\delta} P  \bigg( 1 + \frac{2C_{\mathcal{M}}^2P}{C_1\alpha} \bigg) h^2   \| \mathbf{V}_0^{\eps} \|_{H^1(\Omega)}^2 .
 \end{equation*}
 We now consider the second term called  $S_2$ in (\ref{eq:s1})
 \begin{equation*} \label{eq:ss5}
@@ -2884,23 +2896,17 @@ S_2 dt \leq \frac{\widehat{\gamma} \sigma}{2\eps}\int_0^T\sum_r \sum_j \ljr \big
 \int_0^T\frac{\sigma}{2\widehat{\gamma}  \eps^3}\sum_r \sum_j \ljr \bigg( (\x_r-\x_j),
 \frac{1}{|\Omega_j|}\int_{\Omega_j} \uu^{\eps} d\x \bigg) ^2dt
 $$
-Using one more time the energy estimate (\ref{bee2}) the second term in the right hand side of the above inequality  is bounded by $\frac{C_3h}{\widehat{\gamma}\eps}\|\V^\eps(0)\|^2_{ L^2(\Omega)}$. 
-
-Thus 
+Using one more time the energy estimate (\ref{bee2}) the second term in the right hand side of the above inequality  is bounded by $\frac{ C_{\mathcal{M}}^3 P h}{2 C_1 \widehat{\gamma}\eps} \| \V^\eps_0\|^2_{ L^2(\Omega)}$. Thus 
 $$
-\int _0^TS dt \leq 
-C_2 h^2  \|\V^\eps(0)\|^2_{H^1(\Omega)}
-+
+\int _0^TS(t) dt \leq 
 \frac{\widehat{\gamma} \sigma}{2\eps}\int_0^T\sum_r \sum_j \ljr \bigg( 
-\njr  \: , \: \textbf{u}_r^{\eps}-\textbf{u}_j^{\eps} \bigg)^2 dt\\
+\njr  \: , \: \textbf{u}_r^{\eps}-\textbf{u}_j^{\eps} \bigg)^2 dt 
 +
-\frac{C_3h}{\widehat{\gamma}\eps}\|\V^\eps(0)\|^2_{ L^2(\Omega)}
+C_{\mathcal{M}}^2  P \bigg\{ C_{\delta}\bigg( 1 + \frac{2C_{\mathcal{M}}^2P}{C_1\alpha} \bigg) h^2 
++
+\frac{ C_{\mathcal{M}} h}{2 C_1 \widehat{\gamma}\eps} \bigg\} \|  \mathbf{V}_0^{\eps} \|_{H^1(\Omega)}^2 ,
 $$
-
-
-One finally obtains
-the claim
- with a new constant $C\geq0$ proportional to $\|\V^\eps(0)\|^2_{H^1(\Omega)} $.
+which is the expected result.
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof}[End of the proof of the proposition (\ref{ein_prosit})]
@@ -2914,36 +2920,42 @@ _r^{\eps})^2 +
 $$
 where integrals are estimated in 
 (\ref{eq:bound1}), (\ref{eq:si2}) and   
-(\ref{eq:bound3}).  Using $\mathscr{E}(0)=O(h)$,  it yields with some new constant $C$
-$$
-\begin{array}{ll}
-\mathscr{E}(T)& \leq Ch  \\
+(\ref{eq:bound3}).  Using equation \eqref{constant_init}, one finds
+\begin{equation*}
+\begin{aligned}
+\mathscr{E}(T)& \leq C_0^2h^2 \|\mathbf{V}_0^{\eps}\|_{H^1(\Omega)}^2 \\
 & 
-\displaystyle 
 -\frac1\eps \int_0^T \sum_{j,r}l_{j,r}(\textbf{n}_{j,r},\textbf{u}_j^{\eps}-\textbf{u}
 _r^{\eps})^2\\
-  & 
-    \displaystyle            +            \frac{\gamma}{\eps}
+&  +  \frac{\gamma}{\eps}
      \int_0^T \sum_{j,r}l_{j,r}(\textbf{n}_{j,r},\textbf{u}_j^{\eps}-\textbf{u}
 _r^{\eps})^2 
-+Ch(  \frac 1 {\gamma } +1) \\
-& \displaystyle  + C T
-\frac{h}{\eps}  \\
++ T \frac {P C_{\delta}^2 C_{\mathcal{M}} h }{2\gamma \eps} \vert \vert \mathbf{V}_0^{\eps} \vert\vert^2_{H^1(\Omega)}  +  \bigg( \frac1{\alpha} + PC_{\delta}^2 \bigg) \frac{ h C_{\mathcal{M}}^2 }{2}\sqrt{\frac{P}{C_1}}  \| \mathbf{V}_0 \|_{H^1(\Omega)}^2   \\
+& + \frac{hT}{\eps} C_{\mathcal{M}} C_{\delta} P \bigg( \frac{1+C_0^2h^2}{C_1} + h \bigg)   \|  \mathbf V ^\eps_0 \|^2_  { H^3(\Omega)  }  \\
 &
- \displaystyle +C(h^2+\frac{h}{ \widehat \gamma \eps})
- +
- \frac{\sigma\hat \gamma}{2\eps} \int_0^T \sum_r \sum_j \ljr \bigg(  \njr  \: , \:
-\mathbf{u}_r^{\eps}-\mathbf{u}_j^{\eps} \bigg)^2
- \end{array}.
-$$
++ \frac{\widehat{\gamma} \sigma}{2\eps}\int_0^T\sum_r \sum_j \ljr \bigg( 
+\njr  \: , \: \textbf{u}_r^{\eps}-\textbf{u}_j^{\eps} \bigg)^2 dt 
++
+C_{\mathcal{M}}^2  P \bigg\{ C_{\delta}\bigg( 1 + \frac{2C_{\mathcal{M}}^2P}{C_1\alpha} \bigg) h^2 
++
+\frac{ C_{\mathcal{M}} h}{2 C_1 \widehat{\gamma}\eps} \bigg\} \|  \mathbf{V}_0^{\eps} \|_{H^1(\Omega)}^2 
+ \end{aligned}.
+\end{equation*}
 Therefore
 $$
 \mathscr{E}(T)\leq
-Ch\left( 2 + \frac{1}{\gamma} +\frac T \eps +h +\frac{1}{\eps \widehat{\gamma}}
+Ch\left( 1 +\frac T \eps +h +\frac{1}{\eps \widehat{\gamma}}
 \right)-
-\frac{1}{\eps}\bigg( 1-\frac1{\gamma} - \frac{\sigma \widehat{\gamma}}{2}
-\bigg)\int_0^T \sum_{j,r}l_{j,r}\bigg(\textbf{n}_{j,r},\textbf{u}_j^{\eps}-\textbf{u}_r^{\eps} \bigg)^2 dt.
+\frac{1}{\eps}\bigg( 1- \gamma - \frac{\sigma \widehat{\gamma}}{2}
+\bigg)\int_0^T \sum_{j,r}l_{j,r}\bigg(\textbf{n}_{j,r},\textbf{u}_j^{\eps}-\textbf{u}_r^{\eps} \bigg)^2 dt,
 $$
+where
+\begin{equation*}
+\begin{aligned}
+C = \|\mathbf{V}_0^\eps\|^2_{H^3(\Omega)}  \: \hbox{max}\bigg\{ & \:  \frac{ C_{\mathcal{M}}^2 }{2}\sqrt{\frac{P}{C_1}} \bigg( \frac1{\alpha} + PC_{\delta}^2 \bigg) \: , \: \frac{C_{\mathcal{M}}^3P}{2C_1}  , \\
+&  C_{\mathcal{M}} C_{\delta} P \bigg( \frac{1+C_0^2h^2}{C_1} +\frac{ C_{\delta} }{2 \gamma } + h \bigg) \: , \: C_0^2 + C_{\mathcal{M}}^2  P C_{\delta}\bigg( 1 + \frac{2C_{\mathcal{M}}^2P}{C_1\alpha} \bigg) \: \bigg\} .
+\end{aligned}
+\end{equation*}
 This estimate is fundamental, since it 
 shows the competition between different kind of error terms
 and the dissipation of the fluxes.
@@ -2952,17 +2964,14 @@ term is non positive, which means that
 the dissipation of the fluxes is dominant in some sense. We choose $\widehat{\gamma}=\frac{1}{\sigma}$ and $\gamma=\frac12$, the last term  vanishes thus
 $$
 \mathscr{E}(T)\leq
-Ch\left( 3 +\frac T \eps +h +\frac{\sigma}{\eps}
+Ch\left( 1 +\frac T \eps +h +\frac{\sigma}{\eps}
 \right)$$
- Rereading the proof one can check that the constant $C$ is proportional to  $\|\V^\eps(0)\|^2_{H^3(\Omega)} $, and  if $\sigma=0$ one recovers the result of Mazeran \cite{Mazeran}, chapter 4. The proof was more difficult to obtain due to the non standard discretization of the source term and its incorporation in  the approximate nodal Riemann solver.
-
-
- Since $h$ and $\eps$ can be taken less than 1, elementary comparison
+The constant $C$, uniform in $\eps$, is proportional to  $\|\V^\eps_0\|^2_{H^3(\Omega)} $, and  if $\sigma=0$ one recovers the result of Mazeran \cite{Mazeran}, chapter 4. The proof was more difficult to obtain due to the non standard discretization of the source term and its incorporation in  the approximate nodal Riemann solver. Since $h$ and $\eps$ can be taken less than 1, elementary comparison
 principles 
 yield
 $\ds
 \mathscr{E}(t) 
-\leq C' (T,\sigma)\nvhp \frac{h}{\eps}$.
+\leq  \frac{h}{\eps} C (2+T+\sigma) $.
 The proof is ended. 
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3036,16 +3045,16 @@ E(t)=
 
 \begin{pro}\label{das_stab} Under the geometrical assumption (\ref{geom3}), the
 diffusion approximation scheme (\ref{das:1})  is stable in the $L^2$
-norm, in the sense that $E'(t)\leq 0$. Moreover we have
+norm, in the sense that $E'(t)\leq 0$. Moreover, denoting $p_h=\left( p_j(0)\right)_{j\in Cells}$, we have
 \begin{equation}\label{das:gggg}
 \vert\vert \uu_r \vert\vert_{L^2([0,T]\times \Omega)}\leq
-C  \left\|  \left( p_j(0)\right)_j \right\|_{L^2(\Omega)}
+\frac{1}{\alpha}  \left\|  p_h(0) \right\|_{L^2(\Omega)}
 \end{equation}
 and
 \begin{equation}\label{das:gs}
 \eps \int_{[0,T]}\sum_j \sum_r
 l_{jr}(\njr,(\uj-\ur))^{2} \leq  
- \left\|  \left( p_j(0)\right)_j \right\|_{L^2(\Omega)}.
+ \left\|   p_h(0) \right\|_{L^2(\Omega)}.
 \end{equation}
 \end{pro}
 
@@ -3095,7 +3104,7 @@ E(T) + \int_{[0,T]}\sum_r \left (\sigma B_r \uu_r, \uu_r\right )
 Using again the geometrical assumption  (\ref{geom3}) for the terms
 $(B_r\ur,\ur)$ we have
 \begin{equation*}\label{eq:ds6bis}
-E(T) + \alpha \int_{[0,T]}\sum_r  \vert V_r\vert \  \vert\vert\uu_r\vert\vert^2 
+E(T) + \alpha \int_{[0,T]}\sum_r  \vert V_r\vert \  \| \uu_r \|^2 
 + \int_{[0,T]}\eps\sum_j\sum_r \ljr \left( \uu_r- \uu_j,  \njr\right )^2\leq
 E(0)
 \end{equation*}
@@ -3117,13 +3126,13 @@ by inserting these quantities into the three equations of
 It yields 
 \begin{equation*} \label{eq:d2.2}
 \left\{ 
-\begin{array}{l}
-a_j=\displaystyle \frac{d}{dt} \pej+
+\begin{aligned}
+&a_j=\displaystyle \frac{d}{dt} \pej+
 \frac{1}{\mid\Omega_{j}\mid}\sum_{r}(l_{jr}\uer,\njr)\\
- \br=\frac{1}{\vert V_r\vert}\left (   \sigma B_r \uer- \sum_{j}\ljr
+& \br=\frac{1}{\vert V_r\vert}\left (   \sigma B_r \uer- \sum_{j}\ljr
 \pej\njr+ \eps\sum_j\alj(\uer-\uej)\right ), \\
-\cj= \frac{1}{h}\sum_{r}l_{jr} (\njr,\uer -\uej)\njr=0.
-\end{array}
+&\cj= \frac{1}{h}\sum_{r}l_{jr} (\njr,\uer -\uej)\njr .
+\end{aligned}
 \right.
 \end{equation*}
 
@@ -3134,24 +3143,24 @@ a_j=\displaystyle \frac{d}{dt} \pej+
 \begin{lemma}\label{consistency}
 Assume  the geometrical  assumptions (\ref{geometrie}).
 Assume $p_0\in H^{4}(\Omega)$.
-Then there exists a constant $C>0$ such that the following 
+Then there exists a constant $C_c>0$ such that the following 
 estimates hold
 \begin{equation} \label{eq:d20}
-\left| a_j\right|\leq C h
+\left| a_j\right|\leq C_c h
 \quad
  \mbox{for all } j  ,
 \end{equation}
 \begin{equation} \label{eq:d21}
-\left|  \br\right|  \leq C(h+\eps), \quad
+\left|  \br\right|  \leq C_c(h+\eps), \quad
 \mbox{for all } r   .
 \end{equation}
 and
 \begin{equation} \label{eq:d22}
-\left| \cj\right| \leq C h, \quad
+\left| \cj\right| \leq C_c h, \quad
 \mbox{for all } j   .
 \end{equation}
 \end{lemma}
-
+In this result the constant $C_c$  is not explicitly given since it only depends on the regularity of $p_0$.
 \begin{proof} 
 Since $p_0\in H^{4}(\Omega)$, one has that $p(t)\in H^{4}(\Omega)$ 
 which turns into the fact that $\nabla p(t)\in L^\infty(\Omega)$ and $\nabla ^2p(t)\in L^\infty(\Omega)$ by means of 
@@ -3159,7 +3168,7 @@ Sobolev embeddings. It is sufficient to justify
 the Taylor expansions done hereafter.
 By construction
 $$
-\partial_t p(\xj,t)=\frac{1}{\sigma}\frac{\int_{\Omega_j} \partial_t
+\partial_t p(\xj,t) = \frac{\int_{\Omega_j} \partial_t
 p(x,t)dx}{\left| \Omega_j \right|}+O(h)=
 \frac{1}{\sigma}\frac{\int_{\Omega_j} \Delta p dx}{\left| \Omega_j
 \right|}+O(h)=
@@ -3274,22 +3283,32 @@ There  exists a  constant
 $C(T)>0$ such that 
 \begin{equation} \label{eq:dconv1}
  \| e \|_{L^\infty(  [0,T]: L^2(\Omega) )}
- \leq C(T)(h+\eps),
+ \leq C_e(T)(h+\eps),
 \end{equation}
 \begin{equation} \label{eq:dconv2}
- \| \ff \|_{L^2([0,T]\times \Omega)} \leq C(T) (h+\eps)  
+ \| \ff \|_{L^2([0,T]\times \Omega)} \leq C_f(T) (h+\eps)  
  ,
 \end{equation}
 \begin{equation} \label{eq:dconv3}
-\eps \int_0^T \sum_j \sum_r    \ljr \left( \fr  -
-\fj ,\njr \right)^2\leq C(T) (h+\eps)^2, 
+\sqrt{\eps \int_0^T \sum_j \sum_r    \ljr \left( \fr  -
+\fj ,\njr \right)^2 } \leq C_h(T) (h+\eps), 
  \end{equation}
 and 
 \begin{equation} \label{eq:dconv4}
 \| \gf \|_{L^2([0,T]\times \Omega)} \leq C(T) (h+\eps)\sqrt{(1+\frac
 h\eps )} . 
 \end{equation}
-
+where
+\begin{equation*}
+\left\{
+\begin{aligned}
+&C_e(T) = \sqrt{2} e^{T/2} \max\bigg\{  \: C_0^2\|\mathbf{W}^{\eps}_0\|_{H^1(\Omega)}^2  \:  , \:  T\frac{2C_c^2|\Omega| }{\alpha \sigma} \max \bigg( 1 \: ,\: \frac{C_{\mathcal{M}}^2}{C_1^2\beta}\max\big(\alpha \sigma , C_{\mathcal{M}} P \big) \bigg)  \bigg\}^{\frac12}    ,\\
+&C_f(T) = 2\sqrt{\frac{T+e^{-T}}{\alpha}}C_e , \\
+&C_h(T) = \sqrt{2( T+e^{-T})}C_e , \\
+&C_g(T) = \sqrt{\frac{2}{\beta} } C_{\mathcal{M}} \max\bigg( C_h(T) , \frac{C_{\mathcal{M}}P}{C_1}C_f^2(T) \bigg)^{\frac12} .
+\end{aligned}
+\right.
+\end{equation*}
 \end{theorem}
 
 
@@ -3297,132 +3316,136 @@ h\eps )} .
 By construction
 \begin{equation*}\label{eq:d30}
 \left\{ 
-\begin{array}{l}
-\displaystyle \mid\Omega_{j}\mid e'_{j}+
+\begin{aligned}
+& \mid\Omega_{j}\mid e'_{j}+
 \sum_{r}(l_{jr}\fr,\njr)=-\mid\Omega_{j}\mid a_j\\
- \left( \eps\sum_{j}\alj+  \sigma B_r\right)\fr-
+& \left( \eps\sum_{j}\alj+  \sigma B_r\right)\fr-
 \sum_{j}\ljr e_j\njr-\eps\sum_j\alj\fj=-\mid
 V_r\mid\br , \\
- \sum_{r}l_{jr} (\njr,\fr -\fj)\njr=-h\cj.
-\end{array}
+& \sum_{r}l_{jr} (\njr,\fr -\fj)\njr=-h\cj.
+\end{aligned}
 \right.
 \end{equation*}
 By proceeding as for the results of stability one has the identity
-$$
-E'(t)= \sum_j |\Omega_j| e_j e_j'=
+\begin{equation*}
+\begin{aligned}
+E'(t)&= \sum_j |\Omega_j| e_j e_j'=
 \sum_j  e_j\left(
 - \left( \sum_r l_{jr}\left(\njr, \fr  
    \right)\right)
 - \left| \Omega_j \right| a_j 
 \right)
-$$ 
-$$
 =- \sum_r \sum_j (  l_{jr}  \mathbf n_{jr} e_j , \mathbf f_r)
-- \sum_j\left| \Omega_j \right| e_j a_j 
-$$
-$$= -\sum_r \left (\fr, \left( \eps\sum_{j}\alj+  \sigma
+- \sum_j\left| \Omega_j \right| e_j a_j \\
+&= -\sum_r \left (\fr, \left( \eps\sum_{j}\alj+  \sigma
 B_r\right)\fr- \eps\sum_j\alj\fj\right )
 - \sum_j \left| \Omega_j \right| a_j e_j
-- \sum_r \left| V_r \right| \br \fr
-$$
-$$= -\sum_r \left (\sigma B_r \fr, \fr\right ) 
--\eps \sum_r\left( \fr, \sum_j \alj(\fr -\fj\right )
+- \sum_r \left| V_r \right| \br \fr \\
+&= -\sum_r \left (\sigma B_r \fr, \fr\right ) 
+-\eps \sum_r\left( \fr, \sum_j \alj(\fr -\fj ) \right )
 - \sum_j \left| \Omega_j \right| a_j e_j
-- \sum_r \left| V_r \right| \br \fr
-$$
-$$= -\sum_r \left (\sigma B_r \fr, \fr\right ) 
+- \sum_r \left| V_r \right| \br \fr \\
+&= -\sum_r \left (\sigma B_r \fr, \fr\right ) 
 -\eps\sum_j\sum_r \ljr \left( \fr- \fj,  \njr\right )^2
 - \sum_j \left| \Omega_j \right| a_j e_j
 - \sum_r \left| V_r \right| \br \fr +\eps\sum_j h \fj\cj.
-$$
-Using a Young's inequality and the Cauchy-Schwarz inequality, one gets
+\end{aligned}
+\end{equation*}
+Using a Young's inequality, the Cauchy-Schwarz inequality and assumptions \eqref{eq:d5} and \eqref{geom3}, one gets
 \begin{equation} \label{eq:yi}
 \begin{aligned}
 E'(t) \leq & ||e||_{L^2(\Omega)}\ ||a||_{L^2(\Omega)} +
 \left(
 \frac{\mu}{2} ||\ff ||^2_{L^2(\Omega)} + \frac{1}{2\mu} ||\bb||^2_{L^2(\Omega)} 
 \right)
--  \alpha \|  \ff \|^2_{L^2(\Omega)}\\
+-  \alpha \sigma \|  \ff \|^2_{L^2(\Omega)}\\
 &
   -\eps\sum_j\sum_r \ljr \left( \fr- \fj,  \njr\right )^2 
-+\frac{\eps}{2h}\left (\eta||\gf ||^2_{L^2(\Omega)}
++\frac{\eps}{2h  C_1}\left (\eta||\gf ||^2_{L^2(\Omega)}
 +\frac{1}{\eta}||\cc||^2_{L^2(\Omega)} \right )
 \end{aligned}
 \end{equation}
 where $ \mu,\eta >0$ are two arbitrary coefficients that will be 
 specified later. 
-Now using  (\ref{geom4})
+Now using  (\ref{geom4}) and \eqref{eq:d7},
 we have
 $$
-\vert \Omega_j\vert \ \vert \fj \vert^2\leq C h\sum_r\ljr(\njr,\fj)^2.
+\vert \Omega_j\vert \ \vert \fj \vert^2\leq \frac{C_{\mathcal{M}}^2}{\beta} h\sum_r\ljr(\njr,\fj)^2.
 $$
 Therefore
 $$
 \vert \Omega_j\vert \ \vert\fj \vert^2\leq 
-Ch \left(2\sum_r\ljr(\njr,\fj-\fr)^2+2\sum_r \ljr \vert 
-\fr \vert^2\right ).
+\frac{C_{\mathcal{M}}^2}{\beta} h \left(2\sum_r\ljr(\njr,\fj-\fr)^2+2\sum_r \ljr \vert 
+\fr \vert^2\right ),
 $$
-So 
-there exists two constant $C_1$ and $C_2$ such that
+which yields, using \eqref{eq:d5.2} and \eqref{nbmr}
 \begin{equation}\label{gl2}
 \vert\vert\gf \vert\vert^2_{L^2(\Omega)} \leq 
-C_1 h\sum_{jr}\ljr(\njr,\fj-\fr)^2 +  C_2\vert\vert\ff \vert\vert^2_{L^2(\Omega)}.
+\frac{2C_{\mathcal{M}}^2}{\beta} h\sum_{jr}\ljr(\njr,\fj-\fr)^2 +  \frac{2C_{\mathcal{M}}^3P}{\beta C_1} \vert\vert\ff \vert\vert^2_{L^2(\Omega)}.
 \end{equation}
 So from (\ref{eq:yi}) we  obtain 
-$$
-E'(t) \leq  ||e||_{L^2(\Omega)}\ ||a||_{L^2(\Omega)} +
+\begin{equation*}
+\begin{aligned}
+E'(t) &\leq  ||e||_{L^2(\Omega)}\ ||a||_{L^2(\Omega)} +
  \frac{1}{2\mu} ||\bb||^2_{L^2(\Omega)} 
-+( \frac{\mu}{2} +\frac{C_2\eps\eta}{2h}- \alpha) \|  \ff \|^2_{L^2(\Omega)}
-$$
-$$
-+ (\frac{C_1}{2}\eta -1)\eps\sum_j\sum_r \ljr \left( \fr- \fj,  \njr\right )^2 
-+\frac{\eps}{2h\eta} ||\cc||^2, \qquad \forall \mu,\eta >0.
-$$
-Let us choose $\mu=\frac{\alpha}{2}$ and $\eta =\min(\frac{1}{C_1},\frac{\alpha h}{C_2
-\eps})$, so that
++\bigg( \frac{\mu}{2} + \frac{\eps\eta C_{\mathcal{M}}^3 P }{ h C_1^2 \beta} - \sigma \alpha \bigg) \|  \ff \|^2_{L^2(\Omega)}
+\\
+&+ \bigg(\frac{ C_{\mathcal{M}}^2 \eta}{C_1 \beta} -1 \bigg)\eps\sum_j\sum_r \ljr \left( \fr- \fj,  \njr\right )^2 
++\frac{\eps}{2h\eta C_1} ||\cc||^2, \qquad \forall \mu,\eta >0.
+\end{aligned}
+\end{equation*}
+Let us choose $\mu=\frac{\alpha\sigma}{2}$ and $\eta =\frac{C_1\beta}{2C_{\mathcal{M}}^2} \min\big(1,\frac{\alpha \sigma hC_1}{ \eps C_{\mathcal{M}} P} \big)$. It yields, using the inequality $ab\leq \frac12(a^2+b^2)$
 \begin{equation*} \label{eq:d40}
 \begin{aligned}
-E'(t) \leq & \sqrt{2}\sqrt{E(t)}\ ||a||_{L^2(\Omega)}  - \frac{\alpha}{4}  F'(t)
+E'(t) \leq & E(t) + \frac12  ||a||_{L^2(\Omega)}^2  - \frac{\alpha\sigma}{4}  F'(t)
 - \frac{\eps}{2}\sum_j\sum_r \ljr \left( \fr- \fj,  \njr\right )^2\\
-& +  \frac{1}{2 \alpha} ||\bb||^2_{L^2(\Omega)} +\max(\frac{\eps C_1}{2h},\frac{C_2
-\eps^2}{\alpha h^2}) ||\cc||^2_{L^2(\Omega)} .
+& +  \frac{1}{ \alpha\sigma } ||\bb||^2_{L^2(\Omega)}  +   \frac{C_{\mathcal{M}}^2}{C_1^2\beta} \max \bigg( \frac{\eps}{h} , \frac{\eps^2}{h^2} \frac{C_{\mathcal{M}} P}{ \alpha \sigma C_1 } \bigg) ||\cc||^2_{L^2(\Omega)} .
 \end{aligned}
 \end{equation*}
 where we have used  $\frac1{\min(a,b)}=\max(\frac1a, \frac1b)$.
 By the consistency estimates (\ref{eq:d20}-\ref{eq:d21}-\ref{eq:d22}) 
- and since the domain $\Omega$ is bounded, one finds a constant C such that
+ and since the domain $\Omega$ is bounded, one finds
 \begin{equation} \label{eq:d40bis}
 E'(t) \leq  E(t)  - \frac{\alpha}{4}  F'(t)
 - \frac{\eps}{2}\sum_j\sum_r \ljr \left( \fr- \fj,  \njr\right )^2
-+  C\left (h+\eps\right )^2. 
++  C\left (h+\eps\right )^2,
 \end{equation}
+where
+\begin{equation*}
+C = \frac{2C_c^2|\Omega| }{\alpha \sigma} \max \bigg( 1 \: ,\: \frac{C_{\mathcal{M}}^2}{C_1^2\beta}\max\big(\alpha \sigma , C_{\mathcal{M}} P \big) \bigg).
+\end{equation*}
 Thus 
-$$
+\begin{equation}\label{esti_E_DA}
 E'(t) \leq  E(t)  
 +  C\left (h+\eps\right )^2. 
-$$
-By construction $E(0)=O(h^2)$ for a smooth initial data.
+\end{equation}
+By construction $E(0)\leq C_0^2h^2\|\mathbf{W}^{\eps}_0\|_{H^1(\Omega)}^2$ \eqref{constant_init}.
  So by the Gr\"onwall lemma 
 $
-E(t)\leq C(t) (h+\eps)^2
+E(t)\leq C_e^2(t) (h+\eps)^2,
 $
-which gives (\ref{eq:dconv1}).
+ with $C_e(t) = \sqrt{2} \max ( C_0^2\|\mathbf{W}^{\eps}_0\|_{H^1(\Omega)}^2 , T C )^{\frac12}e^{T/2}$,
+ which gives (\ref{eq:dconv1}).
 Integrating  (\ref{eq:d40bis}) in the time interval $[0,t]$,  we find that for any 
 for $t\leq T$
 $$
 E(t)+  \frac{\alpha}{4}  F(t)+\int_0^t \frac{\eps}{2}\sum_j\sum_r \ljr \left(
 \fr- \fj,  \njr\right )^2
 \leq
- E(0)+ \int_0^t \left(  E(t)+ C(h+\eps)^2  \right) dt \leq C'(T) (h+\eps)^2.
+ E(0)+ \int_0^t \left(  E(s)+ C(h+\eps)^2  \right) ds .
 $$
-It shows   
+Using the estimate \eqref{esti_E_DA}, it shows   
 the  estimates (\ref{eq:dconv2}) and (\ref{eq:dconv3}).
-Using   (\ref{gl2}) 
-one gets
+Integrating  (\ref{gl2}) and using the estimates \eqref{eq:dconv2} and \eqref{eq:dconv3}, one gets
 \begin{equation*}\label{gl3}
 \int_0^T \vert\vert\gf \vert\vert^2_{L^2(\Omega)} \leq 
-C_1 h\int_0^T\sum_{jr}\ljr(\njr,\fj-\fr)^2 +  C_2\int_0^T\vert\vert\ff \vert\vert^2_{L^2(\Omega)}\leq
-C"(T)(h+\eps)^2(1+\frac h\eps)
+\frac{2C_{\mathcal{M}}^2}{\beta} h \int_0^T\sum_{jr}\ljr(\njr,\fj-\fr)^2 +  \frac{2C_{\mathcal{M}}^3P}{\beta C_1} \vert\vert\ff \vert\vert^2_{L^2([0,T]\times\Omega)}
+\leq
+C_g^2(T)(h+\eps)^2(1+\frac h\eps),
+\end{equation*}
+with
+\begin{equation*}
+C_g(T) = \sqrt{\frac{2}{\beta} } C_{\mathcal{M}} \max\bigg( C_h(T) , \frac{C_{\mathcal{M}}P}{C_1}C_f^2(T) \bigg)^{\frac12} . 
 \end{equation*}
 from which (\ref{eq:dconv4}) follows.
 The proof is finished.

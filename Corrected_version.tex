@@ -768,7 +768,7 @@ x_{j+\frac12 }},\\
 
 Provided that the initial data is smooth, the initialization gives us 
 \begin{equation}\label{init_1D}
- \| u_j^{\eps}(0)-\eps v_j(0)\|_{L^2(\mathbb{R})} \leq C_0 h\eps .
+ \| u_j^{\eps}(0)-\eps v_j(0)\|_{L^2(\mathbb{R})} \leq C_0 h\eps \|p_0\|_{H^2(\mathbb{R})}.
 \end{equation}
 
 
@@ -804,10 +804,10 @@ limit equation \eqref{difffff}.
 
 \begin{proposition} \label{heqtode}
 There exists a constant which depend of the time such that 
-\begin{equation*}
+\begin{equation}\label{esti_p_eps_p_0}
 \|\V^{\eps}-\W^\eps\|_{L^\infty([0,T];L^2(\mathbb{R}) )} \leq
  \eps \frac{T}{\sigma^2} \|\partial_{xxx}p_0\|_{L^2(\mathbb{R})}.
-\end{equation*}
+\end{equation}
 \end{proposition}
 \begin{proof}
 We define $v=-\frac{\varepsilon}\sigma \partial_x p$ with $p$ the diffusion solution of (\ref{difffff}) and
@@ -991,13 +991,13 @@ convergence of $P_h^\varepsilon $ to  $P^\varepsilon $. We still denote $V^\eps(
 \begin{proposition}\label{cv1d}
 Under assumption \ref{geometrie1d} on the mesh and assuming that the initial conditions satisfy \eqref{eq:initp1}, the following estimate holds 
 
-\begin{equation*}
+\begin{equation}\label{esti_naive_1d}
 \|\V^{\eps}-\V^{\eps}_h \|_{L^2([0,T]\times \mathbb{R})}
 \leq \sqrt{h\eps + 2T + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} }
 \sqrt \frac{h}\eps 
-\left\| \V^{\eps}(0)
+\left\| \V^{\eps}_0
 \right\|_{H^1(\mathbb{R})}.
-\end{equation*}
+\end{equation}
 
 \end{proposition}
 
@@ -1211,17 +1211,17 @@ S \leq \frac{\sigma^2}{8\widehat{\alpha}\eps^3} \sum_{j\in \mathbb{Z}}\bigg(
 (u^{\eps}_j-u_{j-\frac12 }^{\eps})^2}{\eps} .
 \end{eqnarray*}
 For example by choosing $\alpha=\frac12$ and $\widehat{\alpha}=\frac12$, and coming back to $\mathscr{E}'(t) $ we get
-\begin{eqnarray} \label{eq:eqn1}
+\begin{eqnarray} 
 \mathscr{E}'(t)  & \leq & \sum_{j\in \mathbb{Z}} \bigg(
 \left( \frac{1}{\eps}+\frac{\sigma}{2\eps^2}\right)\left ( 
 \delta_{j}^+(u^{\eps})^2+\delta_{j}^-(u^{\eps})^2\right )
 +\frac{1}{\eps}\left (
 \delta_{j}^+(p^{\eps})^2+\delta_{j}^-(p^{\eps}
-)^2\right ) \bigg) \\
+)^2\right ) \bigg)\label{eq:eqn1} \\
 &+& \underset{j\in \mathbb{Z}}{\sum} \frac{1}{8\eps} \sigma \Delta x_j^2
 \frac{(u_{j-\frac12 }^{\eps})^2+(
 u_{j+\frac12 }^{\eps})^2}{\eps}+\frac{\sigma^2}{4\eps^3} \sum_{j\in
-\mathbb{Z}}\bigg( {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} u^{\eps}(x) dx \bigg)^2.
+\mathbb{Z}}\bigg( {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} u^{\eps}(x) dx \bigg)^2.\label{eq:eqn2}
 \end{eqnarray} 
 To estimate the contributions on the first line we use the following fact:
 for any quantity $q$, one can use  $q(x_{j-\frac12})=q(x)+\int_x^{x_{j-\frac12}}\frac{d}{ds}q(s)ds$
@@ -1272,8 +1272,7 @@ Next, using the assumption \eqref{geometrie1d} on the mesh and the estimate \eqr
 \frac{(u_{j-\frac12 }^{\eps})^2+(
 u_{j+\frac12 }^{\eps})^2}{\eps} \leq  \frac{h}{4C_{\mathcal{M}}} \|\mathbf{V}^{\eps}(0)\|_{L^2(\mathbb{R})}^2.
 \end{equation}
-Finally the last term in (\ref{eq:eqn1}) can be bounded using a
-Cauchy-Schwarz inequality 
+Finally the last term in (\ref{eq:eqn2}) can be bounded using the Jensen inequality 
 $$
 \frac{\sigma^2}{4\eps^3} \sum_{j\in
 \mathbb{Z}}\bigg( {\int_{x_{j-\frac12}}^{x_{j+\frac12}}} u^{\eps}(x) dx \bigg)^2
@@ -1323,7 +1322,7 @@ We  first
 for the diffusion limit scheme \eqref{schemadifff}, assuming smooth initial data \eqref{eq:intip0}. 
 \begin{proposition}\label{ds1d}
 Under assumption \ref{geometrie1d}, the following estimate holds
-\begin{equation*}
+\begin{equation}\label{esti_p_h_0_p_0}
 \|\W_h^\eps-\W^\eps\|_{L^{\infty}([0,T];L^2(\mathbb{R}))} \leq
 h 
 \left(  \|\partial_{xx}p_0   \| _{L^2(\mathbb{R})}+
@@ -1331,7 +1330,7 @@ h
 \right)  \bigg(  
 e^{T/2\sigma} + 
 \eps \sqrt{\frac12 + \frac{4}{\mathcal{C}_M}\bigg( 3 + \frac{T}{\sigma}e^{T/\sigma} \bigg) } \bigg).
-\end{equation*}
+\end{equation}
 \end{proposition}
 
 \begin{proof}
@@ -1473,9 +1472,9 @@ estimates between the initial data of $P_h^\eps$ and $P_h^0$.
 
 \begin{proposition} \label{gttods}
 There exists a constant $C(T)>0$ such that the following estimate holds
-\begin{equation*}
-\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb R)} \leq  \eps e^{T/2} \bigg(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } \big( \frac12 + \frac{1}{\sigma^2} \big) } \|p_0\|_{H^2(\mathbb{R})} \bigg) ,
-\end{equation*}
+\begin{equation}\label{p_h_eps_p_h_0_1d}
+\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb R)} \leq  \eps e^{T/2} \bigg(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } \big( \frac12 + \frac{1}{\sigma^2} \big) } \bigg)  \|p_0\|_{H^2(\mathbb{R})},
+\end{equation}
 where $C_0$ is defined in \eqref{init_1D}.
 \end{proposition}
 \begin{proof}
@@ -1599,7 +1598,7 @@ S\|_{L^2([0,T]\times\mathbb R)}^2 \right)
 Finally, using the previous estimates (\ref{eq:p5}-\ref{eq:xx})
 and the well-preparedness of the data (\ref{eq:initp1},\ref{eq:intip0},\ref{init_1D}), one gets
 $
-\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb{R})} \leq \eps e^{T/2} \big(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } ( \frac12 + \frac{1}{\sigma^2} )} \|p_0\|_{H^2(\mathbb{R})} \big)$. 
+\|\V_h^{\eps}-\W^\eps_h\|_{L^2([0,T]\times\mathbb{R})} \leq \eps e^{T/2} \big(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } ( \frac12 + \frac{1}{\sigma^2} )}  \big) \|p_0\|_{H^2(\mathbb{R})} $.  
 The proof is ended.
 \end{proof} 
 
@@ -1686,6 +1685,43 @@ with the order of convergence
 $
 q=\frac{ac}{a+b}=\frac13$.
 \end{proof} 
+~~\\
+\begin{proof}[ALTERNATIVE PROOF]~~\\
+\\
+All the previous estimates
+show that (\ref{eq:mod3}-\ref{eq:mod4})  are true
+with
+$a=1$, $b=c=\frac12$ and $d=1$. More specifically, estimates \eqref{esti_naive_1d}, \eqref{p_h_eps_p_h_0_1d}, \eqref{esti_p_h_0_p_0} and \eqref{esti_p_eps_p_0} shows that
+\begin{equation*}
+\|\V^{\eps}-\V^{\eps}_h \|_{L^2([0,T]\times \mathbb{R})}
+\leq C \min\bigg( \sqrt \frac{h}\eps  \: , \: \eps + h + \eps \bigg)
+\end{equation*}
+where
+\begin{equation*}
+\begin{aligned}
+C =  2 \max \bigg\{  & \sqrt{h\eps + 2T + \frac{\eps}{2} + \frac{\eps}{4C_{\mathcal{M}}} + \frac{\sigma}{4} }
+\left\| \V^{\eps}_0
+\right\|_{H^1(\mathbb{R})} \: ,  \\
+&\|p_0\|_{H^3(\mathbb{R})} \max\bigg( e^{T/2} \bigg(  C_0h + \sqrt{ \frac{1}{\sigma C_{\mathcal{M}} } \big( \frac12 + \frac{1}{\sigma^2} \big) }  \bigg) \: ,\\
+& \hspace{3cm} e^{T/2\sigma} + 
+\eps \sqrt{\frac12 + \frac{4}{\mathcal{C}_M}\bigg( 3 + \frac{T}{\sigma}e^{T/\sigma} \bigg) }  \: ,  \frac{T}{\sigma^2}  \bigg) \bigg\} .
+\end{aligned}
+\end{equation*}
+Using the general
+method described at the beginning of this work in proposition \ref{prop:1}, 
+one  obtains the convergence
+estimate of convergence
+$
+\|\mathbf V_h^\eps -\mathbf V^\eps   \|_{L^2([0,T]\times \mathbb{R}   )  }
+\leq C(T) h^{ q }
+$
+with the order of convergence
+$
+q=\frac{ac}{a+b}=\frac13$.
+
+
+\end{proof}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{The 2D case}
@@ -1739,13 +1775,13 @@ by a method similar to the one of proposition
 The error between the two solutions
 can be  upper bounded by
 \begin{equation}\label{ine3}
-\textcolor{red}{\| p^\epsilon-p\|_{   L^\infty([0,T];H^n(\Omega))  }+
+\| p^\epsilon-p\|_{   L^\infty([0,T];H^n(\Omega))  }+
 \| \mathbf{v} 
  \|_{   L^\infty([0,T]; H^n(\Omega))  }
  \leq
-C \eps
+\frac{T}{\sigma^2} \eps
 \|p_0 \|_{H^{3+n}(\Omega)},
-\qquad n \in \mathbb N.}
+\qquad n \in \mathbb N.
 \end{equation}
 \end{proposition}
 \begin{proof}
@@ -3497,7 +3533,7 @@ $$
 \|  \tilde p_h(t)\|^2_{L^\infty([0,T];L^2(\Omega)  )   } 
 +\int_0^t \sum_r ( B_r \tilde\uu_r, \tilde\uu_r )dt
 \leq
-\|  \tilde p(0)\|_{L^2(\Omega)} 
+\|  \tilde p(0)\|_{L^2(\Omega)}^2
 $$
 where this last quantity can be estimated
 with the first equation of (\ref{das:1}):
@@ -3692,7 +3728,7 @@ p_j\njr-\sum_j\alj  \uj=0 .
 \end{array}\right.
 \end{equation}
 By definition $\|\mathbf{R}\|_{L^2(\Omega)}= \|\frac{d}{dt}
-\uj\|_{L^2(\Omega)}$. Using the third line of \eqref{das}, one has
+\uj\|_{L^2(\Omega)}$. Using the second line of \eqref{das}, one has
 $\uj=A_j^{-1}\sum_r \alj\ur$ and thus $\|\frac{d}{dt}
 \uj\|_{L^2(\Omega)}\leq C \|\frac{d}{dt} \ur\|_{L^2(\Omega)}$. 
 Using

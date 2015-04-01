@@ -378,7 +378,7 @@ so that $\min
 \left(
  \varepsilon ^{-b}h^c,
 \eps^a
-\right)\leq \varepsilon_{\rm thresh} =h^{\frac{ac}{a+b}  }$, or 
+\right)\leq \varepsilon_{\rm thresh}^a =h^{\frac{ac}{a+b}  }$, or 
 $\eps\geq \varepsilon_{\rm thresh} $ and the same bound is obtained by 
 taking the other term as the minimum.
 And since $d\geq c$, one gets the abstract bound
@@ -774,15 +774,15 @@ Provided that the initial data is smooth, the initialization gives us
 
 We denote by $\V^{\eps}(t,x)=\left(p^{\eps}(x,t),
 u^{\eps}(x,t)\right)$ the solution of the hyperbolic heat equations $P^\eps$ and by
-$\V^{\eps}_h(t)=
-\left( \sum_{j\in \mathbb Z} p_j^{\eps}(t) {1}_{\Omega_j} ,  \sum_{j\in \mathbb Z} u_j^{\eps}(t) {1}_{\Omega_j} \right)$ the solution of the JL-(b) scheme $P_h^\eps$. Similarly  we  reconstruct
+$\V^{\eps}_h(t,x)=
+\left( \sum_{j\in \mathbb Z} p_j^{\eps}(t) {1}_{\Delta x_j}(x) ,  \sum_{j\in \mathbb Z} u_j^{\eps}(t) {1}_{\Delta x_j}(x) \right)$ the solution of the JL-(b) scheme $P_h^\eps$, in which ${1}_{\Delta x_j}(x)=1$ if $x\in\Delta x_j$ and $0$ elsewhere. We  reconstruct
 similar quantities from the diffusion scheme: it yields 
 $\W^\eps(t,x)=\left(p(x,t),\varepsilon v(x,t)\right)$ 
 which is the 
 solution of the diffusion limit
 $P^0$ (\ref{difffff})-(\ref{eq:diff-v}),
- and  $\W_h^\eps(t)= \left( \sum_{j\in \mathbb Z} p_j(t) {1}_{\Omega_j} ,
-\varepsilon \sum_{j\in \mathbb Z} v_j(t)  {1}_{\Omega_j} \right)$ which is
+ and  $\W_h^\eps(t,x)= \left( \sum_{j\in \mathbb Z} p_j(t) {1}_{\Delta x_j}(x) ,
+\varepsilon \sum_{j\in \mathbb Z} v_j(t)  {1}_{\Delta x_j}(x) \right)$ which is
 the
 solution of the diffusion scheme $P_h^0$ (\ref{schemadifff})-(\ref{eq:vv}). 
 For simplicity we choose a final time $T>0$.
@@ -2077,13 +2077,13 @@ norm of any vertex based quantity $g=(g_r)_{r\in {\rm Vertices}}$ is
 $\|g\|_{L^2(\Omega)}=\sqrt{\sum_r |V_r| |g_r|^2   }$.
 Useful  quantities  are
 \begin{itemize}
-\item $\mathbf V_h^\eps=\left(  \sum_{j\in Cells} p^\eps_j 1_{\Omega_j} , \sum_{j\in Cells} \uu^\eps_j  1_{\Omega_j} \right) $ is the solution of $\mathbf P_h^\eps$.
+\item $\mathbf V_h^\eps(t,\x)=\left(  \sum_{j\in Cells} p^\eps_j(t) 1_{\Omega_j}(\x) , \sum_{j\in Cells} \uu^\eps_j(t)  1_{\Omega_j}(\x) \right) $ is the solution of $\mathbf P_h^\eps$.
 \item 
-$\mathbf V^\eps=\left(p^\eps, \uu^\eps  \right)$ is the solution of $\mathbf P^\eps$,
-\item $\mathbf W_h^\eps=\left(  \sum_{j\in Cells}  p^\eps_j 1_{\Omega_j} ,  \sum_{j\in Cells}  \uu^\eps_j  1_{\Omega_j}  \right) $ is the solution of $\mathbf{DA}_h^\eps$.
+$\mathbf V^\eps(t,\x) =\left(p^\eps, \uu^\eps  \right)(t,\x)$ is the solution of $\mathbf P^\eps$,
+\item $\mathbf W_h^\eps(t,\x) =\left(  \sum_{j\in Cells}  p^\eps_j(t) 1_{\Omega_j}(\x) ,  \sum_{j\in Cells}  \uu^\eps_j(t)  1_{\Omega_j} (\x) \right) $ is the solution of $\mathbf{DA}_h^\eps$.
 Notice that an abuse of notations is been made with the solution
 of $\mathbf P_h^\eps$.
-\item $\mathbf W^\eps= \left( p ,-\frac\eps\sigma \nabla p  \right) $ is the solution of $\mathbf P^0$.
+\item $\mathbf W^\eps (t,\x) = \left( p ,-\frac\eps\sigma \nabla p  \right) (t,\x)$ is the solution of $\mathbf P^0$.
 \end{itemize}
 With these notations,  (\ref{ine3}) is rewritten as
 \begin{equation} \label{eq:enc22}

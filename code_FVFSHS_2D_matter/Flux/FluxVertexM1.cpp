@@ -264,20 +264,22 @@ vectorflux FluxVertexClassicM1(Data & d,int numCell,Mesh & Mh, variable & v, Tab
   for(int r=0;r<Mh.nbnodelocal;r++){
 
      numGr=Mh(numCell,r);
-     sol=ur[numGr];
+     sol=ur[numGr]; // Lagrangian Velocity flux
      beta=inittensor(d,Mh,v,tab,'s',numGr,numCell);
      alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
      
-     qj=q(d,Param.M1,v.var[0][numCell],v.var[1][numCell],v.var[2][numCell]);
-     Calcul_u(d,Mh,v,tab,Param.M1,uj,numCell);
-     rjr=(4./sqrt(3.))*(v.var[0][numCell]/(3+(uj,uj)));
+     qj=q(d,Param.M1,v.var[0][numCell],v.var[1][numCell],v.var[2][numCell]); // pressure in the cell
+     Calcul_u(d,Mh,v,tab,Param.M1,uj,numCell); // velocity in the cell
+     rjr=(4./sqrt(3.))*(v.var[0][numCell]/(3+(uj,uj))); // speed velocity 
      
      Gjr.x=Mh.ljr(numCell,r)*(qj*Mh.njr(numCell,r).x+rjr*(alpha.ten[0][0]*(uj.x-sol.x)+alpha.ten[0][1]*(uj.y-sol.y)));
 			      
-     Gjr.y=Mh.ljr(numCell,r)*(qj*Mh.njr(numCell,r).y+rjr*(alpha.ten[1][0]*(uj.x-sol.x)+alpha.ten[1][1]*(uj.y-sol.y)));						          
-     s[0]=s[0]+remap(d,Mh,v,0,tab,Param,numCell,r,ur,sol)+(sol,Gjr);
-     s[1]=s[1]+remap(d,Mh,v,1,tab,Param,numCell,r,ur,sol)+Gjr.x;                    
-     s[2]=s[2]+remap(d,Mh,v,2,tab,Param,numCell,r,ur,sol)+Gjr.y;
+     Gjr.y=Mh.ljr(numCell,r)*(qj*Mh.njr(numCell,r).y+rjr*(alpha.ten[1][0]*(uj.x-sol.x)+alpha.ten[1][1]*(uj.y-sol.y)));
+     // pressure flux lagrangian 
+     
+     s[0]=s[0]+remap(d,Mh,v,0,tab,Param,numCell,r,ur,sol)+(sol,Gjr); // advection of E at the lagrangian velocity and pressure * velocity flux
+     s[1]=s[1]+remap(d,Mh,v,1,tab,Param,numCell,r,ur,sol)+Gjr.x; // advection of F1 at the lagrangian velocity and pressure  flux               
+     s[2]=s[2]+remap(d,Mh,v,2,tab,Param,numCell,r,ur,sol)+Gjr.y; // advection of F2 at the lagrangian velocity and pressure flux
     
   }
  

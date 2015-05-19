@@ -12,7 +12,7 @@ using namespace std;
 /** File which contains the functions for the plot **/
 
 
-void SaveData(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int ntAnim){
+void SaveData(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,int ntAnim){
   /** Function which find the numbers of the variables plotted **/
   int TabNumVar[300];
   int NbVarWrite;
@@ -41,27 +41,110 @@ void SaveData(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int ntAnim){
       } 
       if(d.dimsave==2){
 	if(d.Typewrite=='N'){
-	  SaveOneData(d,Mh,v,Param,TabNumVar[j],ntAnim);
+	  SaveOneData(d,Mh,v,tab,Param,TabNumVar[j],ntAnim);
 	}
 	if(d.Typewrite=='C'){
-	  SaveOneDatacentercell(d,Mh,v,Param,TabNumVar[j],ntAnim);
+	  SaveOneDatacentercell(d,Mh,v,tab,Param,TabNumVar[j],ntAnim);
 	}
       }
       if(d.dimsave==1 && d.Ny == 1){
-	SaveOneData1D(d,Mh,v,Param,TabNumVar[j],ntAnim);
+	SaveOneData1D(d,Mh,v,tab,Param,TabNumVar[j],ntAnim);
 	
       }
     }
 
   
   if(Param.Model == 5) {
-    SaveInterEner(d,Mh,v,Param,ntAnim); 
+    SaveInterEner(d,Mh,v,tab,Param,ntAnim); 
+  }
+  if(Param.Model == 3) {
+    Save_vorticity(d,Mh,v,tab,Param,ntAnim); 
   }
 
 }
 
 
-void SaveOneData(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int Num,int ntAnim){
+void Save_vorticity(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,int ntAnim){
+ /** Function which plot in 2D the variable "num" using the average in the cell**/
+  char string[255];
+  FILE *fileresult=NULL;
+  int j,n;
+  int in=0;
+  double w=0,u2_x=0,u1_y=0,dis=0;
+  int k,A,B,C,D;
+  int **tabCellEdge=NULL;// table with the neighbour cell for each edge//  
+
+  
+  if(d.Anim=='y'){ sprintf(string,"%s%s-%04d.%s","./DATA/","vorticity_1",ntAnim,d.suffixe);}
+
+  else { sprintf(string,"%s%s.%s","./DATA/","vorticit_1",d.suffixe);}
+  fileresult=fopen(string,"w");
+  for(j=0;j<Mh.nc;j++){
+    if(Mh.cells[j].lab!=-1){
+      A=Mh(j,0);
+      B=Mh(j,1);
+      C=Mh(j,2);
+      D=Mh(j,3);
+      
+      tabCellEdge = new int*[4];
+      for(int i=0;i<4;i++){
+	tabCellEdge[i]=new int[3];
+      }
+      
+      tabCellEdge[0][0]=InverseEdge(Mh,A,B,j,tab);
+      tabCellEdge[0][1]=A;
+      tabCellEdge[0][2]=B;
+      tabCellEdge[1][0]=InverseEdge(Mh,B,C,j,tab);
+      tabCellEdge[1][1]=B;
+      tabCellEdge[1][2]=C;
+      tabCellEdge[2][0]=InverseEdge(Mh,C,D,j,tab);
+      tabCellEdge[2][1]=C;
+      tabCellEdge[2][2]=D;
+      tabCellEdge[3][0]=InverseEdge(Mh,D,A,j,tab);
+      tabCellEdge[3][1]=D;
+      tabCellEdge[3][2]=A;
+
+      k=tabCellEdge[1][0];
+      dis=sqrt(pow(Mh.xj(k).x-Mh.xj(j).x,2)+pow(Mh.xj(k).y-Mh.xj(j).y,2));
+      u2_x=(v.var[2][k]-v.var[2][j])/dis;
+      k=tabCellEdge[2][0];
+      dis=sqrt(pow(Mh.xj(k).x-Mh.xj(j).x,2)+pow(Mh.xj(k).y-Mh.xj(j).y,2));
+      u1_y=(v.var[1][k]-v.var[1][j])/dis;
+      w=u1_y-u2_x;
+     
+    
+      if(Mh.nbnodelocal==4)
+	{n=Mh(j,0);
+	  fprintf(fileresult,"%e %e %e\n",Mh.xr(n).x,Mh.xr(n).y,w);
+	n=Mh(j,1);
+	fprintf(fileresult,"%e %e %e\n\n",Mh.xr(n).x,Mh.xr(n).y,w);
+	n=Mh(j,3);
+	fprintf(fileresult,"%e %e %e\n",Mh.xr(n).x,Mh.xr(n).y,w);
+	n=Mh(j,2);
+	fprintf(fileresult,"%e %e %e\n\n\n",Mh.xr(n).x,Mh.xr(n).y,w);
+       
+	
+	}
+      if(Mh.nbnodelocal==3)
+	{n=Mh(j,0);
+	  fprintf(fileresult,"%e %e %e\n",Mh.xr(n).x,Mh.xr(n).y,w);
+	n=Mh(j,1);
+	fprintf(fileresult,"%e %e %e\n\n",Mh.xr(n).x,Mh.xr(n).y,w);
+	n=Mh(j,2);
+	fprintf(fileresult,"%e %e %e\n",Mh.xr(n).x,Mh.xr(n).y,w);
+	n=Mh(j,2);
+	fprintf(fileresult,"%e %e %e\n\n\n",Mh.xr(n).x,Mh.xr(n).y,w);       
+	
+	}
+    }
+      
+   }
+  
+  fclose(fileresult);
+}
+
+
+void SaveOneData(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,int Num,int ntAnim){
  /** Function which plot in 2D the variable "num" using the average in the cell**/
   char string[255];
   FILE *fileresult=NULL;
@@ -86,7 +169,6 @@ void SaveOneData(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int Num,int
 	fprintf(fileresult,"%e %e %e\n",Mh.xr(n).x,Mh.xr(n).y,v.var[Num][j]);
 	n=Mh(j,2);
 	fprintf(fileresult,"%e %e %e\n\n\n",Mh.xr(n).x,Mh.xr(n).y,v.var[Num][j]);
-       
 	
 	}
       if(Mh.nbnodelocal==3)
@@ -138,7 +220,7 @@ void SaveOneData(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int Num,int
 
 
 
-void SaveOneData1D(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int Num,int ntAnim){
+void SaveOneData1D(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,int Num,int ntAnim){
 /** Function which plot in 1D the variable "num" using the average in the cell **/
   char string[255];
   FILE *fileresult=NULL;
@@ -167,7 +249,7 @@ void SaveOneData1D(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int Num,i
 
 
 
-void SaveOneDatacentercell(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int Num,int ntAnim){
+void SaveOneDatacentercell(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,int Num,int ntAnim){
 /** Function which plot in 2D the variable "num" using the center of the cell **/
   char string[255];
   FILE *fileresult=NULL;
@@ -250,7 +332,7 @@ void LoadRestart(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param, double & I
 
   
 
-void SaveMesh(Data & d,Mesh & Mh){
+void SaveMesh(Data & d,Mesh & Mh,TabConnecInv & tab){
 /** Function which plot the mesh **/
   char string[255];
   FILE *fileresult=NULL;
@@ -260,19 +342,19 @@ void SaveMesh(Data & d,Mesh & Mh){
   fileresult=fopen(string,"w");
 
   for(j=0;j<Mh.nc;j++){
-    //  if(Mh.cells[j].lab!=-1){
-    for(r=0;r<Mh.nbnodelocal;r++){
-      n=Mh(j,r);
-      fprintf(fileresult,"%e %e\n",Mh.xr(n).x,Mh.xr(n).y);
+    if(Mh.cells[j].lab!=-1){
+      for(r=0;r<Mh.nbnodelocal;r++){
+	n=Mh(j,r);
+	fprintf(fileresult,"%e %e\n",Mh.xr(n).x,Mh.xr(n).y);
+      }
+      fprintf(fileresult,"\n");
     }
-    fprintf(fileresult,"\n");
-    // }
   }
   fclose(fileresult);
 }
 
 
-void SaveFonction2D(Data & d,Mesh & Mh,ParamPhysic & Param,float t,Vertex c,int Num){
+void SaveFonction2D(Data & d,Mesh & Mh,TabConnecInv & tab,ParamPhysic & Param,float t,Vertex c,int Num){
 /** Function which plot in 2D the exact solution "num" **/
   char string[255];
   FILE *fileresult=NULL;
@@ -320,7 +402,7 @@ void SaveFonction2D(Data & d,Mesh & Mh,ParamPhysic & Param,float t,Vertex c,int 
 
 
 
-void SaveFonction1D(Data & d,Mesh & Mh,ParamPhysic & Param,float t,Vertex c,int Num){
+void SaveFonction1D(Data & d,Mesh & Mh,TabConnecInv & tab,ParamPhysic & Param,float t,Vertex c,int Num){
 /** Function which plot in 1D the exact solution "num" **/
   char string[255];
   FILE *fileresult=NULL;
@@ -340,7 +422,7 @@ void SaveFonction1D(Data & d,Mesh & Mh,ParamPhysic & Param,float t,Vertex c,int 
   fclose(fileresult);
 }
 
-void SaveFonction(Data & d,Mesh & Mh,ParamPhysic & Param,float t,Vertex c){
+void SaveFonction(Data & d,Mesh & Mh,TabConnecInv & tab,ParamPhysic & Param,float t,Vertex c){
 /** Function which find the numbers of the exact solutions plotted **/
  int TabNumVar[300];
   int NbVarWrite;
@@ -367,14 +449,14 @@ void SaveFonction(Data & d,Mesh & Mh,ParamPhysic & Param,float t,Vertex c){
     for(j=0;j<NbVarWrite;j++){
       if(d.dimsave==2){
 	if(d.dimsave==2 && Param.Model != 5){
-	  SaveFonction2D(d,Mh,Param,t,c,TabNumVar[j]);
+	  SaveFonction2D(d,Mh,tab,Param,t,c,TabNumVar[j]);
 	}
 	if(d.dimsave==2 && Param.Model == 5){
-	  SaveFonction2DEuler(d,Mh,Param,t,c,TabNumVar[j]);
+	  SaveFonction2DEuler(d,Mh,tab,Param,t,c,TabNumVar[j]);
 	}
       }
       if(d.dimsave==1 && Param.Model != 5){
-	SaveFonction1D(d,Mh,Param,t,c,TabNumVar[j]);
+	SaveFonction1D(d,Mh,tab,Param,t,c,TabNumVar[j]);
 	
       }
     }

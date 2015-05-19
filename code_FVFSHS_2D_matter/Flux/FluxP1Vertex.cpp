@@ -23,7 +23,7 @@ vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecI
   int z=0;
   double signode=0;
   double epsnode=0;
-  double var0jr=0, var1jr=0, var2jr=0;
+
 
   if(d.scheme==1){
     z=1;} /** JL-(a) scheme**/
@@ -41,21 +41,11 @@ vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecI
      signode=AverageSigNodeP1(d,Mh,v,tab,Param.P1,numGr,numCell);
      epsnode=AverageEpsNodeP1(d,Mh,v,tab,Param.P1,numGr,numCell);
 
-     var0jr=InterLineVertex(d,Mh,v,tab,Param,0,d.Total_order,numCell,r);
-     var1jr=InterLineVertex(d,Mh,v,tab,Param,1,d.Total_order,numCell,r);
-     var2jr=InterLineVertex(d,Mh,v,tab,Param,2,d.Total_order,numCell,r);
-       
-     Fu1=var0jr*Mh.njr(numCell,r).x+alpha.ten[0][0]*(var1jr-sol.x)+alpha.ten[0][1]*(var2jr-sol.y)
-       -z*(signode/epsnode)*(sol.x*beta.ten[0][0]+sol.y*beta.ten[0][1]);
+      Fu1=v.var[0][numCell]*Mh.njr(numCell,r).x+alpha.ten[0][0]*(v.var[1][numCell]-sol.x)+alpha.ten[0][1]*(v.var[2][numCell]-sol.y)
+      -z*(signode/epsnode)*(sol.x*beta.ten[0][0]+sol.y*beta.ten[0][1]);
      
-     Fu2=var0jr*Mh.njr(numCell,r).y+alpha.ten[1][0]*(var1jr-sol.x)+alpha.ten[1][1]*(var2jr-sol.y)
+      Fu2=v.var[0][numCell]*Mh.njr(numCell,r).y+alpha.ten[1][0]*(v.var[1][numCell]-sol.x)+alpha.ten[1][1]*(v.var[2][numCell]-sol.y)
        -z*(signode/epsnode)*(sol.x*beta.ten[1][0]+sol.y*beta.ten[1][1]);
-
-     // Fu1=v.var[0][numCell]*Mh.njr(numCell,r).x+alpha.ten[0][0]*(v.var[1][numCell]-sol.x)+alpha.ten[0][1]*(v.var[2][numCell]-sol.y)
-     //  -z*(signode/epsnode)*(sol.x*beta.ten[0][0]+sol.y*beta.ten[0][1]);
-     
-     //Fu2=v.var[0][numCell]*Mh.njr(numCell,r).y+alpha.ten[1][0]*(v.var[1][numCell]-sol.x)+alpha.ten[1][1]*(v.var[2][numCell]-sol.y)
-      // -z*(signode/epsnode)*(sol.x*beta.ten[1][0]+sol.y*beta.ten[1][1]);
     
 
      s[0]=s[0]+Mh.ljr(numCell,r)*(sol.x*Mh.njr(numCell,r).x+sol.y*Mh.njr(numCell,r).y);
@@ -85,7 +75,6 @@ vectorflux FluxVertexP1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabCo
   double epsnode=0;
   double Mr[2][2];
   double temp=0;
- double var0jr=0, var1jr=0, var2jr=0;
   
 
   
@@ -95,25 +84,21 @@ vectorflux FluxVertexP1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabCo
     MrConstructP1(d,numGr,Mh,v,tab,Param,Mr);
     
     sol=ur[numGr];
-
-     
-    var0jr=InterLineVertex(d,Mh,v,tab,Param,0,d.Total_order,numCell,r);
-     var1jr=InterLineVertex(d,Mh,v,tab,Param,1,d.Total_order,numCell,r);
-     var2jr=InterLineVertex(d,Mh,v,tab,Param,2,d.Total_order,numCell,r);
     
     alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
     signode=AverageSigNodeP1(d,Mh,v,tab,Param.P1,numGr,numCell);
     epsnode=AverageEpsNodeP1(d,Mh,v,tab,Param.P1,numGr,numCell);
       
            // calcul du flux ujr      
-    Fu1=var0jr*Mh.njr(numCell,r).x+(alpha.ten[0][0]*Mr[0][0]+alpha.ten[0][1]*Mr[1][0])*(var1jr-sol.x)+(alpha.ten[0][0]*Mr[0][1]+alpha.ten[0][1]*Mr[1][1])*(var2jr-sol.y);
+    Fu1=v.var[0][numCell]*Mh.njr(numCell,r).x+(alpha.ten[0][0]*Mr[0][0]+alpha.ten[0][1]*Mr[1][0])*(v.var[1][numCell]-sol.x)+(alpha.ten[0][0]*Mr[0][1]+alpha.ten[0][1]*Mr[1][1])*(v.var[2][numCell]-sol.y);
     
-    Fu2=var0jr*Mh.njr(numCell,r).y+(alpha.ten[1][0]*Mr[0][0]+alpha.ten[1][1]*Mr[1][0])*(var1jr-sol.x)+(alpha.ten[1][0]*Mr[0][1]+alpha.ten[1][1]*Mr[1][1])*(var2jr-sol.y);
+    Fu2=v.var[0][numCell]*Mh.njr(numCell,r).y+(alpha.ten[1][0]*Mr[0][0]+alpha.ten[1][1]*Mr[1][0])*(v.var[1][numCell]-sol.x)+(alpha.ten[1][0]*Mr[0][1]+alpha.ten[1][1]*Mr[1][1])*(v.var[2][numCell]-sol.y);
            // sommation des flux
     temp=sol.x;
+    
     sol.x=Mr[0][0]*sol.x+Mr[0][1]*sol.y;
     sol.y=Mr[1][0]*temp+Mr[1][1]*sol.y;
-      
+    
     s[0]=s[0]+Mh.ljr(numCell,r)*(sol.x*Mh.njr(numCell,r).x+sol.y*Mh.njr(numCell,r).y);
     s[1]=s[1]+Mh.ljr(numCell,r)*Fu1;
     s[2]=s[2]+Mh.ljr(numCell,r)*Fu2;
@@ -134,15 +119,10 @@ void MatrixP1(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & 
   int numLrj=0, jG=0; //  numero globale de r
   double signode=0;
   double epsnode=0;
-  double var0jr=0,var1jr=0,var2jr=0;
   
   for(int j=0;j<tab.TabInv[numGr].taille;j++){
     jG=tab.TabInv[numGr].TabCell[j];
     numLrj=NodeGtoL(Mh,jG,numGr);  
-
-    var0jr=InterLineVertex(d,Mh,v,tab,Param,0,d.Total_order,jG,numLrj);
-    var1jr=InterLineVertex(d,Mh,v,tab,Param,1,d.Total_order,jG,numLrj);
-    var2jr=InterLineVertex(d,Mh,v,tab,Param,2,d.Total_order,jG,numLrj);
     
     beta=inittensor(d,Mh,v,tab,'s',numGr,jG);
     alpha=inittensor(d,Mh,v,tab,'h',numGr,jG);//numero local de r dans j    
@@ -158,8 +138,8 @@ void MatrixP1(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & 
     a21=a21+Mh.ljr(jG,numLrj)*(alpha.ten[1][0]+(signode/epsnode)*beta.ten[1][0]);
     a22=a22+Mh.ljr(jG,numLrj)*(alpha.ten[1][1]+(signode/epsnode)*beta.ten[1][1]);      
     
-    b1=b1+Mh.ljr(jG,numLrj)*((var0jr)*Mh.njr(jG,numLrj).x+alpha.ten[0][0]*var1jr+alpha.ten[0][1]*var2jr);
-    b2=b2+Mh.ljr(jG,numLrj)*((var0jr)*Mh.njr(jG,numLrj).y+alpha.ten[1][0]*var1jr+alpha.ten[1][1]*var2jr);   
+    b1=b1+Mh.ljr(jG,numLrj)*((v.var[0][jG])*Mh.njr(jG,numLrj).x+alpha.ten[0][0]*v.var[1][jG]+alpha.ten[0][1]*v.var[2][jG]);
+    b2=b2+Mh.ljr(jG,numLrj)*((v.var[0][jG])*Mh.njr(jG,numLrj).y+alpha.ten[1][0]*v.var[1][jG]+alpha.ten[1][1]*v.var[2][jG]);   
   }
 
 }

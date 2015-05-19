@@ -12,7 +12,7 @@
 using namespace std;
 
 /**
- @brief Class: this class contains the parameters of the code.
+ @brief Class: this class contains the parameter of the code.
 **/
 
 class Data {
@@ -30,14 +30,14 @@ class Data {
   int scheme;
    /** Type of scheme (N for nodal scheme, E for edge scheme) **/
   char Typescheme;
-  /** Test case number **/
+  /** Test case number**/
   int nTest; 
   /** Final time**/
   float Tf;
   /** CFL **/
-  int Total_order;
-  /** CFL **/
   float CFL;
+  /** total order **/
+  int Total_order;
   
   /** Mesh name **/
   char *NameMesh;  
@@ -49,8 +49,7 @@ class Data {
   /** Model :
    - Diffusion : diffusion equation
    - P1 : P1 model
-   - M1 : M1 model
-   - M1Matter : M1 model with matter
+   - M1 : M1 odel
    - Advection : advection
    - Euler : Euler
    - P1Matter : P1 model with matter**/

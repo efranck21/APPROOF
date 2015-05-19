@@ -46,6 +46,8 @@ void BC_Periodic_P1(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double 
 
 void BCDirichlet_P1(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time);
 
+void BC_2DRiemann_P1(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time);
+
 /////////// P1 Matter functions ////////////
 
 void BoundaryConditionP1Matter(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time);

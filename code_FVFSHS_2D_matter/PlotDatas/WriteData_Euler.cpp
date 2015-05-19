@@ -10,7 +10,7 @@
 /** File which contains the functions for the plot of Euler quantities **/
 
 
-void SaveInterEner(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int ntAnim){
+void SaveInterEner(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,int ntAnim){
 /** Function which plot the internal energy for Eler model **/
   char string[255];
   FILE *fileresult=NULL;
@@ -55,7 +55,7 @@ void SaveInterEner(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int ntAni
 }
 
 
-void SaveFonction2DEuler(Data & d,Mesh & Mh,ParamPhysic & Param,float t,Vertex c,int Num){
+void SaveFonction2DEuler(Data & d,Mesh & Mh,TabConnecInv & tab,ParamPhysic & Param,float t,Vertex c,int Num){
 /** Function which plot the non conservative quantities for Euler**/
   char string[255];
   FILE *fileresult=NULL;

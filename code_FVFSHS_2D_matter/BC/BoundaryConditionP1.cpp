@@ -42,9 +42,26 @@ For triangular mesh only the Boundary conditions based on th exact solutions are
 	break;
 
       case 6 : BC_Periodic_P1(d,Mh,v,Param,time);
-       
+
+	break;
+
+      case 7 : BC_2DRiemann_P1(d,Mh,v,Param,time);
 	
-	break;}
+	break;
+
+      case 8 : BC_2DRiemann_P1(d,Mh,v,Param,time);
+	
+	break;
+
+      case 9 : BC_2DRiemann_P1(d,Mh,v,Param,time);
+	
+	break;
+
+      case 10 : BC_2DRiemann_P1(d,Mh,v,Param,time);
+	
+	break;
+
+      }
   }
 
   if (d.Typemesh=='T'){
@@ -119,6 +136,70 @@ void BCNeumann_P1(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double ti
   }
 }
 
+
+void BC_2DRiemann_P1(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time){
+ /** Function which initialize the phantom cells to have Neumann condition **/
+  for(int j=0;j<Mh.nc;j++){
+    if(Mh.cells[j].lab==-1){
+
+	    //cote gauche
+
+	    if((Mh.xj(j).x < 0) && (Mh.xj(j).y> 0 && Mh.xj(j).y< d.Ty)){
+	     v.var[0][j]=v.var[0][j+1];
+	     v.var[1][j]=v.var[1][j+1];	//-
+	     v.var[2][j]=v.var[2][j+1];
+	   }
+	    //cote droit
+	    if(Mh.xj(j).x> d.Tx && (Mh.xj(j).y> 0 && Mh.xj(j).y< d.Ty)){
+	     v.var[0][j]=v.var[0][j-1];
+	     v.var[1][j]=v.var[1][j-1];
+	     v.var[2][j]=v.var[2][j-1]; //-
+	   }
+	    //cote bas
+	    if(Mh.xj(j).y< 0 && (Mh.xj(j).x> 0  && Mh.xj(j).x< d.Tx)){
+	      v.var[0][j]=v.var[0][j+(d.Nx+2)];
+	      v.var[1][j]=v.var[1][j+(d.Nx+2)];
+	      v.var[2][j]=v.var[2][j+(d.Nx+2)]; //-
+	   }
+	    //cote haut
+	    if(Mh.xj(j).y> d.Ty && (Mh.xj(j).x > 0  && Mh.xj(j).x < d.Tx)){
+	      v.var[0][j]=v.var[0][j-(d.Nx+2)];
+	      v.var[1][j]=v.var[1][j-(d.Nx+2)];
+	      v.var[2][j]=v.var[2][j-(d.Nx+2)]; //-
+	    }
+
+      //coin bas gauche
+	    
+	    if(Mh.xj(j).y< 0 && Mh.xj(j).x<0){
+	      v.var[0][j]=v.var[0][j+1];
+	      v.var[1][j]=-v.var[1][j+1]; // -
+	      v.var[2][j]=v.var[2][j+1]; //-
+	   }
+
+	   //coin haut gauche
+	    if(Mh.xj(j).y> d.Ty && Mh.xj(j).x<0){
+	      v.var[0][j]=v.var[0][j+1];
+	      v.var[1][j]=-v.var[1][j+1]; //-
+	      v.var[2][j]=v.var[2][j+1];//-
+
+	   }
+
+	    //coin haut droit
+	    if(Mh.xj(j).y>d.Ty && Mh.xj(j).x>d.Tx){
+	      v.var[0][j]=v.var[0][j-1];
+	      v.var[1][j]=v.var[1][j-1]; //-
+	      v.var[2][j]=-v.var[2][j-1]; //-
+	   }
+	    //coin bas droit
+	    if(Mh.xj(j).y < 0 && Mh.xj(j).x>d.Tx){
+	      v.var[0][j]=v.var[0][j-1];
+	      v.var[1][j]=v.var[1][j-1]; //-
+	      v.var[2][j]=-v.var[2][j-1]; //-
+	    }
+	    
+    }
+  }
+}
 
 
 void BCDirichlet_P1(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time){
@@ -231,13 +312,14 @@ void BC_Periodic_P1(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double 
 	       if(Mh.xj(j).y> d.Ty && Mh.xj(j).x<0){
 		 v.var[0][j]=v.var[0][j-((d.Nx+2)*(d.Ny-1)+2)];
 		 v.var[1][j]=v.var[1][j-((d.Nx+2)*(d.Ny-1)+2)];	//-
-	       v.var[2][j]=v.var[2][j-((d.Nx+2)*(d.Ny-1)+2)];
+		 v.var[2][j]=v.var[2][j-((d.Nx+2)*(d.Ny-1)+2)];
 	   }
 	    //coin haut droit
 	       if(Mh.xj(j).y>d.Ty && Mh.xj(j).x>d.Tx){
 	         v.var[0][j]=v.var[0][j-((d.Nx+2)*(d.Ny+1)-2)];
-	      v.var[1][j]=v.var[1][j-(d.Nx+2)*(d.Ny+1)-2];	//-
-	      v.var[2][j]=v.var[2][j-(d.Nx+2)*(d.Ny+1)-2];	   }
+		 v.var[1][j]=v.var[1][j-((d.Nx+2)*(d.Ny+1)-2)];	//-
+		 v.var[2][j]=v.var[2][j-((d.Nx+2)*(d.Ny+1)-2)];
+	       }
 	    //coin bas droit
 	     if(Mh.xj(j).y < 0 && Mh.xj(j).x>d.Tx){
 	       v.var[0][j]=v.var[0][j+(d.Nx+2)*(d.Ny-1)+2];

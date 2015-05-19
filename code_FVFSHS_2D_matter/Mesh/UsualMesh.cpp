@@ -985,7 +985,7 @@ Mesh CheckMesh(Data & d){
     if (d.Nx==630){ mod=90;}
     if (d.Nx==700){ mod=100;}
     
-    Mesh Mh(d);
+     Mesh Mh(d);
     Dx=d.Tx/(double)d.Nx; // uniform step mesh in the x direction
     Dy=d.Ty/(double)d.Ny;
     

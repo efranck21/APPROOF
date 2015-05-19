@@ -45,10 +45,10 @@ int main() {
   /** Connectivity table construction **/
   struct TabConnecInv TConnectInv;
   CreateTabInv(Mh,TConnectInv);  
-
+  
   /** Physical parameters construction **/
   ParamPhysic Param(d,Mh);
-  
+
   /** Variable contruction and initialization **/
   variable v(d,Mh.nc,Mh.nv);
   
@@ -61,7 +61,7 @@ int main() {
 
   /** Plot informations of the run and plot mesh **/
   WriteDataToMain(d,Param);
-  SaveMesh(d,Mh);
+  SaveMesh(d,Mh,TConnectInv);
  
   /** definition of the time quantities **/
   int SI=0;
@@ -69,7 +69,7 @@ int main() {
   int ntAnim=0;
 
  
- 
+  cout << "Time step: "<<dt<<endl;
 
 
   /** Time loop **/    
@@ -95,7 +95,7 @@ int main() {
 
   /** Save final data **/
   SaveRestart(d,Mh,v,Param,0,time);
-  SaveData(d,Mh,v,Param,ntAnim);   
+  SaveData(d,Mh,v,TConnectInv,Param,ntAnim);   
  
   /** free memory **/
   for(int i=0;i<TConnectInv.nbvertex;i++){
@@ -106,9 +106,10 @@ int main() {
   
   /** Computation and plot of exact solutions. Computation of errors **/
   if(TraceSolfond(d,Param)==1){
+    cout<< "Final error"<<endl;
     cout <<"The L"<<1<<" norm is : "<<Diagnostics_Error(d,Mh,v,Param,d.Tf,1.)<<endl;     
     cout <<"The L"<<2<<" norm is : "<<Diagnostics_Error(d,Mh,v,Param,d.Tf,2.)<<endl;
-    SaveFonction(d,Mh,Param,d.Tf,Mh.cells[in].centercell); 
+    SaveFonction(d,Mh,TConnectInv,Param,d.Tf,Mh.cells[in].centercell); 
   }  
   cout <<" The step mesh is :"<<StepMesh(Mh)<<endl;
  

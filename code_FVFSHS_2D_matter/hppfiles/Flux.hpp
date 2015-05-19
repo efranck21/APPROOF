@@ -139,7 +139,11 @@ void MatrixM1Matter(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhy
 vectorflux FluxVertexClassicM1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur);
 
 
+double q_M1M(Data & d, ParamM1Matter & M1Matter,double E,double F1, double F2);
 
+void  Calcul_u_M1M(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab, ParamM1Matter & M1Matter,R2 & u,int numCell);
+
+double coefk_M1M(Data & d, ParamM1Matter & M1Matter,double E,double F1, double F2);
 
 
 

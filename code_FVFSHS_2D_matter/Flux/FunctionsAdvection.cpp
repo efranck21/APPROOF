@@ -227,7 +227,7 @@ double InterLineVertex(Data d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhy
    /** function which compute the value used by the scheme. Cell average for the order 1, linear reconstruction for the order 2 **/
   double res=0;
   int numGr;
-
+  
   if(ordre==1){
     res=v.var[var][j];
   }
@@ -238,6 +238,7 @@ double InterLineVertex(Data d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhy
       Grad=Gradiant(d,Mh,v,var,tab,Param,numGr);
       m=VertexSlope(d,Mh,v,var,tab,Param,j,Grad);
       res=v.var[var][j]-m*((Mh.xr(j,r)-Mh.xj(j)),Grad);
+
     }
   
   return res;

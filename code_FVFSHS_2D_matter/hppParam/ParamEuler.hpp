@@ -113,50 +113,7 @@ public:
  LSProblem & operator=(const LSProblem & ls){
    NColum=ls.NColum;
    NLign=ls.NLign;
-   /**
-   if(A==NULL){
-     A = new double[ls.NLign*ls.NColum];
-   }
-
-   for(int i=0;i<ls.NLign*ls.NColum;i++){
-     A[i]= ls.A[i];
-     }
-   
-   if(b_rho==NULL){
-     b_rho = new double[ls.NLign];
-   }
-   for(int i=0;i<ls.NLign;i++){
-     b_rho[i]= ls.b_rho[i];
-   }
-   
-    if(b_pressure==NULL){
-     b_pressure = new double[ls.NLign];
-   }
-   for(int i=0;i<ls.NLign;i++){
-     b_pressure[i]= ls.b_pressure[i];
-     }
-   
-   if(Sol_rho==NULL){
-     Sol_rho = new double[ls.NColum];
-   }
-   for(int i=0;i<ls.NColum;i++){
-     Sol_rho[i]= ls.Sol_rho[i];
-   }
-   
-   if(Sol_pressure==NULL){
-     Sol_pressure = new double[ls.NColum];
-   }
-   for(int i=0;i<ls.NColum;i++){
-     Sol_pressure[i]= ls.Sol_pressure[i];
-   }
-   
-   if(Stencil==NULL){
-     Stencil= new int[ls.NLign];
-   }
-   for(int i=0;i<ls.NLign;i++){
-     Stencil[i]= ls.Stencil[i];
-   }
-   **/
+  
    
    if(A!=NULL){
      delete [] A;

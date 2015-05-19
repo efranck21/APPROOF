@@ -45,16 +45,18 @@ void ExplicitDiscret(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv
        if(time+dt>d.Tf) {
 	 dt=d.Tf-time;
        }
+      
 
        /** apply boundary condition (phantom cell) **/ 
        BoundaryCondition(d,Mh,v,Param,time);
-       
+  
        if(d.Anim=='y' && time>=d.dtAnim*ntAnim){
-	  SaveRestart(d,Mh,v,Param,nt,time);
-	 SaveData(d,Mh,v,Param,ntAnim);
+   
+	 SaveRestart(d,Mh,v,Param,nt,time);   
+	 SaveData(d,Mh,v,TConnectInv,Param,ntAnim);
+	    
 	 ntAnim++;
-       } 
-
+       }  
        /** Diagnostic : masse, velocity etc **/
         Diagnostics_Quantities(d,Mh,v,Param,nt,time);   
 
@@ -75,7 +77,7 @@ void ExplicitDiscret(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv
        /** Computation of the flux and source term and update of the time solution **/
        #pragma omp parallel for private(flux,source) 
        for( j=0;j<Mh.nc;j++){
-       if(Mh.cells[j].lab!=-1){
+	  if(Mh.cells[j].lab!=-1){
             if(d.Typescheme == 'N' ){
 	      flux=ChoiceFluxN(d,j,Mh,v,TConnectInv,Param,ur);
             }  
@@ -87,6 +89,7 @@ void ExplicitDiscret(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv
 	    source=ChoiceSource(d,j,Mh,v,TConnectInv,Param,ur);
 	 for(int i=0;i<v.nbvar;i++){
 	   temp.var[i][j]=v.var[i][j]+(dt/Mh.area(j))*(flux.vflux[i]+source.vflux[i]);
+	   //cout<<" ppp "<<flux.vflux[i]<<" "<<source.vflux[i]<<endl;
 	   if (v.var[0][j]<0){
 	     c++; 
 	   }   

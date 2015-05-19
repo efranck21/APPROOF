@@ -110,7 +110,9 @@ void SemiImplicit(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv, P
   temp=v;
   R2 *ur =new R2[Mh.nv];
   double c=0;
- 
+  FILE *fileresult=NULL;
+  char string[255];
+  
   /** computaion of the table for variables parameters  **/ 
   ParamPhysic_InitTab(d,Mh,v,TConnectInv,Param);
 
@@ -122,6 +124,9 @@ void SemiImplicit(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv, P
     }
   }
 
+  //sprintf(string,"TimeError.dat");
+  //fileresult=fopen(string,"w");
+  
    while(time<d.Tf)
      {
        if(time+dt>d.Tf) {
@@ -129,8 +134,11 @@ void SemiImplicit(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv, P
        }
 
        if(d.Anim=='y' && time>=d.dtAnim*ntAnim){
+	 
+	 //	 fprintf(fileresult,"%e %e %e %e\n",time,Diagnostics_Error(d,Mh,v,Param,time,1.),Diagnostics_Error(d,Mh,v,Param,time,2.),Diagnostics_Error(d,Mh,v,Param,time,2.)/NormLP_Stability(d,Mh,v,Param,2));
+
          SaveRestart(d,Mh,v,Param,nt,time);
-	 SaveData(d,Mh,v,Param,ntAnim);
+	 SaveData(d,Mh,v,TConnectInv,Param,ntAnim);
  
 	 ntAnim++;
        } 
@@ -201,7 +209,8 @@ void SemiImplicit(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv, P
 	  
      }
    delete [] ur;
-    cout<<"negative coefficients " <<c<<" "<<" dt "<<dt<<endl;
+   
+   // fclose(fileresult);
 }
 
 

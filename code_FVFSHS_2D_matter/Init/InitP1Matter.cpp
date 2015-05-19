@@ -26,7 +26,7 @@ void InitP1Matter(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param){
 	v.var[0][j]=Param.P1M.a_value*pow(T,4.);
 	v.var[1][j]=0;
 	v.var[2][j]=0;
-	v.var[2][j]=T;
+	v.var[3][j]=T;
       }
       break;
       

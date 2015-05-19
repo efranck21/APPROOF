@@ -20,13 +20,19 @@ void InitM1Matter(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param){
     {
             
         case 1 :
-            // Marshak linear
-            T=300;
             for(int j=0;j<Mh.nc;j++){
-                v.var[0][j]=Param.M1M.a_value*pow(T,4.);
-                v.var[1][j]=0;
-                v.var[2][j]=0;
-                v.var[2][j]=T;
+	      if(Mh.xj(j).x < 0.5*d.Tx){
+		v.var[0][j]=2;
+		v.var[1][j]=0;
+		v.var[2][j]=0;
+		v.var[3][j]=1.e-14;
+	      }
+	      else {
+		v.var[0][j]=1.e-14;
+		v.var[1][j]=0;
+		v.var[2][j]=0;
+		v.var[3][j]=2;
+	      }
             }
             break;
             

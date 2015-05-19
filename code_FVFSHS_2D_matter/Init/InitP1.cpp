@@ -16,6 +16,7 @@
   **/
   
     int in=0;
+    double a=0;
     in=centerdomain(d,Mh);
      switch(d.nTest)
     {
@@ -72,7 +73,63 @@
 	v.var[2][j]=0; /// A verifier
       }     
       break;
-    
+
+       case 7 :
+      for(int j=0;j<Mh.nc;j++){
+	if( ((Mh.xj(j).x -1.0) * (Mh.xj(j).y -1.0))>0.0){
+	  a=1;
+	}  
+	else  {
+	  a=-1;
+	} 
+	v.var[0][j]=0;
+	v.var[1][j]=0;
+	v.var[2][j]=a; /// A verifier
+      }     
+      break;
+
+       case 8 :
+      for(int j=0;j<Mh.nc;j++){
+	if( ((Mh.xj(j).x -1.0) * (Mh.xj(j).y -1.0))>0.0){
+		  a=1;
+	}  
+	else  {
+	  a=-1;
+	} 
+	v.var[0][j]=0;
+	v.var[1][j]=a;
+	v.var[2][j]=a; /// A verifier
+      }     
+      break;
+
+       case 9 :
+      for(int j=0;j<Mh.nc;j++){
+	if( ((Mh.xj(j).x -1.0) * (Mh.xj(j).y -1.0))>0.0){
+	  a=1;
+	}  
+	else  {
+	  a=-1;
+	}     
+	v.var[0][j]=a;
+	v.var[1][j]=a;
+	v.var[2][j]=a; /// A verifier
+      }     
+      break;
+
+      case 10 :
+      for(int j=0;j<Mh.nc;j++){
+	if( ((Mh.xj(j).x -1.0) * (Mh.xj(j).y -1.0))>0.0 && Mh.xj(j).x>1.0){
+	  a=1;
+	}  
+	else  {
+	  a=0;
+	}     
+	v.var[0][j]=a;
+	v.var[1][j]=0;
+	v.var[2][j]=0; /// A verifier
+      }     
+      break;
+
   }
 }
 

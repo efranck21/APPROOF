@@ -348,7 +348,7 @@ class Mesh { public :
     
      
    }
-  Mesh(const Mesh & M){
+  Mesh(const Mesh &  M){
     
      
      nv=M.nv; nc=M.nc; nbnodelocal=M.nbnodelocal;

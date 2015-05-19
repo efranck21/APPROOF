@@ -113,6 +113,20 @@ double NormLP_Stability(Data & d, Mesh & Mh,variable & v,ParamPhysic & Param,dou
      return res;	 
 }
 
+double NormLP_One_variable_Stability(Data & d, Mesh & Mh,variable & v,ParamPhysic & Param,double p,int ivar){
+   /** Function which compute the Lp norm associated with one discrete quantity for the different models **/
+  double res=0.;
+  double sum=0;
+  
+
+  for(int j=0;j<Mh.nc;j++){
+     if(Mh.cells[j].lab!=-1){
+    res=res+Mh.area(j)*pow(Valabs(v.var[ivar][j]),p);
+     }
+  }		  
+  res=pow(res,1/p);
+     return res;	 
+}
 
 double Mass(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,double time){
   /** Function which compute the mass associated with the first quantity for the different models **/
@@ -131,13 +145,19 @@ double Mass(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,double time){
 void Diagnostics_Quantities(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,int nt,double time){
   /** Function which gives the diagnostics for the numerical stability **/
   double Mass_0=0;
-  double p=1.;
   
-    if((nt%20)==0) {
-      Mass_0 = Mass(d,Mh,v,Param,time);
+    if((nt%50)==0) {
       cout<<"Iteration n "<<nt<<" correspondant au temps :"<<time<<endl;
-      cout<<"masse "<<pow(Mass_0,1./p)<<endl;
-
+      cout<<"masse "<<Mass(d,Mh,v,Param,time)<<endl;
+      cout<<"norme L2 :"<<NormLP_Stability(d,Mh,v,Param,2.)<<endl;
+      if( TraceSolfond(d,Param) == 1){
+	cout<<"Error L1 :"<<Diagnostics_Error(d,Mh,v,Param,time,1.)<<endl;
+	cout<<"Error L2 :"<<Diagnostics_Error(d,Mh,v,Param,time,2.)<<endl;
+	cout<<"Error L2 relative :"<<Diagnostics_Error(d,Mh,v,Param,time,2.)/NormLP_Stability(d,Mh,v,Param,2)<<endl;
+      }
+      //cout<<"Error L2 u1:"<<NormLP_Error_One_variable(d,Mh,v,Param,2.,time,1)/NormLP_One_variable_Stability(d,Mh,v,Param,2.,1)<<endl;
+      //cout<<"Error L2 u2:"<<NormLP_Error_One_variable(d,Mh,v,Param,2.,time,2)/NormLP_One_variable_Stability(d,Mh,v,Param,2.,2)<<endl;
+      
       if(!strcmp(d.Typemodel,"Euler")){
 	cout<<"velocity :"<<NormLP_Velocity(d,Mh,v,Param,2,time)<<endl;
       }

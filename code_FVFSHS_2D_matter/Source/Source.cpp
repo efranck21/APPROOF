@@ -8,7 +8,7 @@
 /** File which contains the functions for the source terms **/
 
 
-vectorflux ChoiceSource(Data & d ,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2* ur){
+vectorflux ChoiceSource(Data & d ,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2** ur){
  /**  Function which gives the explicit source term associated with your model and your scheme (in Data) **/
 vectorflux res(d);
 
@@ -38,6 +38,10 @@ vectorflux res(d);
 
   if(Param.Model ==7){
     res=SourceM1Matter(d,numCell,Mh,v,tab,Param); /** M1 with Matter source term **/
+  }
+
+  if(Param.Model ==8){
+    res=SourceP1Compton(d,numCell,Mh,v,tab,Param); /** M1 with Matter source term **/
   }
 
   

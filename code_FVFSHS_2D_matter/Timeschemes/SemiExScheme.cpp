@@ -108,10 +108,16 @@ void SemiImplicit(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv, P
   R2 res(0,0);
   R2 x(0,0);
   temp=v;
-  R2 *ur =new R2[Mh.nv];
+  R2 **ur;
   double c=0;
   FILE *fileresult=NULL;
   char string[255];
+
+   ur = new R2*[d.ngroup];
+  for(int i=0;i<d.ngroup;i++){
+    ur[i]= new R2[Mh.nv];
+  }
+
   
   /** computaion of the table for variables parameters  **/ 
   ParamPhysic_InitTab(d,Mh,v,TConnectInv,Param);
@@ -153,14 +159,17 @@ void SemiImplicit(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv, P
        /** Computation of the nodal flux solving nodal system **/
         if(strcmp(d.Typemodel,"Advection") && d.Typescheme == 'N' ){	 
 	 int r=0;
+	 int g=0;
          #pragma omp parallel for
-	 for(r=0;r<Mh.nv;r++){
-	   if(Param.Model == 5){
-	     InitTab_rhoGravity(d,Mh,v,TConnectInv,Param.Euler,r);
-	   }
-	   ur[r]=SolveurNodal(d,r,Mh,v,TConnectInv,Param);
-	 } 
-       }
+	 for(g=0;g<d.ngroup;g++){
+	   for(r=0;r<Mh.nv;r++){
+	     if(Param.Model == 5){
+	       InitTab_rhoGravity(d,Mh,v,TConnectInv,Param.Euler,r);
+	     }
+	     ur[g][r]=SolveurNodal(d,r,Mh,v,TConnectInv,Param,g);
+	   } 
+	 }
+	}
   
        /** Computation of the flux and source term and update of the time solution **/
 #pragma omp parallel for private(flux,source,x)  
@@ -208,7 +217,10 @@ void SemiImplicit(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv, P
 	nt++;
 	  
      }
-   delete [] ur;
+    for(int i=0;i<d.ngroup;i++){
+    delete [] ur[i];
+  }
+  delete [] ur;
    
    // fclose(fileresult);
 }

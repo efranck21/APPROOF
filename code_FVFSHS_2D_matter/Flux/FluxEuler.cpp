@@ -17,7 +17,7 @@
 
 
 
-vectorflux FluxVertexEulerGosse(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexEulerGosse(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
   /**  Nodal Lagrange+remap JL-(b) fluxes with local source term for the Euler model **/
   vectorflux res(4);
   R2 sol(0.,0.);
@@ -46,7 +46,7 @@ vectorflux FluxVertexEulerGosse(Data & d,int numCell,Mesh & Mh,variable & v,TabC
 
      numGr=Mh(numCell,r);
      MrConstructE(d,numGr,Mh,v,tab,Param,Mr);
-     sol=ur[numGr];
+     sol=ur[0][numGr];
      sol2=ClassicalSolver(d,Mh,v,tab,Param,numGr);
   
      beta=inittensor(d,Mh,v,tab,'s',numGr,numCell);
@@ -84,7 +84,7 @@ vectorflux FluxVertexEulerGosse(Data & d,int numCell,Mesh & Mh,variable & v,TabC
   return res;
 }
 
-vectorflux FluxVertexEuler(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexEuler(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
   /**  Nodal Lagrange+remap JL-(b) fluxes for the Euler model **/
   vectorflux res(4);
     R2 sol(0,0);
@@ -113,7 +113,7 @@ vectorflux FluxVertexEuler(Data & d,int numCell,Mesh & Mh,variable & v,TabConnec
     // calcul du flux nodale vr
 
      numGr=Mh(numCell,r);
-     sol=ur[numGr];
+     sol=ur[0][numGr];
 
      beta=inittensor(d,Mh,v,tab,'s',numGr,numCell);
      alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);

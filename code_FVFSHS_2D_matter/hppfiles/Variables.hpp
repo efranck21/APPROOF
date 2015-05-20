@@ -31,6 +31,7 @@ public:
     if(!strcmp(d.Typemodel,"M1")) {nbvar=3;}
     if(!strcmp(d.Typemodel,"P1Matter")) {nbvar=4;}
     if(!strcmp(d.Typemodel,"M1Matter")) {nbvar=4;}
+    if(!strcmp(d.Typemodel,"P1Compton")) {nbvar=d.ngroup*3+1;}
 
     nbcell=nc;
      
@@ -116,6 +117,7 @@ public:
     if(!strcmp(d.Typemodel,"M1")) {nbvar=3;}
     if(!strcmp(d.Typemodel,"P1Matter")) {nbvar=4;}
     if(!strcmp(d.Typemodel,"M1Matter")) {nbvar=4;}
+    if(!strcmp(d.Typemodel,"P1Compton")) {nbvar=d.ngroup*3+1;}
     vflux = new double[nbvar];
     
   }

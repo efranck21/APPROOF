@@ -24,4 +24,6 @@ void InitP1Matter(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param);
 
 void InitM1Matter(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param);
 
+void InitP1Compton(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param);
+
 #endif

@@ -192,7 +192,7 @@ void MatrixM1(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & 
 }
 
 /** Flux pour le schéma aux noeuds associé a M1**/
-vectorflux FluxVertexAPM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexAPM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur){
   /**  Nodal flux for the nodal JL-(b) scheme for the M1 model **/
     vectorflux res(3);
   R2 sol;
@@ -211,7 +211,7 @@ vectorflux FluxVertexAPM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConne
   for(int r=0;r<Mh.nbnodelocal;r++){
 
      numGr=Mh(numCell,r);
-     sol=ur[numGr];
+     sol=ur[0][numGr];
      beta=inittensor(d,Mh,v,tab,'s',numGr,numCell);
      alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
      signode=AverageSigNodeM1(d,Mh,v,tab,Param.M1,numGr,numCell);
@@ -247,7 +247,7 @@ vectorflux FluxVertexAPM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConne
 }
 
 
-vectorflux FluxVertexClassicM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexClassicM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur){
   /**  Nodal flux for the classical nodal scheme for the M1 model **/
     vectorflux res(3);
   R2 sol;
@@ -264,7 +264,7 @@ vectorflux FluxVertexClassicM1(Data & d,int numCell,Mesh & Mh, variable & v, Tab
   for(int r=0;r<Mh.nbnodelocal;r++){
 
      numGr=Mh(numCell,r);
-     sol=ur[numGr]; // Lagrangian Velocity flux
+     sol=ur[0][numGr]; // Lagrangian Velocity flux
      beta=inittensor(d,Mh,v,tab,'s',numGr,numCell);
      alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
      
@@ -291,7 +291,7 @@ vectorflux FluxVertexClassicM1(Data & d,int numCell,Mesh & Mh, variable & v, Tab
 }
 
 
-vectorflux FluxVertexM1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexM1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur){
   /**  Nodal flux for the nodal JL-(b) with local source term scheme for the M1 model **/
     vectorflux res(3);
   R2 sol;
@@ -314,7 +314,7 @@ vectorflux FluxVertexM1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabCo
   for(int r=0;r<Mh.nbnodelocal;r++){
      numGr=Mh(numCell,r);
      MrConstructM1(d,numGr,Mh,v,tab,Param,Mr);
-     sol=ur[numGr];
+     sol=ur[0][numGr];
      signode=AverageSigNodeM1(d,Mh,v,tab,Param.M1,numGr,numCell);
      epsnode=AverageEpsNodeM1(d,Mh,v,tab,Param.M1,numGr,numCell);
 

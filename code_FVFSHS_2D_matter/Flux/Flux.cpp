@@ -8,7 +8,7 @@
    Function which gives the flux associated with your model and your shceme (in Data)**/
 
 
-vectorflux ChoiceFluxN(Data & d ,int numCell,Mesh &  Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux ChoiceFluxN(Data & d ,int numCell,Mesh &  Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
   /**  Function which gives the Nodal flux associated with your model and your scheme (in Data) **/
 vectorflux res(d);
  
@@ -122,6 +122,25 @@ vectorflux res(d);
     {
         res=FluxVertexClassicM1Matter(d,numCell,Mh,v,tab,Param,ur);
     }
+
+    if(Param.Model == 8){
+     
+     switch(d.scheme){
+     case 1:
+       /** Linear JL-(a) nodal scheme for P1 model with matter**/
+       res=FluxVertexP1Compton(d,numCell,Mh,v,tab,Param,ur);
+       break;
+     case 2:
+       /** Linear JL-(b) nodal scheme for P1 model with matter **/
+       res=FluxVertexP1Compton(d,numCell,Mh,v,tab,Param,ur);
+       break;  
+     case 3:
+       /** Linear JL-(b) nodal scheme with local source term for P1 model with matter **/
+       res=FluxVertexP1ComptonGosse(d,numCell,Mh,v,tab,Param,ur);
+       break;  
+     default: cout <<" the scheme associated with the number"<<d.scheme<<" does not exist "<<endl;
+     }
+   }
   
   return res;
 }
@@ -154,12 +173,14 @@ vectorflux res(d);
   return res;
 }
 
-R2 SolveurNodal(Data & d,int numGr,Mesh & Mh, variable & v,TabConnecInv & tab,ParamPhysic & Param){
+R2 SolveurNodal(Data & d,int numGr,Mesh & Mh, variable & v,TabConnecInv & tab,ParamPhysic & Param,int group){
    /**  Function which gives the nodal sovler associated with your model (in Data) **/
   double a11=0,a12=0,a21=0,a22=0,b1=0,b2=0,Det=0;
   R2 sol(0,0);
+
   if(Mh.vertices[numGr].lab > -1){
-     if(Param.Model == 1){
+   
+    if(Param.Model == 1){
        MatrixDiff(d,Mh,v,tab,Param,numGr,a11,a12,a21,a22,b1,b2);
     }
      if(Param.Model == 3){
@@ -177,7 +198,9 @@ R2 SolveurNodal(Data & d,int numGr,Mesh & Mh, variable & v,TabConnecInv & tab,Pa
      if(Param.Model == 7){
        MatrixM1Matter(d,Mh,v,tab,Param,numGr,a11,a12,a21,a22,b1,b2);
      }
-
+     if(Param.Model == 8){
+       MatrixP1Compton(d,Mh,v,tab,Param,numGr,a11,a12,a21,a22,b1,b2,group);
+     }
 
      
     Det=a11*a22-a21*a12;

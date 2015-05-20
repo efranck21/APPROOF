@@ -70,6 +70,10 @@ int main() {
 
  
   cout << "Time step: "<<dt<<endl;
+  if(d.ngroup > 1 && Param.Model !=8){
+    cout<<"error multi group is only for the model 8"<<endl;
+    exit(0);
+  }
 
 
   /** Time loop **/    

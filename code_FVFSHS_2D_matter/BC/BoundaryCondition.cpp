@@ -85,6 +85,10 @@ void BoundaryCondition(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,doubl
   if (Param.Model == 7) {
     BoundaryConditionM1Matter(d,Mh,v,Param,time);
   }
+
+  if (Param.Model == 8) {
+    BoundaryConditionP1Compton(d,Mh,v,Param,time);
+  }
    
 }
   

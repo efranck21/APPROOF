@@ -22,10 +22,14 @@ void ExplicitDiscret(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv
   vectorflux flux(d);
   vectorflux source(d);
   temp=v;
-  R2 *ur =new R2[Mh.nv];  
+  R2 **ur;
   double c=0;
 
-  
+  ur = new R2*[d.ngroup];
+  for(int i=0;i<d.ngroup;i++){
+    ur[i]= new R2[Mh.nv];
+  }
+
   /** computaion of the table for variables parameters  **/ 
   ParamPhysic_InitTab(d,Mh,v,TConnectInv,Param);
 
@@ -62,15 +66,17 @@ void ExplicitDiscret(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv
 
        /** Computation of the nodal flux solving nodal system **/
        if(Param.Model !=1 && d.Typescheme == 'N' ){	 
-	 int r=0;
-         #pragma omp parallel for
-	 for(r=0;r<Mh.nv;r++){
-	   if(Param.Model == 5){
-	     InitTab_rhoGravity(d,Mh,v,TConnectInv,Param.Euler,r);
-	   }
-	   ur[r]=SolveurNodal(d,r,Mh,v,TConnectInv,Param); 
-	 } 
-       }
+	  int r=0;
+	 int g=0;
+	 for(g=0;g<d.ngroup;g++){
+	   for(r=0;r<Mh.nv;r++){
+	     if(Param.Model == 5){
+	       InitTab_rhoGravity(d,Mh,v,TConnectInv,Param.Euler,r);
+	     }
+	     ur[g][r]=SolveurNodal(d,r,Mh,v,TConnectInv,Param,g);
+	   } 
+	 }
+	}
 
     
        int j=0;	
@@ -106,7 +112,10 @@ void ExplicitDiscret(Data & d,Mesh & Mh, variable & v,TabConnecInv & TConnectInv
        nt++;
 	
      }
-   delete [] ur;
+  for(int i=0;i<d.ngroup;i++){
+    delete [] ur[i];
+  }
+  delete [] ur;
    cout<<"negative coefficients " <<c<<" "<<" dt "<<dt<<endl;
 
 }

@@ -11,6 +11,7 @@
 #include "ParamEuler.hpp"
 #include "ParamM1.hpp"
 #include "ParamM1Matter.hpp"
+#include "ParamP1Compton.hpp"
 #include "ClassMesh.hpp"
 #include <cassert>
 #include <fstream>
@@ -34,6 +35,7 @@ Model :
 -Euler : Model = 5
 -M1 : Model = 6
 -M1 with matter : Model = 7
+-P1 with compton : Model =8
  **/
 
 class ParamPhysic {
@@ -45,6 +47,7 @@ public:
   ParamM1 M1;
   ParamM1Matter M1M ;
   ParamP1Matter P1M;
+  ParamP1Compton P1C;
   int Model;
 
    ParamPhysic(){
@@ -55,6 +58,7 @@ public:
      ParamM1();
      ParamM1Matter();
      ParamP1Matter();
+     ParamP1Compton();
      Model=0; 
   }
 
@@ -96,6 +100,12 @@ public:
       Model=7;
     }
 
+    if (!strcmp(d.Typemodel,"P1Compton")){
+      ParamP1Compton P1C_temp(d,Mh);
+      P1C = P1C_temp;
+      Model=8;
+    }
+
       
   }
 
@@ -107,6 +117,7 @@ public:
      M1=ppy.M1;
      M1M=ppy.M1M;
      P1M=ppy.P1M;
+     P1C=ppy.P1C;
      Model=ppy.Model;
   }
 
@@ -122,6 +133,7 @@ public:
     M1=ppy.M1;
     M1M=ppy.M1M;
     P1M=ppy.P1M;
+    P1C=ppy.P1C;
     Model=ppy.Model;
     return *this;
  }    

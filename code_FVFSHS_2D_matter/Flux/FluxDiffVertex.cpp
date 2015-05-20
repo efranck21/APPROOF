@@ -12,7 +12,7 @@
 #include "FunctionsAdvection.hpp"
 
 /** Flux du schéma de diffusion GLACE linéaire**/
-vectorflux FluxVertexDiff(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexDiff(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
    /**  Nodal fluxes for linear diffusion scheme   **/
   vectorflux res(1);
   R2 sol(0,0);
@@ -23,7 +23,7 @@ vectorflux FluxVertexDiff(Data & d,int numCell,Mesh & Mh, variable & v, TabConne
   for(int r=0;r<Mh.nbnodelocal;r++){
      numGr=Mh(numCell,r);
 
-     sol=ur[numGr];  
+     sol=ur[0][numGr];  
 
      s=s+Mh.ljr(numCell,r)*(sol,Mh.njr(numCell,r));
     
@@ -32,7 +32,7 @@ vectorflux FluxVertexDiff(Data & d,int numCell,Mesh & Mh, variable & v, TabConne
     return res;	
 }
 
-vectorflux FluxVertexNlDiff(Data & d,int numCell,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexNlDiff(Data & d,int numCell,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
    /**  Nodal fluxes for nonlinear diffusion scheme based on advection   **/
  vectorflux res(1);
  R2 sol(0,0);
@@ -48,7 +48,7 @@ vectorflux FluxVertexNlDiff(Data & d,int numCell,Mesh &  Mh,variable & v, TabCon
      cd=AverageCoefDiffNode(d,Mh,v,tab,Param.Diff,numGr,numCell);   
      
      Er=AverageQuantity(d,Mh,v,tab,Param,numGr,0);
-     sol=ur[numGr];
+     sol=ur[0][numGr];
        
      s=s+VertexUpwind(d,Mh,v,0,tab,Param,numCell,r,sol/Er);
   }

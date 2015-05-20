@@ -77,7 +77,9 @@ class Data {
   /** plot in 1D or 2D **/
   int dimsave;
   int restart;
- 
+
+  /** nbgroup **/
+  int ngroup;
 
   Data(const char * filename){
     FILE* f = fopen(filename,"rb");
@@ -137,6 +139,10 @@ class Data {
   /* Model */
   fgets(string,255,f);
   fscanf(f,"%s\n",Typemodel);
+
+     /* nb group */
+  fgets(string,255,f);
+  fscanf(f,"%d\n",&ngroup);
   
  /* Time scheme */
   fgets(string,255,f);
@@ -201,6 +207,7 @@ class Data {
     Typescheme=d.Typescheme;
     restart=d.restart;
     Total_order=d.Total_order;
+    ngroup=d.ngroup;
 
 	
   }
@@ -226,6 +233,7 @@ class Data {
     Typescheme=d.Typescheme;
     restart=d.restart;
     Total_order=d.Total_order;
+    ngroup=d.ngroup;
     
 
     return *this;

@@ -14,7 +14,7 @@
 
 //////////////// General functions ////////////
 
-vectorflux ChoiceSource(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param, R2 * ur);
+vectorflux ChoiceSource(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param, R2 ** ur);
 
 R2 SemiImplicitPart(Data & d ,int numCell,Mesh & Mh, variable & v,variable & temp, TabConnecInv & tab,ParamPhysic & Param,double dt);
 
@@ -57,15 +57,15 @@ R2 SplittingCalculMatter(Data & d ,ParamPhysic & Param, int numCell,Mesh &  Mh,v
 
 //////////// Euler explicit functions /////////
 
-double FrictionUcarre(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+double FrictionUcarre(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-R2 FrictionU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+R2 FrictionU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-vectorflux SourceE(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux SourceE(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
 R2 SourceGravityEuler(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param);
 
-double SourceGravityEulerU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+double SourceGravityEulerU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
 
 
@@ -95,6 +95,9 @@ vectorflux SourceM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv &
 vectorflux SourceM1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param);
 
 
+//////////// P1 Compton functions /////////
+
+vectorflux SourceP1Compton(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param);
 
 
 

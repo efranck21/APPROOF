@@ -121,7 +121,7 @@ void MatrixM1Matter(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhy
 
 
 
-vectorflux FluxVertexClassicM1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexClassicM1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur){
     /**  Nodal flux for the classical nodal scheme for the M1 model **/
     vectorflux res(3);
     R2 sol;
@@ -138,7 +138,7 @@ vectorflux FluxVertexClassicM1Matter(Data & d,int numCell,Mesh & Mh, variable & 
     for(int r=0;r<Mh.nbnodelocal;r++){
         
         numGr=Mh(numCell,r);
-        sol=ur[numGr];
+        sol=ur[0][numGr];
 
         beta=inittensor(d,Mh,v,tab,'s',numGr,numCell);
         alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);

@@ -45,11 +45,8 @@ double dt=0;
   if(Param.Model == 6 && d.nTest <3 ){  // M1 Model
      dt=d.CFL*h*h;
    }
-  if (Param.Model == 7) // M1 Model with matter
-  {
     cout << "M1 Model with matter not define in semi implicite configuration"<< endl ;
     exit(1) ;
-  }
  }
 
  if(d.Typetime=='E'){
@@ -86,7 +83,9 @@ double dt=0;
   if(Param.Model == 7 && d.nTest <3 ){
     dt=d.CFL*pow(h,Param.M1M.OrderAdv);
   }
-
+  if(Param.Model == 8){
+    dt=d.CFL*hx; // P1 Compton model
+  }
  }
  return dt;
 }

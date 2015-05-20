@@ -11,7 +11,7 @@
 
 
 
-vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
   /**  Nodal JL-(b) and JL-(a) fluxes for the P1 model **/
     vectorflux res(3);
   double Fu1=0,Fu2=0;
@@ -33,7 +33,7 @@ vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecI
   for(int r=0;r<Mh.nbnodelocal;r++){
    
     numGr=Mh(numCell,r);
-    sol=ur[numGr];
+    sol=ur[0][numGr];
     
      beta=inittensor(d,Mh,v,tab,'s',numGr,numCell);
      alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
@@ -62,7 +62,7 @@ vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecI
 
 
 
-vectorflux FluxVertexP1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux FluxVertexP1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
    /**  Nodal JL-(b) fluxes with local source term for the P1 model **/
     vectorflux res(3);
   double Fu1=0,Fu2=0;
@@ -83,7 +83,7 @@ vectorflux FluxVertexP1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabCo
     numGr=Mh(numCell,r);
     MrConstructP1(d,numGr,Mh,v,tab,Param,Mr);
     
-    sol=ur[numGr];
+    sol=ur[0][numGr];
     
     alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
     signode=AverageSigNodeP1(d,Mh,v,tab,Param.P1,numGr,numCell);

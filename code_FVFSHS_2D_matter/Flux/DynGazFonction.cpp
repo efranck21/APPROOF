@@ -104,7 +104,7 @@ double WaveSpeed(Data & d,Mesh & Mh, variable & v, int numCell,int r,TabConnecIn
 }
 
 
-double remap(Data & d,Mesh & Mh, variable & v,int var,TabConnecInv & tab,ParamPhysic & Param,int numCell,int r, R2 * ur, R2 a){
+double remap(Data & d,Mesh & Mh, variable & v,int var,TabConnecInv & tab,ParamPhysic & Param,int numCell,int r, R2 ** ur, R2 a){
   /** This function compute the remap part of the fluxes using the advction fluxes at the velocity a. **/
   double res=0;
 

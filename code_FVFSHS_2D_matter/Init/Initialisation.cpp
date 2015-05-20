@@ -32,6 +32,9 @@ void ChoiceInit(Data & d,Mesh & Mh,variable & v,ParamPhysic & Param,double & Ini
       
     if(Param.Model == 7) {InitM1Matter(d,Mh,v,Param);}
 
+    if(Param.Model == 8) {InitP1Compton(d,Mh,v,Param);}
+
+
   }
   else{
     LoadRestart(d,Mh,v,Param,InitTime);

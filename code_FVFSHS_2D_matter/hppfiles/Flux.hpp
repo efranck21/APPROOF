@@ -20,9 +20,9 @@ vectorflux FluxVF4Diff(Data & d,int numCell, Mesh & Mh,  variable & v,  TabConne
 
 vectorflux FluxEdgeAdv(Data & d,int numCell,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param);
 
-vectorflux ChoiceFluxN(Data & d ,int numCell,Mesh & Mh, variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux ChoiceFluxN(Data & d ,int numCell,Mesh & Mh, variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-R2 SolveurNodal(Data & d,int numGr,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param);
+R2 SolveurNodal(Data & d,int numGr,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param, int group);
 
 
 ///////// flux d'advection/////////
@@ -33,20 +33,20 @@ vectorflux FluxVertexadv(Data & d,int numCell, Mesh &  Mh, variable & v,TabConne
 /////////////// flux de diffusion/////////
 
 
-vectorflux FluxVertexDiff(Data & d,int numCell,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexDiff(Data & d,int numCell,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-vectorflux FluxVertexNlDiff(Data & d,int numCell,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexNlDiff(Data & d,int numCell,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-double FluxadvectionDiff(Data & d,int numCell,int r,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 a,R2* ur);
+double FluxadvectionDiff(Data & d,int numCell,int r,Mesh &  Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 a,R2** ur);
 
 void MatrixDiff(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,int numGr,double &a11,double &a12,double &a21,double &a22,double &b1,double &b2); 
 
 ////////////// flux du modèle P1//////////////////
 
 
-vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexP1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-vectorflux FluxVertexP1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexP1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
 void MrConstructP1(Data & d,int numGr,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,double  Mr[2][2]);
 
@@ -56,9 +56,9 @@ void MatrixP1(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & 
 ////////////// flux du modèle P1 Matter//////////////////
 
 
-vectorflux FluxVertexP1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexP1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-vectorflux FluxVertexP1MatterGosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexP1MatterGosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
 void MrConstructP1Matter(Data & d,int numGr,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,double  Mr[2][2]);
 
@@ -67,9 +67,9 @@ void MatrixP1Matter(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhy
 
 /////////////// Euler  Flux ////////
 
-vectorflux FluxVertexEulerGosse(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexEulerGosse(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
-vectorflux FluxVertexEuler(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexEuler(Data & d,int numCell,Mesh & Mh,variable & v,TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
 
 void MrConstructE(Data & d,int numGr,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,double  Mr[2][2]);
 
@@ -90,7 +90,7 @@ double c(Data & d,Mesh & Mh, variable & v,ParamEuler & Euler, int numCell);
 
 double WaveSpeed(Data & d,Mesh & Mh, variable & v, int numCell,int r,TabConnecInv & tab,ParamEuler & Euler);
 
-double remap(Data & d,Mesh & Mh, variable & v,int var,TabConnecInv & tab,ParamPhysic & Param,int numCell,int r, R2 * ur, R2 a);
+double remap(Data & d,Mesh & Mh, variable & v,int var,TabConnecInv & tab,ParamPhysic & Param,int numCell,int r, R2 ** ur, R2 a);
 
 R2 IntGradiantPressureInterpolation(Data & d,Mesh & Mh,variable & v,TabConnecInv & tab,ParamEuler & Euler,int numGr);
 
@@ -120,13 +120,13 @@ void MatrixAPM1(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic 
 
 void MatrixClassicM1(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,int numGr,double &a11,double &a12,double &a21,double &a22,double &b1,double &b2); 
 
-vectorflux FluxVertexAPM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexAPM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur);
 
-vectorflux FluxVertexClassicM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexClassicM1(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur);
 
-vectorflux FluxVertexM1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexM1Gosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur);
 
-double remap(Data & d,Mesh & Mh, variable & v,int var,TabConnecInv & tab, ParamPhysic & Param,int numCell,int r,R2 * ur, R2 a);
+double remap(Data & d,Mesh & Mh, variable & v,int var,TabConnecInv & tab, ParamPhysic & Param,int numCell,int r,R2 ** ur, R2 a);
 
 void MrConstructM1(Data & d,int numGr,Mesh & Mh,variable & v, TabConnecInv & tab, ParamPhysic & Param,double Mr[2][2]);
 
@@ -136,7 +136,7 @@ void MrConstructM1(Data & d,int numGr,Mesh & Mh,variable & v, TabConnecInv & tab
 
 void MatrixM1Matter(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,int numGr,double &a11,double &a12,double &a21,double &a22,double &b1,double &b2);
 
-vectorflux FluxVertexClassicM1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 * ur);
+vectorflux FluxVertexClassicM1Matter(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab, ParamPhysic & Param,R2 ** ur);
 
 
 double q_M1M(Data & d, ParamM1Matter & M1Matter,double E,double F1, double F2);
@@ -147,3 +147,13 @@ double coefk_M1M(Data & d, ParamM1Matter & M1Matter,double E,double F1, double F
 
 
 
+////////////// flux du modèle P1 Compton//////////////////
+
+
+vectorflux FluxVertexP1Compton(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
+
+vectorflux FluxVertexP1ComptonGosse(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur);
+
+void MrConstructP1Compton(Data & d,int numGr,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,double  Mr[2][2]);
+
+void MatrixP1Compton(Data & d,Mesh & Mh,variable & v, TabConnecInv & tab,ParamPhysic & Param,int numGr,double &a11,double &a12,double &a21,double &a22,double &b1,double &b2,int group); 

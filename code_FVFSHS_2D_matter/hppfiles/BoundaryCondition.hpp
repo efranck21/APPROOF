@@ -93,4 +93,12 @@ void BC_Periodic_M1M(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double
 
 
 
+/////////// P1 Matter functions ////////////
+
+void BoundaryConditionP1Compton(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time);
+
+void BC_Neumann_P1Compton(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time);
+
+void BC_BlackBodyCompton_Left(Data & d,Mesh & Mh,variable & v, ParamPhysic & Param,double time);
+
 #endif

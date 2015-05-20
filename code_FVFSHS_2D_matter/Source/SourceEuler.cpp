@@ -12,7 +12,7 @@
 
 
 
-vectorflux SourceE(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+vectorflux SourceE(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
 /** Function wich compute the explicit source terms for Euler **/
   
   vectorflux res(4);
@@ -179,7 +179,7 @@ R2 SolveurImpliciteE(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv 
   return res;
 }
 
-R2 FrictionU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+R2 FrictionU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
 /** Function wich compute the nodal friction term for momemtum equation **/
   R2 res(0,0);
   tensor alpha(d,'h');
@@ -198,7 +198,7 @@ R2 FrictionU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,Pa
     for(int r=0;r<Mh.nbnodelocal;r++){
        numGr=Mh(numCell,r);
        MrConstructE(d,numGr,Mh,v,tab,Param,Mr);
-      sol=ur[numGr];
+      sol=ur[0][numGr];
       rjr=WaveSpeed(d,Mh,v,numCell,numGr,tab,Param.Euler);
       alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
       a11=a11+Mh.ljr(numCell,r)*rjr*(alpha.ten[0][0]*(1-Mr[0][0])+alpha.ten[0][1]*(-Mr[1][0]));
@@ -215,7 +215,7 @@ R2 FrictionU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,Pa
  
 }
 
-double FrictionUcarre(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+double FrictionUcarre(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
 /** Function wich compute the nodal friction term for energy equation **/
 double res=0;
   tensor alpha(d,'h');
@@ -236,7 +236,7 @@ double res=0;
     for(int r=0;r<Mh.nbnodelocal;r++){
        numGr=Mh(numCell,r);
        MrConstructE(d,numGr,Mh,v,tab,Param,Mr);
-      sol=ur[numGr];
+      sol=ur[0][numGr];
       rjr=WaveSpeed(d,Mh,v,numCell,numGr,tab,Param.Euler);
       alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
       a11=Mh.ljr(numCell,r)*rjr*(alpha.ten[0][0]*(1-Mr[0][0])+alpha.ten[0][1]*(-Mr[1][0]));
@@ -300,7 +300,7 @@ R2 SourceGravityEuler(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv
   return res;
 }
 
-double SourceGravityEulerU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 * ur){
+double SourceGravityEulerU(Data & d,int numCell,Mesh & Mh, variable & v, TabConnecInv & tab,ParamPhysic & Param,R2 ** ur){
    /** Function wich compute the nodal gravity source term (energy equation) for Euler equations  **/
   double res=0;
   tensor alpha(d,'h');
@@ -318,7 +318,7 @@ double SourceGravityEulerU(Data & d,int numCell,Mesh & Mh, variable & v, TabConn
 
     for(int r=0;r<Mh.nbnodelocal;r++){
       numGr=Mh(numCell,r);
-      sol=ur[numGr];
+      sol=ur[0][numGr];
       MrConstructE(d,numGr,Mh,v,tab,Param,Mr);
       MatrixSourceWBE(d,numGr,Mh,v,tab,Param,Nr);
       alpha=inittensor(d,Mh,v,tab,'h',numGr,numCell);
